@@ -40,3 +40,7 @@
 # Created by JetBrains www.jetbrains.com
 _ReSharper[#]/
 *.DotSettings.user
+# Специфично для 2026 / Visual Studio 2022+
+.vsconfig
+*.slnx
+UserSettings/
