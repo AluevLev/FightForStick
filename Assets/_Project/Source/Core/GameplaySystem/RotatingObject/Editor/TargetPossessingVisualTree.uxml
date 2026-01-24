@@ -1,0 +1,9 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:VisualElement name="MainPane" style="flex-grow: 1;">
+        <uie:PropertyField name="TypeField" binding-path="_startTarget" style="display: flex;" />
+        <uie:PropertyField name="StartAngleField" binding-path="_startTargetAngle" style="display: flex;" />
+        <uie:PropertyField name="StartDirectionField" binding-path="_startTargetDirection" style="display: flex;" />
+        <uie:PropertyField name="StartTransformField" binding-path="_startTargetTransform" style="display: flex;" />
+        <uie:PropertyField name="AdditionalAngleField" binding-path="&lt;AdditionalAngle&gt;k__BackingField" style="display: flex;" />
+    </ui:VisualElement>
+</ui:UXML>

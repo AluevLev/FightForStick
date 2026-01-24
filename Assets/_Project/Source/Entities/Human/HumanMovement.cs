@@ -1,13 +1,13 @@
 using UnityEngine;
 using VContainer;
-[RequireComponent(typeof(Rigidbody2D))]
 public class HumanMovement : MonoBehaviour, IMovable
 {
     [SerializeField] private Transform _groundCheck;
 
+    [SerializeField] private Rigidbody2D _body;
+
     private GroundCheckSettings _groundCheckSettings;
     private MovementSettings _movementSettings;
-    private Rigidbody2D _rigidbody2D;
 
     private static readonly RaycastHit2D[] _singleHitBuffer = new RaycastHit2D[1];
 
@@ -18,10 +18,6 @@ public class HumanMovement : MonoBehaviour, IMovable
     {
         _groundCheckSettings = groundCheckSettings;
         _movementSettings = movementSettings;
-    }
-    private void Awake()
-    {
-        _rigidbody2D = GetComponent<Rigidbody2D>();
     }
     private void FixedUpdate()
     {
@@ -36,16 +32,16 @@ public class HumanMovement : MonoBehaviour, IMovable
     }
     private void Move()
     {
-        _rigidbody2D.AddForce(_movementSettings.Speed * CurrentDirection * Vector2.right, ForceMode2D.Force);
+        _body.AddForce(_movementSettings.Speed * CurrentDirection * Vector2.right, ForceMode2D.Force);
     }
     public void Jump()
     {
         if (!IsGrounded)
             return;
 
-        _rigidbody2D.linearVelocity = new(_rigidbody2D.linearVelocity.x, 0);
+        _body.linearVelocity = new(_body.linearVelocity.x, 0);
         Vector2 jumpForce = new(_movementSettings.JumpBoost * CurrentDirection, _movementSettings.JumpForce);
-        _rigidbody2D.AddForce(jumpForce, ForceMode2D.Impulse);
+        _body.AddForce(jumpForce, ForceMode2D.Impulse);
     }
     public void Sneak()
     {

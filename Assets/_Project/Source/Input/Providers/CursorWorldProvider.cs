@@ -1,6 +1,6 @@
 using UnityEngine;
 using VContainer.Unity;
-public class CursorWorldProvider : IScreenInWorld, ITickable
+public class CursorWorldProvider : ICursorWorldProvider, ITickable
 {
     private readonly IInputProvider _inputProvider;
     private readonly Camera _mainCamera;

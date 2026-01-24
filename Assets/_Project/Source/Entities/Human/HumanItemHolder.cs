@@ -3,6 +3,7 @@ using VContainer;
 
 public class HumanItemHolder : MonoBehaviour
 {
+    [SerializeField] private Transform humanTransform;
     [SerializeField] private Rigidbody2D _hand1;
     [SerializeField] private Rigidbody2D _hand2;
 
@@ -11,12 +12,12 @@ public class HumanItemHolder : MonoBehaviour
     private IPickable _itemInHand;
 
     private IInputProvider _inputProvider;
-    private IScreenInWorld _screenToWorld;
+    private ICursorWorldProvider _cursorWorldProvider;
     [Inject]
-    public void Construct(IInputProvider inputProvider, IScreenInWorld screenInWorld)
+    public void Construct(IInputProvider inputProvider, ICursorWorldProvider screenInWorld)
     {
         _inputProvider = inputProvider;
-        _screenToWorld = screenInWorld;
+        _cursorWorldProvider = screenInWorld;
     }
     private void Update()
     {
@@ -48,9 +49,11 @@ public class HumanItemHolder : MonoBehaviour
     }
     private IPickable TryFindPickable()
     {
-        Collider2D collider = Physics2D.OverlapPoint(_screenToWorld.MousePosition);
+        Collider2D collider = Physics2D.OverlapPoint(_cursorWorldProvider.MousePosition);
 
-        if (!collider || Vector2.Distance(collider.transform.position, transform.position) > _maxPickUpRadius)
+        print(Vector2.Distance(collider.transform.position, transform.position) > _maxPickUpRadius);
+
+        if (!collider || Vector2.Distance(collider.transform.position, humanTransform.position) > _maxPickUpRadius)
             return null;
 
         return collider.GetComponent<IPickable>();

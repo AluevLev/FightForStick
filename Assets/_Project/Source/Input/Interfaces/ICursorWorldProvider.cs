@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface IScreenInWorld
+public interface ICursorWorldProvider
 {
     Vector2 MousePosition { get; }
 }
