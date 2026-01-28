@@ -1,16 +1,19 @@
 using UnityEngine;
 
-public class LongRangeWeapon : MonoBehaviour, IPickable
+[RequireComponent(typeof(ITargetSetter))]
+public class Item : MonoBehaviour, IPickable
 {
     [SerializeField] private HingeJoint2D _holder1;
     [SerializeField] private HingeJoint2D _holder2;
 
-    private ObjectPool _objectPool;
+    private ITargetSetter _targetTracker;
 
     private void Awake()
     {
-        _objectPool = GetComponent<ObjectPool>();
-
+        _targetTracker = GetComponent<ITargetSetter>();
+    }
+    private void Start()
+    {
         Drop();
     }
     public void PickUp(Rigidbody2D hand1, Rigidbody2D hand2)
@@ -19,21 +22,25 @@ public class LongRangeWeapon : MonoBehaviour, IPickable
 
         Connect(_holder1, hand1);
         Connect(_holder2, hand2);
+
+        //_targetTracker.SetTargetMousePosition();
     }
     private void AlignHandsAndItems(Rigidbody2D hand1, Rigidbody2D hand2)
     {
         Vector2 hand1Position = hand1.transform.position;
         Vector2 hand2Position = hand2.transform.position;
 
-        Vector2 direction = hand2Position - hand1Position;
-
         Vector2 newPosition = Vector2.Lerp(hand1Position, hand2Position, 0.5f);
 
-        hand1.position = _holder1.transform.TransformPoint(_holder1.anchor);
-        hand2.position = _holder2.transform.TransformPoint(_holder2.anchor);
+        if (_holder1)
+            hand1.position = _holder1.transform.TransformPoint(_holder1.anchor);
+        if (_holder2)
+            hand2.position = _holder2.transform.TransformPoint(_holder2.anchor);
     }
     public void Drop()
     {
+        //_targetTracker.ResetTarget();
+
         Disconnect(_holder1);
         Disconnect(_holder2);
     }

@@ -1,17 +1,31 @@
 using UnityEngine;
-[RequireComponent(typeof(TargetPossessing))]
+using VContainer;
+
+[RequireComponent(typeof(ITargetSetter))]
+[RequireComponent(typeof(IPointProvider))]
 public class FaceRotator : MonoBehaviour
 {
     [SerializeField] private Transform _face;
     [SerializeField] private float _maxDistancing;
-    private TargetPossessing _targetPossessing;
+
+    private ITargetSetter _targetSetter;
+    private IPointProvider _pointProvider;
+
+    private IPointProvider _cursor;
+    [Inject]
+    public void Construct(IPointProvider cursor)
+    {
+        _cursor = cursor;
+    }
     private void Awake()
     {
-        _targetPossessing = GetComponent<TargetPossessing>();
+        _targetSetter = GetComponent<ITargetSetter>();
+        _pointProvider = GetComponent<IPointProvider>();
     }
     private void Start()
     {
-        _targetPossessing.SetTargetMousePosition();
+        var direction = new TransformPointProvider(transform).DirectionTo(_cursor);
+        _targetSetter.SetTarget(direction);
     }
     private void Update()
     {
@@ -19,10 +33,10 @@ public class FaceRotator : MonoBehaviour
     }
     private void LookAtTarget()
     {
-        if (!_targetPossessing.HasTarget)
+        if (_pointProvider.Exists())
             return;
 
-        Vector2 targetPosition = _targetPossessing.GetTargetDirection().Value;
+        Vector2 targetPosition = _pointProvider.GetPoint().Value;
         Vector3 rotateDirection = Quaternion.Euler(Vector3.forward * -transform.eulerAngles.z) * targetPosition;
         _face.localPosition = rotateDirection * _maxDistancing;
     }

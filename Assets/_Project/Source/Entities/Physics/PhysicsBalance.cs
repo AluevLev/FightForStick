@@ -1,14 +1,15 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(IPointProvider))]
 public class PhysicsBalance : MonoBehaviour
 {
     [SerializeField] [Range(0f, 1f)] private float _force;
-    private ITargetSource _targetPossessing;
+    private IPointProvider _pointProvider;
     private Rigidbody2D _rigidbody2D;
     private void Awake()
     {
-        _targetPossessing = GetComponent<ITargetSource>();
+        _pointProvider = GetComponent<IPointProvider>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
     }
     private void FixedUpdate()
@@ -17,11 +18,11 @@ public class PhysicsBalance : MonoBehaviour
     }
     private void LookAtTarget()
     {
-        if (!_targetPossessing.HasTarget)
+        if (!_pointProvider.Exists())
             return;
 
-        float targetAngle = _targetPossessing.GetTargetDirection().Value.GetAngle();
+        float targetAngle = _pointProvider.GetPoint().Value.GetAngle();
 
-        _rigidbody2D.MoveRotation(Mathf.Lerp(_rigidbody2D.rotation, targetAngle, _force));
+        _rigidbody2D.MoveRotation(Mathf.LerpAngle(_rigidbody2D.rotation, targetAngle, _force));
     }
 }

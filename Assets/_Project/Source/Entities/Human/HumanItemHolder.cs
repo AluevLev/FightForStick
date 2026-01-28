@@ -7,17 +7,19 @@ public class HumanItemHolder : MonoBehaviour
     [SerializeField] private Rigidbody2D _hand1;
     [SerializeField] private Rigidbody2D _hand2;
 
+    [SerializeField] private TargetVector[] amrsParts;
+
     [SerializeField] private float _maxPickUpRadius;
 
     private IPickable _itemInHand;
 
     private IInputProvider _inputProvider;
-    private ICursorWorldProvider _cursorWorldProvider;
+    private IPointProvider _cursor;
     [Inject]
-    public void Construct(IInputProvider inputProvider, ICursorWorldProvider screenInWorld)
+    public void Construct(IInputProvider inputProvider, IPointProvider cursor)
     {
         _inputProvider = inputProvider;
-        _cursorWorldProvider = screenInWorld;
+        _cursor = cursor;
     }
     private void Update()
     {
@@ -37,6 +39,9 @@ public class HumanItemHolder : MonoBehaviour
         {
             pickable.PickUp(_hand1, _hand2);
             _itemInHand = pickable;
+
+            foreach (ITargetSetter armPart in amrsParts)
+                armPart.SetTarget(_cursor);
         }
     }
     private void DropItem()
@@ -45,13 +50,17 @@ public class HumanItemHolder : MonoBehaviour
         {
             _itemInHand.Drop();
             _itemInHand = null;
+
+            foreach (ITargetSetter armPart in amrsParts)
+                armPart.ResetTarget();
         }
     }
     private IPickable TryFindPickable()
     {
-        Collider2D collider = Physics2D.OverlapPoint(_cursorWorldProvider.MousePosition);
+        if (_cursor.Exists())
+            return null;
 
-        print(Vector2.Distance(collider.transform.position, transform.position) > _maxPickUpRadius);
+        Collider2D collider = Physics2D.OverlapPoint(_cursor.GetPoint().Value);
 
         if (!collider || Vector2.Distance(collider.transform.position, humanTransform.position) > _maxPickUpRadius)
             return null;
