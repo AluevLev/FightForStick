@@ -8,6 +8,12 @@ public class CursorPointProvider : IPointProvider
         _inputProvider = inputProvider;
         _mainCamera = camera;
     }
-    public bool HasValue => _mainCamera;
-    public Vector2? GetPoint() => HasValue ? _mainCamera.ScreenToWorldPoint(_inputProvider.MousePosition) : null;
+    public bool TryGetPoint(out Vector2 point)
+    {
+        bool hasValue = _mainCamera && _inputProvider != null;
+
+        point = hasValue ? _mainCamera.ScreenToWorldPoint(_inputProvider.MousePosition) : default;
+
+        return hasValue;
+    }
 }

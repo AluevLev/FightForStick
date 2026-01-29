@@ -10,7 +10,6 @@ public class HumanMovement : MonoBehaviour, IMovable
     private MovementSettings _movementSettings;
 
     private static readonly RaycastHit2D[] _singleHitBuffer = new RaycastHit2D[1];
-
     public bool IsGrounded { get; private set; }
     public float CurrentDirection { get; private set; }
     [Inject]
@@ -22,6 +21,7 @@ public class HumanMovement : MonoBehaviour, IMovable
     private void FixedUpdate()
     {
         Move();
+
         IsGrounded = CheckGround();
     }
     public void SetMovementDirection(float direction) => CurrentDirection = direction;

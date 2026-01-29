@@ -1,5 +1,14 @@
+using UnityEngine;
 public static class PositionProviderExtensions
 {
-    public static bool Exists(this IPointProvider pointProvider) => pointProvider != null && pointProvider.HasValue;
-    public static DirectionPointProvider DirectionTo(this IPointProvider origin, IPointProvider target) => new(origin, target);
+    public static bool TryGetPointSafe(this IPointProvider pointProvider, out Vector2 point)
+    {
+        if (pointProvider != null)
+        {
+            return pointProvider.TryGetPoint(out point);
+        }
+
+        point = default;
+        return false;
+    }
 }

@@ -6,8 +6,8 @@ public class ObjectPool : MonoBehaviour
     [SerializeField] private TemporaryObject _prefab;
     [SerializeField] private int _poolSize;
 
-    private Queue<TemporaryObject> _activeObjects = new();
-    private Queue<TemporaryObject> _inactiveObjects = new();
+    private readonly Queue<TemporaryObject> _activeObjects = new();
+    private readonly Queue<TemporaryObject> _inactiveObjects = new();
     private void Awake()
     {
         FillPool();

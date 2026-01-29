@@ -1,29 +1,29 @@
 using UnityEngine;
 
-[RequireComponent(typeof(ITargetSetter))]
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(PhysicsBalance))]
 public class Item : MonoBehaviour, IPickable
 {
     [SerializeField] private HingeJoint2D _holder1;
     [SerializeField] private HingeJoint2D _holder2;
 
-    private ITargetSetter _targetTracker;
-
+    private PhysicsBalance _physicsBalance;
+    private Rigidbody2D _rigidbody2D;
     private void Awake()
     {
-        _targetTracker = GetComponent<ITargetSetter>();
-    }
-    private void Start()
-    {
+        _rigidbody2D = GetComponent<Rigidbody2D>();
+        _physicsBalance = GetComponent<PhysicsBalance>();
+
         Drop();
     }
-    public void PickUp(Rigidbody2D hand1, Rigidbody2D hand2)
+    public void PickUp(Rigidbody2D hand1, Rigidbody2D hand2, IPointProvider target)
     {
         AlignHandsAndItems(hand1, hand2);
 
         Connect(_holder1, hand1);
         Connect(_holder2, hand2);
 
-        //_targetTracker.SetTargetMousePosition();
+        _physicsBalance.SetTarget(target);
     }
     private void AlignHandsAndItems(Rigidbody2D hand1, Rigidbody2D hand2)
     {
@@ -32,6 +32,8 @@ public class Item : MonoBehaviour, IPickable
 
         Vector2 newPosition = Vector2.Lerp(hand1Position, hand2Position, 0.5f);
 
+        _rigidbody2D.position = newPosition;
+
         if (_holder1)
             hand1.position = _holder1.transform.TransformPoint(_holder1.anchor);
         if (_holder2)
@@ -39,7 +41,7 @@ public class Item : MonoBehaviour, IPickable
     }
     public void Drop()
     {
-        //_targetTracker.ResetTarget();
+        _physicsBalance.SetTarget(null);
 
         Disconnect(_holder1);
         Disconnect(_holder2);

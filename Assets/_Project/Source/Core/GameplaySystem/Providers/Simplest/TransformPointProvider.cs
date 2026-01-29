@@ -7,6 +7,12 @@ public class TransformPointProvider : IPointProvider
     {
         _transform = transform;
     }
-    public bool HasValue => _transform;
-    public Vector2? GetPoint() => HasValue ? _transform.position : null;
+    public bool TryGetPoint(out Vector2 point)
+    {
+        bool hasValue = _transform;
+
+        point = hasValue ? _transform.position : default;
+
+        return hasValue;
+    }
 }
