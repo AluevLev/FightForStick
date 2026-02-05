@@ -1,4 +1,5 @@
 using UnityEngine;
+
 public class CursorPointProvider : IPointProvider
 {
     private readonly IInputProvider _inputProvider;

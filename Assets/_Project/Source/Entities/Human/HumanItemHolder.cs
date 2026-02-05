@@ -14,9 +14,9 @@ public class HumanItemHolder : MonoBehaviour
     private IPickable _itemInHand;
 
     private IInputProvider _inputProvider;
-    private IPointProvider _cursor;
+    private CursorPointProvider _cursor;
     [Inject]
-    public void Construct(IInputProvider inputProvider, IPointProvider cursor)
+    public void Construct(IInputProvider inputProvider, CursorPointProvider cursor)
     {
         _inputProvider = inputProvider;
         _cursor = cursor;

@@ -6,9 +6,9 @@ public class FaceRotator : MonoBehaviour
     [SerializeField] private Transform _face;
     [SerializeField] private float _maxDistancing;
 
-    private IPointProvider _curcorProvider;
+    private CursorPointProvider _curcorProvider;
     [Inject]
-    public void Construct(IPointProvider cursor)
+    public void Construct(CursorPointProvider cursor)
     {
         _curcorProvider = cursor;
     }

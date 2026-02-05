@@ -16,6 +16,13 @@ public class Item : MonoBehaviour, IPickable
 
         Drop();
     }
+    private void AlignHandsAndItems(Rigidbody2D hand1, Rigidbody2D hand2)
+    {
+        if (_holder1)
+            hand1.position = _holder1.transform.TransformPoint(_holder1.anchor);
+        if (_holder2)
+            hand2.position = _holder2.transform.TransformPoint(_holder2.anchor);
+    }
     public void PickUp(Rigidbody2D hand1, Rigidbody2D hand2, IPointProvider target)
     {
         AlignHandsAndItems(hand1, hand2);
@@ -25,23 +32,9 @@ public class Item : MonoBehaviour, IPickable
 
         _physicsBalance.SetTarget(target);
     }
-    private void AlignHandsAndItems(Rigidbody2D hand1, Rigidbody2D hand2)
-    {
-        Vector2 hand1Position = hand1.transform.position;
-        Vector2 hand2Position = hand2.transform.position;
-
-        Vector2 newPosition = Vector2.Lerp(hand1Position, hand2Position, 0.5f);
-
-        _rigidbody2D.position = newPosition;
-
-        if (_holder1)
-            hand1.position = _holder1.transform.TransformPoint(_holder1.anchor);
-        if (_holder2)
-            hand2.position = _holder2.transform.TransformPoint(_holder2.anchor);
-    }
     public void Drop()
     {
-        _physicsBalance.SetTarget(null);
+        _physicsBalance.ResetTarget();
 
         Disconnect(_holder1);
         Disconnect(_holder2);

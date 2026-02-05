@@ -1,8 +1,10 @@
 using UnityEngine;
 
+[System.Serializable]
 public class TransformPointProvider : IPointProvider
 {
-    private readonly Transform _transform;
+    [SerializeField] private Transform _transform;
+    public TransformPointProvider() { }
     public TransformPointProvider(Transform transform)
     {
         _transform = transform;
