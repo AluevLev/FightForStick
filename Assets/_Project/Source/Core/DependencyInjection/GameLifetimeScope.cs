@@ -6,7 +6,6 @@ public class GameLifetimeScope : LifetimeScope
 {
     [SerializeField] private MovementSettings _movementSettings;
     [SerializeField] private GroundCheckSettings _groundCheckSettings;
-    [SerializeField] private HumanMovement _playerMovement;
     [SerializeField] private Camera _mainCamera;
     protected override void Configure(IContainerBuilder builder)
     {
@@ -19,8 +18,5 @@ public class GameLifetimeScope : LifetimeScope
         
         builder.RegisterEntryPoint<InputProvider>(Lifetime.Singleton);
         builder.RegisterEntryPoint<CursorPointProvider>(Lifetime.Singleton).AsSelf();
-        builder.RegisterEntryPoint<PlayerInputHandler>();
-
-        builder.RegisterComponent(_playerMovement).AsImplementedInterfaces();
     }
 }

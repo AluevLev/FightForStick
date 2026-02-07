@@ -15,7 +15,7 @@ public class DirectionPointProvider : IPointProvider
     {
         if (_from.TryGetPointSafe(out Vector2 from) && _to.TryGetPointSafe(out Vector2 to))
         {
-            point = (to - from).normalized;
+            point = from.DirectionTo(to);
             return true;
         }
 

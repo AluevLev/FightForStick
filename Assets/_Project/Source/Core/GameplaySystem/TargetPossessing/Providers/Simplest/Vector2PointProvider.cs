@@ -9,6 +9,10 @@ public sealed class Vector2PointProvider : IPointProvider
     {
         _vector2 = vector2;
     }
+    public Vector2PointProvider(float x, float y)
+    {
+        _vector2 = new(x, y);
+    }
     public bool TryGetPoint(out Vector2 point)
     {
         point = _vector2;

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using VContainer.Unity;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PhysicsBalance : MonoBehaviour, ITargetPossessing
