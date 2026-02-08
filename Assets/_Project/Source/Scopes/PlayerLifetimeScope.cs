@@ -33,6 +33,6 @@ public class PlayerLifetimeScope : LifetimeScope
         builder.Register<IMotor, EntityMotor>(Lifetime.Scoped).WithParameter(_pushBody);
         builder.Register<IMotorHandler, EntityMotorHandler>(Lifetime.Scoped);
         builder.Register<IAnimation, EntityAnimation>(Lifetime.Scoped).WithParameter(_animator);
-        builder.RegisterEntryPoint<PlayerController>();
+        builder.RegisterEntryPoint<PlayerMovementController>();
     }
 }
