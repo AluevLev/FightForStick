@@ -6,6 +6,8 @@ public class EntityItemHolderHandler : ITogglable, IItemHolderHandler
     private readonly IPointProvider _cursor;
     private readonly IPointProvider _humanPosition;
     private readonly float _maxPickUpDistance;
+
+    private IPickable _itemInHand;
     public bool Enabled { get; set; }
     public EntityItemHolderHandler(IItemHolder entityItemHolder, IPointProvider cursor, IPointProvider humanPosition, float maxPickUpDistance)
     {
@@ -33,7 +35,12 @@ public class EntityItemHolderHandler : ITogglable, IItemHolderHandler
         if (!collider.TryGetComponent(out IPickable item))
             return;
 
+        if (_itemInHand != null)
+            Drop();
+
         _entityItemHolder.PickUpItem(item);
+
+        _itemInHand = item;
     }
     public void Drop()
     {
@@ -41,5 +48,7 @@ public class EntityItemHolderHandler : ITogglable, IItemHolderHandler
             return;
 
         _entityItemHolder.DropItemInHand();
+
+        _itemInHand = null;
     }
 }

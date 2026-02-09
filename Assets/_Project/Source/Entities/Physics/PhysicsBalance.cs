@@ -1,36 +1,37 @@
 using System;
 using UnityEngine;
+using VContainer.Unity;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PhysicsBalance : MonoBehaviour, ITargetPossessing
+public class PhysicsBalance : ITogglable, ITargetPossessing, IFixedTickable
 {
-    [SerializeField, Range(0f, 1f)] private float _force;
+    private readonly float _force;
+    private readonly Rigidbody2D _rigidbody2D;
 
-    [SerializeReference, InterfaceImplementation] private IPointProvider _defaultPointProvider;
+    private readonly IPointProvider _defaultPointProvider;
     private IPointProvider _targetPoint;
 
-    private Rigidbody2D _rigidbody2D;
-    [field: SerializeField] public float AdditionalAngle { get; set; }
-    private void Awake()
+    public float AdditionalAngle { get; set; }
+    public bool Enabled { get; set; }
+    public PhysicsBalance(Rigidbody2D rigidbody2D, float force, IPointProvider defaultPointProvider = null)
     {
-        _rigidbody2D = GetComponent<Rigidbody2D>();
+        _rigidbody2D = rigidbody2D;
+        _force = force;
+        _defaultPointProvider = defaultPointProvider;
 
         SetTarget(_defaultPointProvider);
     }
-    public void SetTarget(IPointProvider targetProvider)
-    {
-        _targetPoint = targetProvider;
-    }
-    public void ResetTarget()
-    {
-        _targetPoint = _defaultPointProvider;
-    }
-    private void FixedUpdate()
+    public void SetTarget(IPointProvider targetProvider) => _targetPoint = targetProvider;
+    public void ResetTarget() => _targetPoint = _defaultPointProvider;
+    public void Relax() => _targetPoint = null;
+    public void FixedTick()
     {
         LookAtTarget();
     }
     private void LookAtTarget()
     {
+        if (!Enabled)
+            return;
         if (!_targetPoint.TryGetPointSafe(out Vector2 point))
             return;
 

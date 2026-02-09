@@ -3,7 +3,6 @@ using UnityEngine;
 public class EntityItemHolder : ITogglable, IItemHolder
 {
     private readonly IHand[] _entityHands;
-    private IPickable _itemInHand;
     public bool Enabled { get; set; }
     public EntityItemHolder(IHand[] entityHands)
     {
@@ -13,10 +12,6 @@ public class EntityItemHolder : ITogglable, IItemHolder
     {
         if (!Enabled)
             return;
-        if (item == null)
-            return;
-        if (_itemInHand != null)
-            DropItemInHand();
 
         HingeJoint2D[] holders = item.Holders;
 
@@ -24,17 +19,13 @@ public class EntityItemHolder : ITogglable, IItemHolder
 
         for (int connection = 0; connection < connections; connection++)
             _entityHands[connection].Connect(holders[connection]);
-
-        _itemInHand = item;
     }
     public void DropItemInHand()
     {
-        if (_itemInHand == null)
+        if (!Enabled)
             return;
 
         foreach (IHand hand in _entityHands)
             hand.Disconnect();
-
-        _itemInHand = null;
     }
 }

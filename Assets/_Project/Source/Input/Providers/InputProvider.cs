@@ -3,15 +3,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using VContainer.Unity;
 
-public class InputProvider : IInputProvider, ILateTickable, IStartable, IDisposable
+public class InputProvider : IInputProvider, ITickable
 {
     private readonly GameInputAction _controls;
     private readonly GameInputAction.PlayerActions _playerActions;
-    public InputProvider(GameInputAction controls)
-    {
-        _controls = controls;
-        _playerActions = _controls.Player;
-    }
     public float HorizontalMovement { get; private set; }
     public float VerticalMovement { get; private set; }
     public bool IsDialogueInteract { get; private set; }
@@ -20,44 +15,21 @@ public class InputProvider : IInputProvider, ILateTickable, IStartable, IDisposa
     public Vector2 MousePosition { get; private set; }
     public bool IsAttacking { get; private set; }
     public bool IsPickingUp { get; private set; }
-    public void Start()
+    public InputProvider(GameInputAction controls)
     {
-        _playerActions.Enable();
-
-        _playerActions.VerticalMovement.performed += OnVerticalChange;
-        _playerActions.VerticalMovement.canceled += OnVerticalChange;
-        _playerActions.HorizontalMovement.performed += OnHorizontalChange;
-        _playerActions.HorizontalMovement.canceled += OnHorizontalChange;
-
-        _playerActions.LookPositionOnScreen.performed += OnMousePositionChange;
-        _playerActions.LookPositionOnScreen.canceled += OnMousePositionChange;
-
-        _playerActions.Attack.performed += callbackContext => IsAttacking = true;
-        _playerActions.Attack.canceled += callbackContext => IsAttacking = false;
-
-        _playerActions.PickUp.performed += callbackContext => IsPickingUp = true;
-        _playerActions.Drop.performed += callbackContext => IsDroppingItem = true;
-        _playerActions.DialogueInteract.performed += callbackContext => IsDialogueInteract = true;
+        _controls = controls;
+        _playerActions = _controls.Player;
     }
-    public void Dispose()
+    public void Tick()
     {
-        _playerActions.VerticalMovement.performed -= OnVerticalChange;
-        _playerActions.VerticalMovement.canceled -= OnVerticalChange;
-        _playerActions.HorizontalMovement.performed -= OnHorizontalChange;
-        _playerActions.HorizontalMovement.canceled -= OnHorizontalChange;
+        HorizontalMovement = _playerActions.HorizontalMovement.ReadValue<float>();
+        VerticalMovement = _playerActions.VerticalMovement.ReadValue<float>();
 
-        _playerActions.LookPositionOnScreen.performed -= OnMousePositionChange;
-        _playerActions.LookPositionOnScreen.canceled -= OnMousePositionChange;
+        MousePosition = _playerActions.LookPositionOnScreen.ReadValue<Vector2>();
+        IsAttacking = _playerActions.Attack.IsPressed();
 
-        _playerActions.Disable();
-    }
-    private void OnVerticalChange(InputAction.CallbackContext callbackContext) => VerticalMovement = callbackContext.ReadValue<float>();
-    private void OnHorizontalChange(InputAction.CallbackContext callbackContext) => HorizontalMovement = callbackContext.ReadValue<float>();
-    private void OnMousePositionChange(InputAction.CallbackContext callbackContext) => MousePosition = callbackContext.ReadValue<Vector2>();
-    public void LateTick()
-    {
-        IsPickingUp = false;
-        IsDroppingItem = false;
-        IsDialogueInteract = false;
+        IsPickingUp = _playerActions.PickUp.WasPressedThisFrame();
+        IsDroppingItem = _playerActions.Drop.WasPressedThisFrame();
+        IsDialogueInteract = _playerActions.DialogueInteract.WasPressedThisFrame();
     }
 }
