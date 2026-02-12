@@ -1,23 +1,21 @@
-using System;
 using UnityEngine;
 using VContainer.Unity;
 
-[RequireComponent(typeof(Rigidbody2D))]
-public class PhysicsBalance : ITogglable, ITargetPossessing, IFixedTickable
+public class PhysicsBalancer : ITogglable, ITargetPossessing, IFixedTickable
 {
-    private readonly float _force;
-    private readonly Rigidbody2D _rigidbody2D;
+    private readonly IPhysicsBody _physicsBody;
+    private readonly IPhysicsBalancerCalculator _physicsBalancerCalculator;
 
     private readonly IPointProvider _defaultPointProvider;
     private IPointProvider _targetPoint;
 
     public float AdditionalAngle { get; set; }
     public bool Enabled { get; set; }
-    public PhysicsBalance(Rigidbody2D rigidbody2D, float force, IPointProvider defaultPointProvider = null)
+    public PhysicsBalancer(IPhysicsBody physics, IPhysicsBalancerCalculator physicsBalancerCalculator, IPointProvider defaultPointProvider = null)
     {
-        _rigidbody2D = rigidbody2D;
-        _force = force;
+        _physicsBody = physics;
         _defaultPointProvider = defaultPointProvider;
+        _physicsBalancerCalculator = physicsBalancerCalculator;
 
         SetTarget(_defaultPointProvider);
     }
@@ -35,8 +33,8 @@ public class PhysicsBalance : ITogglable, ITargetPossessing, IFixedTickable
         if (!_targetPoint.TryGetPointSafe(out Vector2 point))
             return;
 
-        float targetAngle = point.GetAngle() + AdditionalAngle;
+        float torque = _physicsBalancerCalculator.CalculateTorque(_physicsBody.AngularVelocity, _physicsBody.Rotation, point.GetAngle() + AdditionalAngle);
 
-        _rigidbody2D.MoveRotation(Mathf.LerpAngle(_rigidbody2D.rotation, targetAngle, _force));
+        _physicsBody.AddTorque(torque, ForceMode2D.Force);
     }
 }

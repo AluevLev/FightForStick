@@ -7,13 +7,22 @@ public class PlayerLifetimeScope : LifetimeScope
     [Header("Settings")]
     [SerializeField] private GroundCheckSettings _groundCheckSettings;
     [SerializeField] private MovementSettings _movementSettings;
+    [Header("Ground Checker")]
+    [SerializeField] private Transform _groundCheck;
     [Header("Components")]
     [SerializeField] private Rigidbody2D _pushBody;
     [SerializeField] private Animator _animator;
-    [Header("Ground Checker")]
-    [SerializeField] private Transform _groundCheck;
-    [Header("Body Parts")]
+    [Header("Hands")]
     [SerializeField] private Rigidbody2D[] _hands;
+
+    [Header("Body parts settings:")]
+    [Header("Head")]
+    [SerializeField] private Rigidbody2D _headRigidbody2D;
+    [SerializeReference, InterfaceImplementation] private IPointProvider _headDefaultTarget;
+    [SerializeField] private float _stiffness;
+    [SerializeField] private float _damping;
+
+    
     protected override void Configure(IContainerBuilder builder)
     {
         RegisterSettings(builder);
@@ -45,7 +54,7 @@ public class PlayerLifetimeScope : LifetimeScope
         }, Lifetime.Scoped);
 
         builder.Register<IMovementCalculator, EntityMovementCalculator>(Lifetime.Scoped);
-        builder.Register<IMotor, EntityMotor>(Lifetime.Scoped).WithParameter(_pushBody);
+        builder.Register<IPhysicsBody, PhysicsMotor>(Lifetime.Scoped).WithParameter(_pushBody);
         builder.Register<IMotorHandler, EntityMotorHandler>(Lifetime.Scoped);
     }
     private void RegisterItemHolder(IContainerBuilder builder)
