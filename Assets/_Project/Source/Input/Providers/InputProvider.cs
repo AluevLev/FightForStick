@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using VContainer.Unity;
 
 public class InputProvider : IInputProvider, ITickable

@@ -7,7 +7,7 @@ public class EntityMotorHandler : ITogglable, IMotorHandler, IFixedTickable
     private readonly IAreaCaster _areaCaster;
     private readonly IMovementCalculator _movementCalculator;
     private readonly Trigger _jumpTrigger = new();
-    public bool Enabled { get; set; }
+    public bool Enabled { get; set; } = true;
     public float MovementDirection { get; set; }
     public EntityMotorHandler(IPhysicsBody entityPhysics, IAreaCaster groundCheck, IMovementCalculator movementCalculator)
     {
@@ -18,6 +18,8 @@ public class EntityMotorHandler : ITogglable, IMotorHandler, IFixedTickable
     public void Jump() => _jumpTrigger.Charge();
     public void FixedTick()
     {
+        _jumpTrigger.ProcessLife();
+
         MoveMotor();
     }
     public void MoveMotor()

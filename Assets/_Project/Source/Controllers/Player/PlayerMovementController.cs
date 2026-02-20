@@ -4,7 +4,7 @@ public class PlayerMovementController : ITogglable, IController, ITickable
 {
     private readonly IInputProvider _inputProvider;
     private readonly IMotorHandler _playerMotorHandler;
-    public bool Enabled { get; set; }
+    public bool Enabled { get; set; } = true;
     public PlayerMovementController(IMotorHandler entityMotorHandler, IInputProvider inputProvider)
     {
         _playerMotorHandler = entityMotorHandler;

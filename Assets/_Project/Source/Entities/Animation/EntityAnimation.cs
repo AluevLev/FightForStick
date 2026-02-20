@@ -6,7 +6,7 @@ public class EntityAnimation : ITogglable, IAnimation, IFixedTickable
     private static readonly int _movementFloat = Animator.StringToHash("Movement");
     private readonly IMotorHandler _movable;
     private readonly Animator _animator;
-    public bool Enabled { get; set; }
+    public bool Enabled { get; set; } = true;
     public EntityAnimation(IMotorHandler movable, Animator animator)
     {
         _movable = movable;

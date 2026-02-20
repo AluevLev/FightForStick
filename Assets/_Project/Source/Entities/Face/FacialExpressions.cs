@@ -1,28 +1,23 @@
-using System.Collections;
 using UnityEngine;
-public class FacialExpressions : MonoBehaviour
+public class FacialExpressions
 {
-    [SerializeField] private SpriteRenderer _eye1;
-    [SerializeField] private SpriteRenderer _eye2;
-    [SerializeField] private SpriteRenderer _mouth;
+    private readonly SpriteRenderer _eye1;
+    private readonly SpriteRenderer _eye2;
+    private readonly SpriteRenderer _mouth;
 
-    [SerializeField] private Animator _animator;
-    [SerializeField] private GrimaceLibrary _grimaceLibrary;
+    private readonly Animator _animator;
+    private readonly GrimaceLibrary _grimaceLibrary;
 
-    private void Start()
+    public FacialExpressions(SpriteRenderer eye1, SpriteRenderer eye2, SpriteRenderer mouth, Animator animator, GrimaceLibrary grimaceLibrary)
     {
-        StartCoroutine(ChangeFaceCoroutine());
+        _eye1 = eye1;
+        _eye2 = eye2;
+        _mouth = mouth;
+        _animator = animator;
+        _grimaceLibrary = grimaceLibrary;
     }
-    private IEnumerator ChangeFaceCoroutine()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(3f);
-
-            ChangeFace(_grimaceLibrary.GetFace());
-        }
-    }
-    private void ChangeFace(Face face)
+    public void ChangeFaceToRandom() => ChangeFace(_grimaceLibrary.GetFace());
+    public void ChangeFace(Face face)
     {
         _animator.SetTrigger("Pulse");
 

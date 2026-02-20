@@ -4,7 +4,7 @@ public class PlayerItemHolderController : ITogglable, IController, ITickable
 {
     private readonly IInputProvider _inputProvider;
     private readonly IItemHolderHandler _playerHolderHandler;
-    public bool Enabled { get; set; }
+    public bool Enabled { get; set; } = true;
     public PlayerItemHolderController(IInputProvider inputProvider, IItemHolderHandler playerHolderHandler)
     {
         _inputProvider = inputProvider;
