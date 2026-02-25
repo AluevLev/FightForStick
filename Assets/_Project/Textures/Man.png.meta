@@ -613,7 +613,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SadMouth
+      name: AstonishmentMouth
       rect:
         serializedVersion: 2
         x: 6
@@ -701,7 +701,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SadMout
+      name: SadMouth
       rect:
         serializedVersion: 2
         x: 30
@@ -716,7 +716,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6cfebd747ba73ad4f8e0255521809e13
+      spriteID: 9d28c10925808ad43a40a4980456ed0d
       internalID: 1236426864
       vertices: []
       indices: 
@@ -738,6 +738,7 @@ TextureImporter:
     nameFileIdTable:
       AngryEye1: -740540139
       AngryEye2: -2027451590
+      AstonishmentMouth: -246476734
       ClosedEye: 2059409492
       GhostBody: -2250128633291984448
       GhostHand: 1342992502
@@ -753,8 +754,8 @@ TextureImporter:
       OrdinaryMouth: -635156460
       SadEye1: 815444607
       SadEye2: 1215232334
-      SadMout: 1236426864
-      SadMouth: -246476734
+      SadMouth: 1236426864
+      SaddMouth: 1236426864
       SeriousEye: 83165674
       SkeletonBody: -785938945
       SkeletonFoot: -1085457484

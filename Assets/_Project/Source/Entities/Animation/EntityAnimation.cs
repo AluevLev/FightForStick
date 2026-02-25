@@ -1,16 +1,14 @@
-using UnityEngine;
 using VContainer.Unity;
 
 public class EntityAnimation : ITogglable, IAnimation, IFixedTickable
 {
-    private static readonly int _movementFloat = Animator.StringToHash("Movement");
+    private readonly AnimatorFloat _movementFloat;
     private readonly IMotorHandler _movable;
-    private readonly Animator _animator;
     public bool Enabled { get; set; } = true;
-    public EntityAnimation(IMotorHandler movable, Animator animator)
+    public EntityAnimation(IMotorHandler movable, AnimatorFloat movementFloat)
     {
         _movable = movable;
-        _animator = animator;
+        _movementFloat = movementFloat;
     }
     public void FixedTick()
     {
@@ -21,6 +19,6 @@ public class EntityAnimation : ITogglable, IAnimation, IFixedTickable
         if (!Enabled)
             return;
 
-        _animator.SetFloat(_movementFloat, _movable.MovementDirection);
+        _movementFloat.Value = _movable.MovementDirection;
     }
 }
