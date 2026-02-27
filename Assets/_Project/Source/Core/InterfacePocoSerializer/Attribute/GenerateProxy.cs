@@ -1,4 +1,4 @@
 using System;
 
-[AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
+[AttributeUsage(AttributeTargets.Constructor)]
 public class GenerateProxy : Attribute { }

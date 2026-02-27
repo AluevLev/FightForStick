@@ -44,6 +44,7 @@ public class InterfaceImplementationDrawer : PropertyDrawer
                 if (!child.NextVisible(false))
                     break;
             }
+
             EditorGUI.indentLevel--;
         }
 
