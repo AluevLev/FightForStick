@@ -3,9 +3,10 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class DirectionPointProviderProxy
+public class DirectionPointProviderProxy : IPointProviderProxy
 {
-    [SerializeReference, InterfaceImplementation] private IPointProvider _from;
-    [SerializeReference, InterfaceImplementation] private IPointProvider _to;
-    public DirectionPointProvider ToPoco() => new(_from, _to);
+    [SerializeReference, InterfaceImplementation] private IPointProviderProxy _from;
+    [SerializeReference, InterfaceImplementation] private IPointProviderProxy _to;
+
+    public IPointProvider ToPoco() => new DirectionPointProvider(_from.ToPoco(), _to.ToPoco());
 }

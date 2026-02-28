@@ -3,6 +3,7 @@ using UnityEngine;
 public class AnimatorFieldName
 {
     private readonly int _hash;
+	[GenerateProxy]
     public AnimatorFieldName(string name)
 	{
 		_hash = Animator.StringToHash(name);

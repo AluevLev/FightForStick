@@ -3,6 +3,7 @@ using UnityEngine;
 public class TransformPointProvider : IPointProvider
 {
     private readonly Transform _transform;
+    [GenerateProxy(typeof(IPointProvider))]
     public TransformPointProvider(Transform transform)
     {
         _transform = transform;

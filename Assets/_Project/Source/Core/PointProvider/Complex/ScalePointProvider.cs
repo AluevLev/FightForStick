@@ -4,7 +4,8 @@ public class ScalePointProvider : IPointProvider
 {
 	private readonly IPointProvider _pointProvider;
 	private readonly float _scale;
-	public ScalePointProvider(IPointProvider pointProvider, float scale)
+    [GenerateProxy(typeof(IPointProvider))]
+    public ScalePointProvider(IPointProvider pointProvider, float scale)
 	{
 		_pointProvider = pointProvider;
 		_scale = scale;

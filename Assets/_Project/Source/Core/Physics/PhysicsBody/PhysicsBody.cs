@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PhysicsBody : ITogglable, IPhysicsBody
+public class PhysicsBody : ITogglable, IRigidbody2D
 {
     private readonly Rigidbody2D _rigidbody2D;
     public Vector2 Position

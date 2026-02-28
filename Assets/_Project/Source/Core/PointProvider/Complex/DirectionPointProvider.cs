@@ -4,7 +4,7 @@ public class DirectionPointProvider : IPointProvider
 {
     private readonly IPointProvider _from;
     private readonly IPointProvider _to;
-    [GenerateProxy]
+    [GenerateProxy(typeof(IPointProvider))]
     public DirectionPointProvider(IPointProvider from, IPointProvider to)
     {
         _from = from;

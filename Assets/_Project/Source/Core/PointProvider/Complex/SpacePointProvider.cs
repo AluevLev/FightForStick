@@ -4,6 +4,7 @@ public class SpacePointProvider : IPointProvider
 {
     private readonly IPointProvider _pointProvider;
     private readonly Transform _space;
+    [GenerateProxy(typeof(IPointProvider))]
     public SpacePointProvider(IPointProvider pointProvider, Transform space)
     {
         _space = space;

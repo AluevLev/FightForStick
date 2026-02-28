@@ -2,10 +2,12 @@ using UnityEngine;
 using UnityEditor;
 using System;
 using System.Linq;
+using System.Collections.Generic;
 
 [CustomPropertyDrawer(typeof(InterfaceImplementation))]
 public class InterfaceImplementationDrawer : PropertyDrawer
 {
+    private readonly int spacing = 2;
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
         if (property.managedReferenceFullTypename == null)
@@ -29,18 +31,21 @@ public class InterfaceImplementationDrawer : PropertyDrawer
 
             SerializedProperty child = property.Copy();
             SerializedProperty endProperty = child.GetEndProperty();
+
             child.NextVisible(true);
 
-            float currentY = position.y + EditorGUIUtility.singleLineHeight + 2;
+            float currentY = position.y + EditorGUIUtility.singleLineHeight + spacing;
 
             while (!SerializedProperty.EqualContents(child, endProperty))
             {
                 float height = EditorGUI.GetPropertyHeight(child, true);
+
                 Rect childRect = new(position.x, currentY, position.width, height);
 
                 EditorGUI.PropertyField(childRect, child, true);
 
-                currentY += height + 2;
+                currentY += height + spacing;
+
                 if (!child.NextVisible(false))
                     break;
             }
@@ -60,11 +65,12 @@ public class InterfaceImplementationDrawer : PropertyDrawer
 
         SerializedProperty child = property.Copy();
         SerializedProperty endProperty = child.GetEndProperty();
+
         child.NextVisible(true);
 
         while (!SerializedProperty.EqualContents(child, endProperty))
         {
-            height += EditorGUI.GetPropertyHeight(child, true) + 2;
+            height += EditorGUI.GetPropertyHeight(child, true) + spacing;
             if (!child.NextVisible(false))
                 break;
         }
@@ -75,19 +81,25 @@ public class InterfaceImplementationDrawer : PropertyDrawer
     private void ShowTypeMenu(SerializedProperty property)
     {
         Type targetType = fieldInfo.FieldType;
-        if (targetType.IsGenericType) targetType = targetType.GetGenericArguments()[0];
+
+        if (targetType.IsGenericType)
+            targetType = targetType.GetGenericArguments()[0];
 
         GenericMenu menu = new();
-        var types = AppDomain.CurrentDomain.GetAssemblies()
-            .SelectMany(s => s.GetTypes())
-            .Where(p => targetType.IsAssignableFrom(p) && p.IsClass && !p.IsAbstract);
+
+        IEnumerable<Type> types = AppDomain.CurrentDomain.GetAssemblies()
+            .SelectMany(assembly => assembly.GetTypes())
+            .Where(Type => targetType.IsAssignableFrom(Type) && Type.IsClass && !Type.IsAbstract);
 
         string path = property.propertyPath;
-        var targets = property.serializedObject.targetObjects;
+
+        UnityEngine.Object[] targets = property.serializedObject.targetObjects;
 
         menu.AddItem(new GUIContent("None"), false, () => Apply(targets, path, null));
-        foreach (var t in types)
-            menu.AddItem(new GUIContent(t.Name), false, () => Apply(targets, path, Activator.CreateInstance(t)));
+
+        foreach (Type type in types)
+            menu.AddItem(new GUIContent(type.Name), false, () => Apply(targets, path, Activator.CreateInstance(type)));
+
         menu.ShowAsContext();
     }
 
@@ -95,9 +107,10 @@ public class InterfaceImplementationDrawer : PropertyDrawer
     {
         Undo.RecordObjects(targets, "Change Type");
 
-        foreach (var obj in targets)
+        foreach (UnityEngine.Object obj in targets)
         {
             SerializedObject so = new(obj);
+
             so.FindProperty(path).managedReferenceValue = val;
             so.ApplyModifiedProperties();
         }

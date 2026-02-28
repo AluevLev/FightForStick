@@ -3,6 +3,7 @@ using UnityEngine;
 public sealed class Vector2PointProvider : IPointProvider
 {
     private readonly Vector2 _vector2;
+    [GenerateProxy(typeof(IPointProvider))]
     public Vector2PointProvider(Vector2 vector2)
     {
         _vector2 = vector2;

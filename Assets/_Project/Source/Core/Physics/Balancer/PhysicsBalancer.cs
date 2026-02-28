@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PhysicsBalancer : ITogglable, ITargetPossessing, IPhysicsBalancer
 {
-    private readonly IPhysicsBody _physicsBody;
+    private readonly IRigidbody2D _physicsBody;
     private readonly IPhysicsBalancerCalculator _physicsBalancerCalculator;
 
     private readonly IPointProvider _defaultPointProvider;
@@ -10,7 +10,7 @@ public class PhysicsBalancer : ITogglable, ITargetPossessing, IPhysicsBalancer
 
     public float AdditionalAngle { get; set; }
     public bool Enabled { get; set; } = true;
-    public PhysicsBalancer(IPhysicsBody physics, IPhysicsBalancerCalculator physicsBalancerCalculator, IPointProvider defaultPointProvider = null)
+    public PhysicsBalancer(IRigidbody2D physics, IPhysicsBalancerCalculator physicsBalancerCalculator, IPointProvider defaultPointProvider = null)
     {
         _physicsBody = physics;
         _defaultPointProvider = defaultPointProvider;

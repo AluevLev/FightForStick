@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface IPhysicsBody
+public interface IRigidbody2D
 {
     Vector2 LinearVelocity { get; set; }
     float AngularVelocity { get; set; }

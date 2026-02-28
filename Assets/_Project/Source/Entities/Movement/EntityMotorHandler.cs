@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class EntityMotorHandler : ITogglable, IMotorHandler, IFixedTickable
 {
-    private readonly IPhysicsBody _entityPhysics;
+    private readonly IRigidbody2D _entityPhysics;
     private readonly IAreaCaster _areaCaster;
     private readonly IMovementCalculator _movementCalculator;
     private readonly Trigger _jumpTrigger = new();
     public bool Enabled { get; set; } = true;
     public float MovementDirection { get; set; }
-    public EntityMotorHandler(IPhysicsBody entityPhysics, IAreaCaster groundCheck, IMovementCalculator movementCalculator)
+    public EntityMotorHandler(IRigidbody2D entityPhysics, IAreaCaster groundCheck, IMovementCalculator movementCalculator)
     {
         _entityPhysics = entityPhysics;
         _areaCaster = groundCheck;
