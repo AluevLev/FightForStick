@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PhysicsBody : ITogglable, IRigidbody2D
+public class StandartRigidBody2D : ITogglable, IRigidbody2D
 {
     private readonly Rigidbody2D _rigidbody2D;
     public Vector2 Position
@@ -48,7 +48,7 @@ public class PhysicsBody : ITogglable, IRigidbody2D
         }
     }
     public bool Enabled { get; set; } = true;
-    public PhysicsBody(Rigidbody2D pushBody)
+    public StandartRigidBody2D(Rigidbody2D pushBody)
     {
         _rigidbody2D = pushBody;
     }

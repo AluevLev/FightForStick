@@ -5,7 +5,7 @@ using UnityEngine;
 [Serializable]
 public class TransformPointProviderProxy : IPointProviderProxy
 {
-    [SerializeField] private Transform _transform;
+    [SerializeReference, InterfaceImplementation] private ITransform _transform;
 
     public IPointProvider ToPoco() => new TransformPointProvider(_transform);
 }

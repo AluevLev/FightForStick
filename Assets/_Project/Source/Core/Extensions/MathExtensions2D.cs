@@ -2,15 +2,15 @@ using UnityEngine;
 
 public static class MathExtensions2D
 {
-    public static Vector2 Rotate(this Vector2 vector, float angle)
+    public static Vector2 Rotate(this Vector2 vector2, float angle)
     {
         float rad = Mathf.Deg2Rad * angle;
         
         float sin = Mathf.Sin(rad);
         float cos = Mathf.Cos(rad);
 
-        float x = vector.x;
-        float y = vector.y;
+        float x = vector2.x;
+        float y = vector2.y;
 
         return new(x * cos - y * sin, x * sin + y * cos);
     }

@@ -2,17 +2,17 @@ using UnityEngine;
 
 public class TransformPointProvider : IPointProvider
 {
-    private readonly Transform _transform;
+    private readonly ITransform _transform;
     [GenerateProxy(typeof(IPointProvider))]
-    public TransformPointProvider(Transform transform)
+    public TransformPointProvider(ITransform transform)
     {
         _transform = transform;
     }
     public bool TryGetPoint(out Vector2 point)
     {
-        bool hasValue = _transform;
+        bool hasValue = _transform != null;
 
-        point = hasValue ? _transform.position : default;
+        point = hasValue ? _transform.Position : default;
 
         return hasValue;
     }

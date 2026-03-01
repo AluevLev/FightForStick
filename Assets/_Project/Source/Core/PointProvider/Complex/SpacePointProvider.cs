@@ -12,9 +12,9 @@ public class SpacePointProvider : IPointProvider
     }
     public bool TryGetPoint(out Vector2 point)
     {
-        if (_space && _pointProvider.TryGetPointSafe(out Vector2 startPoint))
+        if (_space != null && _pointProvider.TryGetPointSafe(out Vector2 startPoint))
         {
-            point = _space.TransformDirection(startPoint).normalized;
+            point = _space.TransformDirection(startPoint);
             return true;
         }
 

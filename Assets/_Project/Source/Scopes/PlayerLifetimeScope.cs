@@ -55,7 +55,7 @@ public class PlayerLifetimeScope : LifetimeScope
         {
             GroundCheckSettings groundCheckSettings = container.Resolve<GroundCheckSettings>();
 
-            IPointProvider position = new TransformPointProvider(_groundCheck);
+            IPointProvider position = new TransformPointProvider(new StandartTransform(_groundCheck));
             IPointProvider angleDirection = new SpacePointProvider(new Vector2PointProvider(Vector2.up), _groundCheck);
 
             return new BoxCaster(position, groundCheckSettings.GroundCheckSize, angleDirection, groundCheckSettings.ContactFilter2D);
@@ -63,7 +63,7 @@ public class PlayerLifetimeScope : LifetimeScope
         }, Lifetime.Scoped);
 
         builder.Register<IMovementCalculator, EntityMovementCalculator>(Lifetime.Scoped);
-        builder.Register<IRigidbody2D, PhysicsBody>(Lifetime.Scoped).WithParameter(_pushBody);
+        builder.Register<IRigidbody2D, StandartRigidBody2D>(Lifetime.Scoped).WithParameter(_pushBody);
         builder.Register<IMotorHandler, EntityMotorHandler>(Lifetime.Scoped);
     }
     private void RegisterItemHolder(IContainerBuilder builder)
