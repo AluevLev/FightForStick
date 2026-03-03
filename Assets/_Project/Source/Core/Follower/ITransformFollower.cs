@@ -1,4 +1,8 @@
-public interface ITransformFollower
+namespace February.Space.Follow
 {
-	void Follow();
+    public interface ITransformFollower
+    {
+        void Follow();
+    }
+
 }

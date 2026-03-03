@@ -17,6 +17,6 @@ public class GameLifetimeScope : LifetimeScope
         builder.Register<GameInputAction>(Lifetime.Singleton);
         
         builder.RegisterEntryPoint<InputProvider>(Lifetime.Singleton);
-        builder.RegisterEntryPoint<CursorPointProvider>(Lifetime.Singleton).AsSelf();
+        //builder.RegisterEntryPoint<CursorPointProvider>(Lifetime.Singleton).AsSelf();
     }
 }

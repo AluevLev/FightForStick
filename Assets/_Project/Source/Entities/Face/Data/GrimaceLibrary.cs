@@ -1,4 +1,6 @@
 using UnityEngine;
+using February;
+using February.Random;
 
 [CreateAssetMenu(fileName = "Grimaces", menuName = "Face/Grimaces")]
 public class GrimaceLibrary : ScriptableObject
@@ -26,7 +28,7 @@ public class GrimaceLibrary : ScriptableObject
     private T GetFacePart<T>(T[] array, int index) => index switch
     {
         FacePart.Empty => default,
-        FacePart.Random => array.RandomElement(),
+        FacePart.Random => GlobalRandom.InArray(array),
         _ => array[Mathf.Clamp(index, 0, array.Length - 1)]
     };
 }

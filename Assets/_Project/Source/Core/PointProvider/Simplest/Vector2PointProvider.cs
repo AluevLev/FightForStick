@@ -1,20 +1,24 @@
-using UnityEngine;
-
-public sealed class Vector2PointProvider : IPointProvider
+namespace February.Space.PointProvider
 {
-    private readonly Vector2 _vector2;
-    [GenerateProxy(typeof(IPointProvider))]
-    public Vector2PointProvider(Vector2 vector2)
+    using February.Proxy;
+    using February.Space;
+
+    public sealed class Vector2PointProvider : IPointProvider
     {
-        _vector2 = vector2;
-    }
-    public Vector2PointProvider(float x, float y)
-    {
-        _vector2 = new(x, y);
-    }
-    public bool TryGetPoint(out Vector2 point)
-    {
-        point = _vector2;
-        return true;
+        private readonly UniVector2 _vector2;
+        [GenerateProxy(typeof(IPointProvider))]
+        public Vector2PointProvider(UniVector2 vector2)
+        {
+            _vector2 = vector2;
+        }
+        public Vector2PointProvider(float x, float y)
+        {
+            _vector2 = new(x, y);
+        }
+        public bool TryGetPoint(out UniVector2 point)
+        {
+            point = _vector2;
+            return true;
+        }
     }
 }

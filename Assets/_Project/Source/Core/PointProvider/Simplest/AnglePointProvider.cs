@@ -1,16 +1,19 @@
-using UnityEngine;
-
-public class AnglePointProvider : IPointProvider
+namespace February.Space.PointProvider
 {
-    private readonly Vector2 _vectorAngle;
-    [GenerateProxy(typeof(IPointProvider))]
-    public AnglePointProvider(float angle)
+    using February.Proxy;
+    using February.Space;
+    public class AnglePointProvider : IPointProvider
     {
-        _vectorAngle = angle.GetVector();
-    }
-    public bool TryGetPoint(out Vector2 point)
-    {
-        point = _vectorAngle;
-        return true;
+        private readonly UniVector2 _vectorAngle;
+        [GenerateProxy(typeof(IPointProvider))]
+        public AnglePointProvider(float angle)
+        {
+            _vectorAngle = angle.GetVector();
+        }
+        public bool TryGetPoint(out UniVector2 point)
+        {
+            point = _vectorAngle;
+            return true;
+        }
     }
 }

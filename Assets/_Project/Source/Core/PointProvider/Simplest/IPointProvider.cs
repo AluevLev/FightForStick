@@ -1,10 +1,14 @@
-using UnityEngine;
-
-[GenerateInterfaceProxy]
-public interface IPointProvider
+namespace February.Space.PointProvider
 {
-    /// <summary>
-    /// ATTENTION: Use .TryGetPointSafe(), if you are unsure whether IPointProvider is null.
-    /// </summary>
-    bool TryGetPoint(out Vector2 point);
+    using February.Proxy;
+    using February.Space;
+
+    [GenerateInterfaceProxy]
+    public interface IPointProvider
+    {
+        /// <summary>
+        /// ATTENTION: Use .TryGetPointSafe(), if you are unsure whether IPointProvider is null.
+        /// </summary>
+        bool TryGetPoint(out UniVector2 point);
+    }
 }

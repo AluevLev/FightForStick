@@ -1,7 +1,11 @@
-using UnityEngine;
-
-public interface ITransform
+namespace February.Components
 {
-    Vector2 Position { get; set; }
-    Vector2 TransformDirection(Vector2 vector2);
+    using February.Space;
+
+    public interface ITransform
+    {
+        UniVector2 Position { get; set; }
+        UniVector2 LocalPosition { get; set; }
+        UniVector2 TransformDirection(UniVector2 vector2);
+    }
 }

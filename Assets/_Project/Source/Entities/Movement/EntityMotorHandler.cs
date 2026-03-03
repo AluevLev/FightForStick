@@ -1,5 +1,7 @@
 using VContainer.Unity;
-using UnityEngine;
+using February;
+using February.Components;
+using February.Adaptation;
 
 public class EntityMotorHandler : ITogglable, IMotorHandler, IFixedTickable
 {
@@ -27,9 +29,9 @@ public class EntityMotorHandler : ITogglable, IMotorHandler, IFixedTickable
         if (!Enabled)
             return;
 
-        _entityPhysics.AddForce(_movementCalculator.CalculateMovementVector(MovementDirection), ForceMode2D.Force);
+        _entityPhysics.AddForce(_movementCalculator.CalculateMovementVector(MovementDirection).ToUniversal(), UniversalForceMode2D.Force);
 
         if (_jumpTrigger.Active && _areaCaster.Cast())
-            _entityPhysics.AddForce(_movementCalculator.CalculateJumpVector(MovementDirection), ForceMode2D.Force);
+            _entityPhysics.AddForce(_movementCalculator.CalculateJumpVector(MovementDirection).ToUniversal(), UniversalForceMode2D.Force);
     }
 }

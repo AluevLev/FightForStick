@@ -1,4 +1,7 @@
-using System;
+namespace February.Proxy
+{
+    using System;
 
-[AttributeUsage(AttributeTargets.Interface)]
-public class GenerateInterfaceProxy : Attribute { }
+    [AttributeUsage(AttributeTargets.Interface)]
+    public class GenerateInterfaceProxy : Attribute { }
+}

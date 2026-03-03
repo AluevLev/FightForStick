@@ -9,7 +9,7 @@ public class PlayerLifetimeScope : LifetimeScope
     [SerializeField] private MovementSettings _movementSettings;
     [SerializeField] private PickUpSettings _pickUpSettings;
     [SerializeField] private GrimaceLibrary _grimaceLibrary;
-    [SerializeField] private AnimatorFieldNameProxy _pulseFieldName;
+    //[SerializeField] private AnimatorFieldNameProxy _pulseFieldName;
 
     [Header("Scene Components")]
     [SerializeField] private Transform _groundCheck;
@@ -51,12 +51,13 @@ public class PlayerLifetimeScope : LifetimeScope
     }
     private void RegisterMovement(IContainerBuilder builder)
     {
+        /*
         builder.Register<IAreaCaster>(container =>
         {
             GroundCheckSettings groundCheckSettings = container.Resolve<GroundCheckSettings>();
 
             IPointProvider position = new TransformPointProvider(new StandartTransform(_groundCheck));
-            IPointProvider angleDirection = new SpacePointProvider(new Vector2PointProvider(Vector2.up), _groundCheck);
+            IPointProvider angleDirection = new SpacePointProvider(new Vector2PointProvider(UniversalVector2.Up), new StandartTransform(_groundCheck));
 
             return new BoxCaster(position, groundCheckSettings.GroundCheckSize, angleDirection, groundCheckSettings.ContactFilter2D);
 
@@ -65,6 +66,7 @@ public class PlayerLifetimeScope : LifetimeScope
         builder.Register<IMovementCalculator, EntityMovementCalculator>(Lifetime.Scoped);
         builder.Register<IRigidbody2D, StandartRigidBody2D>(Lifetime.Scoped).WithParameter(_pushBody);
         builder.Register<IMotorHandler, EntityMotorHandler>(Lifetime.Scoped);
+        */
     }
     private void RegisterItemHolder(IContainerBuilder builder)
     {

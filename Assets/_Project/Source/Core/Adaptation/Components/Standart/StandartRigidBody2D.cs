@@ -1,83 +1,89 @@
-using UnityEngine;
-
-public class StandartRigidBody2D : ITogglable, IRigidbody2D
+namespace February.Components.UnityStandart
 {
-    private readonly Rigidbody2D _rigidbody2D;
-    public Vector2 Position
+    using UnityEngine;
+    using February.Space;
+    using February.Components;
+    using February.Adaptation;
+
+    public class StandartRigidBody2D : ITogglable, IRigidbody2D
     {
-        get => _rigidbody2D.position;
-        set
+        private readonly Rigidbody2D _rigidbody2D;
+        public UniVector2 Position
+        {
+            get => _rigidbody2D.position.ToUniversal();
+            set
+            {
+                if (!Enabled)
+                    return;
+
+                _rigidbody2D.position = value.ToUnity2D();
+            }
+        }
+        public float Rotation
+        {
+            get => _rigidbody2D.rotation;
+            set
+            {
+                if (!Enabled)
+                    return;
+
+                _rigidbody2D.rotation = value;
+            }
+        }
+        public UniVector2 LinearVelocity
+        {
+            get => _rigidbody2D.linearVelocity.ToUniversal();
+            set
+            {
+                if (!Enabled)
+                    return;
+
+                _rigidbody2D.linearVelocity = value.ToUnity2D();
+            }
+        }
+        public float AngularVelocity
+        {
+            get => _rigidbody2D.angularVelocity;
+            set
+            {
+                if (!Enabled)
+                    return;
+
+                _rigidbody2D.angularVelocity = value;
+            }
+        }
+        public bool Enabled { get; set; } = true;
+        public StandartRigidBody2D(Rigidbody2D pushBody)
+        {
+            _rigidbody2D = pushBody;
+        }
+        public void AddForce(UniVector2 force, UniversalForceMode2D forceMode)
         {
             if (!Enabled)
                 return;
 
-            _rigidbody2D.position = value;
+            _rigidbody2D.AddForce(force.ToUnity2D(), (ForceMode2D)forceMode);
         }
-    }
-    public float Rotation
-    {
-        get => _rigidbody2D.rotation;
-        set
+        public void AddTorque(float torque, UniversalForceMode2D forceMode)
         {
             if (!Enabled)
                 return;
 
-            _rigidbody2D.rotation = value;
+            _rigidbody2D.AddTorque(torque, (ForceMode2D)forceMode);
         }
-    }
-    public Vector2 LinearVelocity
-    {
-        get => _rigidbody2D.linearVelocity;
-        set
+        public void MovePosition(UniVector2 position)
         {
             if (!Enabled)
                 return;
 
-            _rigidbody2D.linearVelocity = value;
+            _rigidbody2D.MovePosition(position.ToUnity2D());
         }
-    }
-    public float AngularVelocity
-    {
-        get => _rigidbody2D.angularVelocity;
-        set
+        public void MoveRotation(float rotation)
         {
             if (!Enabled)
                 return;
 
-            _rigidbody2D.angularVelocity = value;
+            _rigidbody2D.MoveRotation(rotation);
         }
-    }
-    public bool Enabled { get; set; } = true;
-    public StandartRigidBody2D(Rigidbody2D pushBody)
-    {
-        _rigidbody2D = pushBody;
-    }
-    public void AddForce(Vector2 force, ForceMode2D forceMode)
-    {
-        if (!Enabled)
-            return;
-
-        _rigidbody2D.AddForce(force, forceMode);
-    }
-    public void AddTorque(float torque, ForceMode2D forceMode)
-    {
-        if (!Enabled)
-            return;
-
-        _rigidbody2D.AddTorque(torque, forceMode);
-    }
-    public void MovePosition(Vector2 position)
-    {
-        if (!Enabled)
-            return;
-
-        _rigidbody2D.MovePosition(position);
-    }
-    public void MoveRotation(float rotation)
-    {
-        if (!Enabled)
-            return;
-
-        _rigidbody2D.MoveRotation(rotation);
     }
 }

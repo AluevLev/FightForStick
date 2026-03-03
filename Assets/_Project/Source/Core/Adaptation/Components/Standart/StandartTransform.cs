@@ -1,13 +1,29 @@
-using UnityEngine;
-
-public class StandartTransform : ITogglable, ITransform
+namespace February.Components.UnityStandart
 {
-	private readonly Transform _transform;
-    public bool Enabled { get; set; } = true;
-    public StandartTransform(Transform transform)
+    using February;
+    using February.Adaptation;
+    using February.Components;
+    using February.Space;
+    using UnityEngine;
+
+    public class StandartTransform : ITogglable, ITransform
     {
-        _transform = transform;
+        private readonly Transform _transform;
+        public bool Enabled { get; set; } = true;
+        public StandartTransform(Transform transform)
+        {
+            _transform = transform;
+        }
+        public UniVector2 Position
+        {
+            get => _transform.position.ToUniversal();
+            set => _transform.position = value.ToUnity2D();
+        }
+        public UniVector2 LocalPosition
+        {
+            get => _transform.localPosition.ToUniversal();
+            set => _transform.localPosition = value.ToUnity2D();
+        }
+        public UniVector2 TransformDirection(UniVector2 vector2) => _transform.TransformDirection(vector2.ToUnity3D()).ToUniversal();
     }
-    public Vector2 Position { get; set; }
-    public Vector2 TransformDirection(Vector2 vector2) => _transform.TransformDirection(vector2);
 }

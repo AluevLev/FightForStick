@@ -1,19 +1,24 @@
-using UnityEngine;
-
-public class TransformPointProvider : IPointProvider
+namespace February.Space.PointProvider
 {
-    private readonly ITransform _transform;
-    [GenerateProxy(typeof(IPointProvider))]
-    public TransformPointProvider(ITransform transform)
-    {
-        _transform = transform;
-    }
-    public bool TryGetPoint(out Vector2 point)
-    {
-        bool hasValue = _transform != null;
+    using February.Proxy;
+    using February.Space;
+    using February.Components;
 
-        point = hasValue ? _transform.Position : default;
+    public class TransformPointProvider : IPointProvider
+    {
+        private readonly ITransform _transform;
+        [GenerateProxy(typeof(IPointProvider))]
+        public TransformPointProvider(ITransform transform)
+        {
+            _transform = transform;
+        }
+        public bool TryGetPoint(out UniVector2 point)
+        {
+            bool hasValue = _transform != null;
 
-        return hasValue;
+            point = hasValue ? _transform.Position : default;
+
+            return hasValue;
+        }
     }
 }

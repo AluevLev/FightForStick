@@ -1,7 +1,11 @@
-public interface IPhysicsBalancer
+namespace February.Physics
 {
-    void SetTarget(IPointProvider targetProvider);
-    void ResetTarget();
-    void Relax();
-    void LookAtTarget();
+    using February.Space.PointProvider;
+    public interface IPhysicsBalancer
+    {
+        void SetTarget(IPointProvider targetProvider);
+        void ResetTarget();
+        void Relax();
+        void LookAtTarget();
+    }
 }

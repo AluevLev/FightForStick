@@ -1,5 +1,8 @@
 using UnityEngine;
-
+using February;
+using February.Space;
+using February.Space.PointProvider;
+using February.Adaptation;
 public class EntityItemHolderHandler : ITogglable, IItemHolderHandler
 {
     private readonly IItemHolder _entityItemHolder;
@@ -21,16 +24,16 @@ public class EntityItemHolderHandler : ITogglable, IItemHolderHandler
     {
         if (!Enabled)
             return;
-        if (!_cursor.TryGetPointSafe(out Vector2 cursorPosition))
+        if (!_cursor.TryGetPointSafe(out UniVector2 cursorPosition))
             return;
         
-        Collider2D collider = Physics2D.OverlapPoint(cursorPosition);
+        Collider2D collider = Physics2D.OverlapPoint(cursorPosition.ToUnity2D());
 
         if (!collider)
             return;
-        if (!_humanPosition.TryGetPointSafe(out Vector2 entityPosition))
+        if (!_humanPosition.TryGetPointSafe(out UniVector2 entityPosition))
             return;
-        if (Vector2.Distance(collider.transform.position, entityPosition) >= _maxPickUpDistance)
+        if (Vector2.Distance(collider.transform.position, entityPosition.ToUnity2D()) >= _maxPickUpDistance)
             return;
         if (!collider.TryGetComponent(out IPickable item))
             return;

@@ -1,5 +1,4 @@
-using UnityEngine;
-
+using February.Space;
 public interface IInputProvider
 {
     float HorizontalMovement { get; }
@@ -7,7 +6,7 @@ public interface IInputProvider
     bool IsDialogueInteract { get; }
     bool IsDroppingItem { get; }
 
-    Vector2 MousePosition { get; }
+    UniVector2 MousePosition { get; }
     bool IsAttacking { get; }
     bool IsPickingUp { get; }
 }

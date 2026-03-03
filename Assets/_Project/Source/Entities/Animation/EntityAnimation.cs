@@ -1,4 +1,5 @@
 using VContainer.Unity;
+using February;
 
 public class EntityAnimation : ITogglable, IAnimation, IFixedTickable
 {

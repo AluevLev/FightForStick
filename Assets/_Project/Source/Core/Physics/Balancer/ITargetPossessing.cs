@@ -1,5 +1,9 @@
-public interface ITargetPossessing
+namespace February.Space.Follow
 {
-    void SetTarget(IPointProvider targetProvider);
-    void ResetTarget();
+    using February.Space.PointProvider;
+    public interface ITargetPossessing
+    {
+        void SetTarget(IPointProvider targetProvider);
+        void ResetTarget();
+    }
 }
