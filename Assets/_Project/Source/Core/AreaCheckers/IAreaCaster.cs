@@ -1,4 +1,4 @@
 public interface IAreaCaster
 {
-    bool Cast();
+    bool Check();
 }

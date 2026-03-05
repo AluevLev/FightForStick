@@ -1,5 +1,5 @@
 using UnityEngine;
-using February.Proxy;
+using IceFebruary.Proxy;
 
 public class AnimatorFieldName
 {

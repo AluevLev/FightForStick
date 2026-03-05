@@ -1,8 +1,7 @@
 using VContainer.Unity;
-using February;
-using February.Components;
-using February.Physics;
-using February.Components.UnityStandart;
+using IceFebruary;
+using IceFebruary.Components;
+using UnityIceFebruary.Components;
 public class RagdollCore : ITogglable, IRagdollCore, IFixedTickable
 {
     private readonly IPhysicsBalancer[] _balancers;
@@ -16,7 +15,7 @@ public class RagdollCore : ITogglable, IRagdollCore, IFixedTickable
             PhysicsLimbSettings physicsBalancer = settings[limb];
             PhysicsBalancerSettings physicsBalancerSettings = physicsBalancer.BalancerSettings;
 
-            IRigidbody2D physicsBody = new StandartRigidBody2D(physicsBalancer.Rigidbody2D);
+            IRigidbody2D physicsBody = new UnityRigidBody2D(physicsBalancer.Rigidbody2D);
             IPhysicsBalancerCalculator physicsBalancerCalculator = new PhysicsBalancerCalculator(physicsBalancerSettings.Force);
 
             IPhysicsBalancer balancer = new PhysicsBalancer(physicsBody, physicsBalancerCalculator, physicsBalancerSettings.DefaultTarget);

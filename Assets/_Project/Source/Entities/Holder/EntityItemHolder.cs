@@ -1,5 +1,5 @@
 using UnityEngine;
-using February;
+using IceFebruary;
 
 public class EntityItemHolder : ITogglable, IItemHolder
 {

@@ -1,7 +1,7 @@
-using February.Adaptation;
-using February.Space;
+using IceFebruary.Space;
 using UnityEngine;
 using VContainer.Unity;
+using UnityIceFebruary.Adaptation;
 
 public class InputProvider : IInputProvider, ITickable
 {
@@ -12,7 +12,7 @@ public class InputProvider : IInputProvider, ITickable
     public bool IsDialogueInteract { get; private set; }
     public bool IsDroppingItem { get; private set; }
 
-    public UniVector2 MousePosition { get; private set; }
+    public IceFebruary.Space.Vector2 MousePosition { get; private set; }
     public bool IsAttacking { get; private set; }
     public bool IsPickingUp { get; private set; }
     public InputProvider(GameInputAction controls)
@@ -25,7 +25,7 @@ public class InputProvider : IInputProvider, ITickable
         HorizontalMovement = _playerActions.HorizontalMovement.ReadValue<float>();
         VerticalMovement = _playerActions.VerticalMovement.ReadValue<float>();
 
-        MousePosition = _playerActions.LookPositionOnScreen.ReadValue<Vector2>().ToUniversal();
+        MousePosition = _playerActions.LookPositionOnScreen.ReadValue<UnityEngine.Vector2>().ToUniversal();
         IsAttacking = _playerActions.Attack.IsPressed();
 
         IsPickingUp = _playerActions.PickUp.WasPressedThisFrame();

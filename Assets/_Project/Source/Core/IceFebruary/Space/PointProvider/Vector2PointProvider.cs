@@ -1,0 +1,23 @@
+namespace IceFebruary.Space.PointProvider
+{
+    using IceFebruary.Proxy;
+
+    public sealed class Vector2PointProvider : IPointProvider
+    {
+        private readonly Vector2 _vector2;
+        [GenerateProxy(typeof(IPointProvider))]
+        public Vector2PointProvider(Vector2 vector2)
+        {
+            _vector2 = vector2;
+        }
+        public Vector2PointProvider(float x, float y)
+        {
+            _vector2 = new(x, y);
+        }
+        public bool TryGetPoint(out Vector2 point)
+        {
+            point = _vector2;
+            return true;
+        }
+    }
+}

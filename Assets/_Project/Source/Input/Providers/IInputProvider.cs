@@ -1,4 +1,4 @@
-using February.Space;
+using IceFebruary.Space;
 public interface IInputProvider
 {
     float HorizontalMovement { get; }
@@ -6,7 +6,7 @@ public interface IInputProvider
     bool IsDialogueInteract { get; }
     bool IsDroppingItem { get; }
 
-    UniVector2 MousePosition { get; }
+    Vector2 MousePosition { get; }
     bool IsAttacking { get; }
     bool IsPickingUp { get; }
 }

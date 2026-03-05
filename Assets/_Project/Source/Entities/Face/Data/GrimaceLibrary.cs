@@ -1,6 +1,6 @@
 using UnityEngine;
-using February;
-using February.Random;
+using IceFebruary.Collections;
+using IceFebruary.Random;
 
 [CreateAssetMenu(fileName = "Grimaces", menuName = "Face/Grimaces")]
 public class GrimaceLibrary : ScriptableObject

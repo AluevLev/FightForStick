@@ -1,11 +1,9 @@
-namespace February.Physics
+using IceFebruary.Space.PointProvider;
+
+public interface IPhysicsBalancer
 {
-    using February.Space.PointProvider;
-    public interface IPhysicsBalancer
-    {
-        void SetTarget(IPointProvider targetProvider);
-        void ResetTarget();
-        void Relax();
-        void LookAtTarget();
-    }
+    void SetTarget(IPointProvider targetProvider);
+    void ResetTarget();
+    void Relax();
+    void LookAtTarget();
 }
