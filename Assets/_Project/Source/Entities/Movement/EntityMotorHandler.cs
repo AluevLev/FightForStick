@@ -32,7 +32,7 @@ public class EntityMotorHandler : ITogglable, IMotorHandler, IFixedTickable
 
         _entityPhysics.AddForce(_movementCalculator.CalculateMovementVector(MovementDirection).ToUniversal(), ForceMode2D.Force);
 
-        if (_jumpTrigger.Active && _areaCaster.Check())
+        if (_jumpTrigger.Active && _areaCaster.Cast())
             _entityPhysics.AddForce(_movementCalculator.CalculateJumpVector(MovementDirection).ToUniversal(), ForceMode2D.Force);
     }
 }

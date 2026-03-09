@@ -4,17 +4,22 @@ namespace UnityIceFebruary.Components
     using IceFebruary.Components;
     using IceFebruary.Space;
     using UnityIceFebruary.Adaptation;
-    using UnityEngine;
 
-    public class UnityCamera : ITogglable, ICamera
+    public class UnityCamera : ICamera
     {
-        private readonly Camera _camera;
-        public bool Enabled { get; set; }
-        public UnityCamera(Camera camera)
+        private readonly UnityEngine.Camera _camera;
+        public bool Enabled
+        {
+            get => _camera.enabled;
+            set => _camera.enabled = value;
+        }
+        public IGameObject GameObject { get; init; }
+        public UnityCamera(UnityEngine.Camera camera)
         {
             _camera = camera;
+            GameObject = new UnityGameObject(camera.gameObject);
         }
-        public IceFebruary.Space.Vector2 ScreenToWorldPoint(IceFebruary.Space.Vector2 onScreenPosition) => _camera.ScreenToWorldPoint(onScreenPosition.ToUnity3D()).ToUniversal();
-        public IceFebruary.Space.Vector2 WorldToScreenPoint(IceFebruary.Space.Vector2 inWorldPosition) => _camera.WorldToScreenPoint(inWorldPosition.ToUnity3D()).ToUniversal();
+        public Vector2 ScreenToWorldPoint(Vector2 onScreenPosition) => _camera.ScreenToWorldPoint(onScreenPosition.ToUnity3D()).ToUniversal();
+        public Vector2 WorldToScreenPoint(Vector2 inWorldPosition) => _camera.WorldToScreenPoint(inWorldPosition.ToUnity3D()).ToUniversal();
     }
 }

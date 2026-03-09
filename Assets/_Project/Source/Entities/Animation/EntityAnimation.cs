@@ -1,12 +1,13 @@
 using VContainer.Unity;
 using IceFebruary;
+using IceFebruary.Animation;
 
 public class EntityAnimation : ITogglable, IAnimation, IFixedTickable
 {
-    private readonly AnimatorFloat _movementFloat;
+    private readonly AnimatorVariable<float> _movementFloat;
     private readonly IMotorHandler _movable;
     public bool Enabled { get; set; } = true;
-    public EntityAnimation(IMotorHandler movable, AnimatorFloat movementFloat)
+    public EntityAnimation(IMotorHandler movable, AnimatorVariable<float> movementFloat)
     {
         _movable = movable;
         _movementFloat = movementFloat;

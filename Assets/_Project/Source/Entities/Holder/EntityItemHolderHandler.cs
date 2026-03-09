@@ -3,11 +3,10 @@ using IceFebruary.Space;
 using IceFebruary.Space.PointProvider;
 using IceFebruary.Components;
 using IceFebruary.Physics;
-using UnityIceFebruary.Adaptation;
 using IceFebruary.Shapes;
 public class EntityItemHolderHandler : ITogglable, IItemHolderHandler
 {
-    private readonly IPhysics _physics;
+    private readonly IPhysics2D _physics;
     private readonly IItemHolder _entityItemHolder;
     private readonly IPointProvider _cursor;
     private readonly IPointProvider _humanPosition;
@@ -29,17 +28,17 @@ public class EntityItemHolderHandler : ITogglable, IItemHolderHandler
             return;
         if (!_cursor.TryGetPointSafe(out Vector2 cursorPosition))
             return;
-        
-        ICollider2D collider = _physics.Overlap(new Dot(cursorPosition));
+
+        ICollider2D collider = null;//_physics.Overlap(new Dot(cursorPosition));
 
         if (collider == null)
             return;
         if (!_humanPosition.TryGetPointSafe(out Vector2 entityPosition))
             return;
-        /*
-        if (Vector2.Distance(collider.transform.position, entityPosition.ToUnity2D()) >= _maxPickUpDistance)
+        
+        if (Vector2.Distance(collider.GameObject.Transform.Position, entityPosition) >= _maxPickUpDistance)
             return;
-        if (!collider.TryGetComponent(out IPickable item))
+        if (!collider.GameObject.TryGetComponent(out IPickable item))
             return;
 
         if (_itemInHand != null)
@@ -48,7 +47,6 @@ public class EntityItemHolderHandler : ITogglable, IItemHolderHandler
         _entityItemHolder.PickUpItem(item);
 
         _itemInHand = item;
-        */
     }
     public void Drop()
     {

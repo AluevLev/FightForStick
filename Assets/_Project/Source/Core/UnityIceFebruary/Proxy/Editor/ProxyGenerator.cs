@@ -12,9 +12,14 @@ namespace UnityIceFebruary.Proxy
 
     public static class ProxyGenerator
     {
+        private static bool IsGenerate = true;
+
         [MenuItem("Tools/Generate all proxies")]
         public static void Generate()
         {
+            if (!IsGenerate)
+                return;
+
             Debug.Log($"Assemblies found: {AppDomain.CurrentDomain.GetAssemblies().Length}");
 
             IEnumerable<Type> assembiles = AppDomain.CurrentDomain.GetAssemblies()
@@ -129,8 +134,6 @@ namespace UnityIceFebruary.Proxy
         }
         private static void SaveProxy(string proxyName, StringBuilder proxyStringBuilder)
         {
-            return;
-
             string proxyPath = Path.Combine(Application.dataPath, "ProxyGenerated", $"{proxyName}.cs");
             string proxyCode = proxyStringBuilder.ToString();
 

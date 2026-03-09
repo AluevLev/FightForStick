@@ -9,6 +9,17 @@ namespace UnityIceFebruary.Components
     public class UnityRigidBody2D : ITogglable, IRigidbody2D
     {
         private readonly UnityEngine.Rigidbody2D _rigidbody2D;
+        public UnityRigidBody2D(UnityEngine.Rigidbody2D rigidbody2d)
+        {
+            _rigidbody2D = rigidbody2d;
+            GameObject = new UnityGameObject(rigidbody2d.gameObject);
+        }
+        public IGameObject GameObject { get; init; }
+        public bool Enabled
+        {
+            get => _rigidbody2D.simulated;
+            set => _rigidbody2D.simulated = value;
+        }
         public Vector2 Position
         {
             get => _rigidbody2D.position.ToUniversal();
@@ -52,11 +63,6 @@ namespace UnityIceFebruary.Components
 
                 _rigidbody2D.angularVelocity = value;
             }
-        }
-        public bool Enabled { get; set; } = true;
-        public UnityRigidBody2D(UnityEngine.Rigidbody2D pushBody)
-        {
-            _rigidbody2D = pushBody;
         }
         public void AddForce(Vector2 force, ForceMode2D forceMode)
         {

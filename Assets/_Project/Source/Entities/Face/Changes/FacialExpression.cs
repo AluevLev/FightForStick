@@ -1,4 +1,6 @@
 using UnityEngine;
+using IceFebruary.Animation;
+
 public class FacialExpression : IFacialExpression
 {
     private readonly AnimatorTrigger _pulseTrigger;
@@ -16,7 +18,7 @@ public class FacialExpression : IFacialExpression
     }
     public void ChangeFace(Face face)
     {
-        _pulseTrigger.Active();
+        _pulseTrigger.Set();
 
         _eye1.sprite = face.Eye1;
         _eye2.sprite = face.Eye2;
