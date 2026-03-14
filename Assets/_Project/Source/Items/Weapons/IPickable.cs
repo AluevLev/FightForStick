@@ -1,7 +1,7 @@
-using IceFebruary.Components;
-using UnityEngine;
+using IceFebruary.Physics;
+using IceFebruary;
 
 public interface IPickable : IComponent
 {
-    HingeJoint2D[] Holders { get; }
+    IHingeJoint2D[] Holders { get; }
 }

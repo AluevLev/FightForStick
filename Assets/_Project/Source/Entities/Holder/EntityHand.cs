@@ -1,26 +1,27 @@
-using UnityEngine;
+using IceFebruary;
+using IceFebruary.Physics;
 
 public class EntityHand : IHand
 {
-    private readonly Rigidbody2D _hand;
-    private HingeJoint2D _holder;
-    public EntityHand(Rigidbody2D hand)
+    private readonly IRigidbody2D _hand;
+    private IFullDataComponent<IHingeJoint2D> _holder;
+    public EntityHand(IRigidbody2D hand)
     {
         _hand = hand;
     }
-    public void Connect(HingeJoint2D holder)
+    public void Connect(IFullDataComponent<IHingeJoint2D> holder)
     {
         _holder = holder;
 
-        _hand.position = _holder.transform.TransformPoint(_holder.anchor);
+        _hand.Position = _holder.GameObject.Transform.TransformPoint(_holder.Component.Anchor);
 
-        _holder.connectedBody = _hand;
-        _holder.enabled = true;
+        _holder.Component.ConnectedBody = _hand;
+        _holder.Component.Enabled = true;
     }
     public void Disconnect()
     {
-        _holder.enabled = false;
-        _holder.connectedBody = null;
+        _holder.Component.Enabled = false;
+        _holder.Component.ConnectedBody = null;
         _holder = null;
     }
 }

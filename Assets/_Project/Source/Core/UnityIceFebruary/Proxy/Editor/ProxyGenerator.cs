@@ -147,23 +147,23 @@ namespace UnityIceFebruary.Proxy
         }
 
         private static readonly Dictionary<Type, string> _typeAlias = new()
-    {
-        { typeof(bool), "bool" },
-        { typeof(byte), "byte" },
-        { typeof(char), "char" },
-        { typeof(decimal), "decimal" },
-        { typeof(double), "double" },
-        { typeof(float), "float" },
-        { typeof(int), "int" },
-        { typeof(long), "long" },
-        { typeof(sbyte), "sbyte" },
-        { typeof(short), "short" },
-        { typeof(string), "string" },
-        { typeof(uint), "uint" },
-        { typeof(ulong), "ulong" },
-        { typeof(ushort), "ushort" },
-        { typeof(void), "void" }
-    };
+        {
+            { typeof(bool), "bool" },
+            { typeof(byte), "byte" },
+            { typeof(char), "char" },
+            { typeof(decimal), "decimal" },
+            { typeof(double), "double" },
+            { typeof(float), "float" },
+            { typeof(int), "int" },
+            { typeof(long), "long" },
+            { typeof(sbyte), "sbyte" },
+            { typeof(short), "short" },
+            { typeof(string), "string" },
+            { typeof(uint), "uint" },
+            { typeof(ulong), "ulong" },
+            { typeof(ushort), "ushort" },
+            { typeof(void), "void" }
+        };
 
         private static string GetSafetyTypeName(this Type type)
         {

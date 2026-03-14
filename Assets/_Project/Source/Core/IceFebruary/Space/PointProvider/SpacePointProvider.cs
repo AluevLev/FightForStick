@@ -1,6 +1,5 @@
 namespace IceFebruary.Space.PointProvider
 {
-    using IceFebruary.Components;
     using IceFebruary.Proxy;
 
     public class SpacePointProvider : IPointProvider

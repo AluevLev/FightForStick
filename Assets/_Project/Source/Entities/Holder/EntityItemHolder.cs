@@ -1,5 +1,5 @@
-using UnityEngine;
 using IceFebruary;
+using IceFebruary.Physics;
 
 public class EntityItemHolder : ITogglable, IItemHolder
 {
@@ -14,12 +14,12 @@ public class EntityItemHolder : ITogglable, IItemHolder
         if (!Enabled)
             return;
 
-        HingeJoint2D[] holders = item.Holders;
+        IHingeJoint2D[] holders = item.Holders;
 
-        int connections = Mathf.Min(_entityHands.Length, holders.Length);
+        int connections = Math.Min(_entityHands.Length, holders.Length);
 
-        for (int connection = 0; connection < connections; connection++)
-            _entityHands[connection].Connect(holders[connection]);
+        //for (int connection = 0; connection < connections; connection++)
+        //    _entityHands[connection].Connect(holders[connection]);
     }
     public void DropItemInHand()
     {

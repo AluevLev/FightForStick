@@ -1,7 +1,6 @@
-namespace IceFebruary.Components
+namespace IceFebruary.Physics
 {
     using IceFebruary.Space;
-    using IceFebruary.Physics;
 
     public interface IRigidbody2D : IComponent
     {

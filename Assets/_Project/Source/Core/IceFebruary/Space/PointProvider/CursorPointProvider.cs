@@ -1,6 +1,6 @@
 namespace IceFebruary.Space.PointProvider
 {
-    using IceFebruary.Components;
+    using IceFebruary.Render;
 
     public class CursorPointProvider : IPointProvider
     {

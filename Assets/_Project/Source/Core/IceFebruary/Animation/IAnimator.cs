@@ -1,4 +1,4 @@
-namespace IceFebruary.Components
+namespace IceFebruary.Animation
 {
     public interface IAnimator : IComponent
     {

@@ -1,15 +1,15 @@
-using UnityEngine;
 using IceFebruary.Animation;
+using IceFebruary.Render;
 
 public class FacialExpression : IFacialExpression
 {
     private readonly AnimatorTrigger _pulseTrigger;
 
-    private readonly SpriteRenderer _eye1;
-    private readonly SpriteRenderer _eye2;
-    private readonly SpriteRenderer _mouth;
+    private readonly ISpriteRenderer _eye1;
+    private readonly ISpriteRenderer _eye2;
+    private readonly ISpriteRenderer _mouth;
 
-    public FacialExpression(SpriteRenderer eye1, SpriteRenderer eye2, SpriteRenderer mouth, AnimatorTrigger pulseTrigger)
+    public FacialExpression(ISpriteRenderer eye1, ISpriteRenderer eye2, ISpriteRenderer mouth, AnimatorTrigger pulseTrigger)
     {
         _eye1 = eye1;
         _eye2 = eye2;
@@ -20,8 +20,8 @@ public class FacialExpression : IFacialExpression
     {
         _pulseTrigger.Set();
 
-        _eye1.sprite = face.Eye1;
-        _eye2.sprite = face.Eye2;
-        _mouth.sprite = face.Mouth;
+        _eye1.Sprite = face.Eye1;
+        _eye2.Sprite = face.Eye2;
+        _mouth.Sprite = face.Mouth;
     }
 }

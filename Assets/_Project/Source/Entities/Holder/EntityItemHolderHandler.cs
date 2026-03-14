@@ -1,24 +1,26 @@
 using IceFebruary;
-using IceFebruary.Space;
-using IceFebruary.Space.PointProvider;
-using IceFebruary.Components;
 using IceFebruary.Physics;
 using IceFebruary.Shapes;
-public class EntityItemHolderHandler : ITogglable, IItemHolderHandler
+using IceFebruary.Space;
+using IceFebruary.Space.PointProvider;
+public class EntityItemHolderHandler<T> : ITogglable, IItemHolderHandler where T : struct, IShape
 {
-    private readonly IPhysics2D _physics;
+    private readonly IPhysics2D _physics2D;
     private readonly IItemHolder _entityItemHolder;
     private readonly IPointProvider _cursor;
     private readonly IPointProvider _humanPosition;
+    private readonly T _overlapArea;
     private readonly float _maxPickUpDistance;
 
     private IPickable _itemInHand;
     public bool Enabled { get; set; } = true;
-    public EntityItemHolderHandler(IItemHolder entityItemHolder, IPointProvider cursor, IPointProvider humanPosition, float maxPickUpDistance)
+    public EntityItemHolderHandler(IPhysics2D physics2D, IItemHolder entityItemHolder, IPointProvider cursor, IPointProvider humanPosition, T overlapArea, float maxPickUpDistance)
     {
+        _physics2D = physics2D;
         _entityItemHolder = entityItemHolder;
         _cursor = cursor;
         _humanPosition = humanPosition;
+        _overlapArea = overlapArea;
         _maxPickUpDistance = maxPickUpDistance;
     }
 
@@ -28,17 +30,26 @@ public class EntityItemHolderHandler : ITogglable, IItemHolderHandler
             return;
         if (!_cursor.TryGetPointSafe(out Vector2 cursorPosition))
             return;
-
-        ICollider2D collider = null;//_physics.Overlap(new Dot(cursorPosition));
-
-        if (collider == null)
-            return;
         if (!_humanPosition.TryGetPointSafe(out Vector2 entityPosition))
             return;
-        
-        if (Vector2.Distance(collider.GameObject.Transform.Position, entityPosition) >= _maxPickUpDistance)
+        if (_physics2D.Overlap(out ICollider2D[] results, _overlapArea, cursorPosition) == 0)
             return;
-        if (!collider.GameObject.TryGetComponent(out IPickable item))
+
+        IPickable item = null;
+
+        foreach (ICollider2D result in results)
+        {
+            /*
+            IGameObject gameObject = result.GameObject;
+
+            if (Vector2.Distance(gameObject.Transform.Position, entityPosition) >= _maxPickUpDistance)
+                continue;
+            if (gameObject.TryGetComponent(out item))
+                break;
+            */
+        }
+
+        if (item != null)
             return;
 
         if (_itemInHand != null)

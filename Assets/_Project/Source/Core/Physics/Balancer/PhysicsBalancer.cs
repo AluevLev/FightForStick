@@ -1,5 +1,5 @@
 using IceFebruary;
-using IceFebruary.Components;
+using IceFebruary.Physics;
 using IceFebruary.Space;
 using IceFebruary.Space.Follow;
 using IceFebruary.Space.PointProvider;

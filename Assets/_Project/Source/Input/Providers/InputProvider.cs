@@ -25,7 +25,7 @@ public class InputProvider : IInputProvider, ITickable
         HorizontalMovement = _playerActions.HorizontalMovement.ReadValue<float>();
         VerticalMovement = _playerActions.VerticalMovement.ReadValue<float>();
 
-        MousePosition = _playerActions.LookPositionOnScreen.ReadValue<UnityEngine.Vector2>().ToUniversal();
+        MousePosition = _playerActions.LookPositionOnScreen.ReadValue<UnityEngine.Vector2>().ToIce();
         IsAttacking = _playerActions.Attack.IsPressed();
 
         IsPickingUp = _playerActions.PickUp.WasPressedThisFrame();

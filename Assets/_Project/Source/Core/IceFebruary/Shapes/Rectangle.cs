@@ -4,14 +4,10 @@ namespace IceFebruary.Shapes
 
     public readonly struct Rectangle : IShape
     {
-        private readonly Vector2 _size;
-        private readonly Vector2 _pivot;
-        public Vector2 Size => _size;
-        public Vector2 Pivot => _pivot;
-        public Rectangle(Vector2 size, Vector2 pivot)
+        public Vector2 Size { get; init; }
+        public Rectangle(Vector2 size)
         {
-            _size = size;
-            _pivot = pivot;
+            Size = size;
         }
     }
 }

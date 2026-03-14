@@ -1,4 +1,4 @@
-using UnityEngine;
+using IceFebruary.Space;
 
 public interface IMovementCalculator
 {

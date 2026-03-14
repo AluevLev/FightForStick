@@ -1,4 +1,4 @@
-using UnityEngine;
+using IceFebruary.Space;
 
 public class EntityMovementCalculator : IMovementCalculator
 {
@@ -9,7 +9,7 @@ public class EntityMovementCalculator : IMovementCalculator
     }
     public Vector2 CalculateMovementVector(float movementDirection)
     {
-        return _movementSettings.Speed * movementDirection * Vector2.right;
+        return _movementSettings.Speed * movementDirection * Vector2.Right;
     }
     public Vector2 CalculateJumpVector(float movementDirection)
     {

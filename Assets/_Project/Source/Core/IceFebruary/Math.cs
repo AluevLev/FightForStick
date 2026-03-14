@@ -23,5 +23,7 @@ namespace IceFebruary
         }
         public static float Lerp(float x, float y, float interpolation) => x + (y - x) * Clamp01(interpolation);
         public static float Clamp01(float x) => Clamp(x, 0f, 1f);
+        public static T Min<T>(T x, T y) where T : System.IComparable<T> => x.CompareTo(y) < 0 ? x : y;
+        public static T Max<T>(T x, T y) where T : System.IComparable<T> => x.CompareTo(y) > 0 ? x : y;
     }
 }

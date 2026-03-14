@@ -1,7 +1,5 @@
 namespace IceFebruary
 {
-    using IceFebruary.Components;
-
     public interface IGameObject : ITogglable
     {
         ITransform Transform { get; }

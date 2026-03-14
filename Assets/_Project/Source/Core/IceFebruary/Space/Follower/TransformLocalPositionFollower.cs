@@ -3,7 +3,6 @@ namespace IceFebruary.Space.Follow
     using IceFebruary;
     using IceFebruary.Space;
     using IceFebruary.Space.PointProvider;
-    using IceFebruary.Components;
 
     public class TransformLocalPositionFollower : ITogglable, ITransformFollower
     {

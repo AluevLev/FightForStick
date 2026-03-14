@@ -1,6 +1,7 @@
 using VContainer;
 using VContainer.Unity;
 using UnityEngine;
+using IceFebruary.Shapes;
 
 public class PlayerLifetimeScope : LifetimeScope
 {
@@ -75,13 +76,13 @@ public class PlayerLifetimeScope : LifetimeScope
             IHand[] hands = new IHand[_hands.Length];
 
             for (int hand = 0; hand < _hands.Length; hand++)
-                hands[hand] = new EntityHand(_hands[hand]);
+                hands[hand] = null;//new EntityHand(_hands[hand]);
 
             return new EntityItemHolder(hands);
 
         }, Lifetime.Scoped);
 
-        builder.Register<IItemHolderHandler, EntityItemHolderHandler>(Lifetime.Scoped);
+        builder.Register<IItemHolderHandler, EntityItemHolderHandler<Dot>>(Lifetime.Scoped);
     }
     private void RegisterAnimation(IContainerBuilder builder)
     {

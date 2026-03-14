@@ -1,23 +1,20 @@
-using UnityEngine;
+using IceFebruary.Render;
 
 public readonly struct Face
 {
-    private readonly Sprite _eye1;
-    private readonly Sprite _eye2;
-    private readonly Sprite _mouth;
-    public readonly Sprite Eye1 => _eye1;
-    public readonly Sprite Eye2 => _eye2;
-    public readonly Sprite Mouth => _mouth;
-    public Face(Sprite eye1, Sprite eye2, Sprite mouth)
+    public ISprite Eye1 { get; init; }
+    public ISprite Eye2 { get; init; }
+    public ISprite Mouth { get; init; }
+    public Face(ISprite eye1, ISprite eye2, ISprite mouth)
     {
-        _eye1 = eye1;
-        _eye2 = eye2;
-        _mouth = mouth;
+        Eye1 = eye1;
+        Eye2 = eye2;
+        Mouth = mouth;
     }
     public Face(Eyes eyes, Mouth mouth)
     {
-        _eye1 = eyes.Eye1;
-        _eye2 = eyes.Eye2;
-        _mouth = mouth.Value;
+        Eye1 = eyes.Eye1;
+        Eye2 = eyes.Eye2;
+        Mouth = mouth.Value;
     }
 }

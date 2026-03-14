@@ -1,7 +1,5 @@
 namespace IceFebruary.Animation
 {
-    using IceFebruary.Components;
-
     public static class AnimatorExtensions
     {
         public static AnimatorVariable<T> BindVariable<T>(this IAnimator animator, int hash) where T : struct => new(new(animator, hash));
