@@ -19,7 +19,7 @@ namespace IceFebruary.Physics
             _angleDirection = angleDirection;
             _contactFilter2D = contactFilter;
         }
-        public bool Overlap(out ICollider2D[] colliders2D)
+        public bool Overlap(out IEntireComponent<ICollider2D>[] colliders2D)
         {
             if (!_position.TryGetPointSafe(out Vector2 position) || !_angleDirection.TryGetPointSafe(out Vector2 angleDirection))
             {

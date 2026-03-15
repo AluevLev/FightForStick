@@ -3,5 +3,5 @@ using IceFebruary;
 
 public interface IPickable : IComponent
 {
-    IHingeJoint2D[] Holders { get; }
+    IEntireComponent<IHingeJoint2D>[] Holders { get; }
 }

@@ -2,9 +2,9 @@ namespace UnityIceFebruary.Components
 {
     using IceFebruary;
 
-    public class FullDataComponent<T> : IFullDataComponent<T> where T : IComponent
+    public class UnityFullDataComponent<T> : IEntireComponent<T> where T : IComponent
     {
-        public FullDataComponent(T unityComponent, IGameObject gameObject)
+        public UnityFullDataComponent(T unityComponent, IGameObject gameObject)
         {
             GameObject = gameObject;
             Transform = GameObject.Transform;

@@ -1,8 +1,12 @@
-using UnityEngine;
+using IceFebruary.Proxy;
 
-[CreateAssetMenu(fileName = "Pick Up")]
-public class PickUpSettings : ScriptableObject
+public readonly struct PickUpSettings
 {
-    [SerializeField] private float _maxPickUpDistance;
-    public float MaxPickUpDistance => _maxPickUpDistance;
+    public float MaxPickUpDistance { get; init; }
+
+    [GenerateScriptableObjectProxy]
+    public PickUpSettings(float maxPickUpDistance)
+    {
+        MaxPickUpDistance = maxPickUpDistance;
+    }
 }

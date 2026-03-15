@@ -1,12 +1,14 @@
-using UnityEngine;
+using IceFebruary.Proxy;
 
-
-[CreateAssetMenu(fileName = "Animator Data", menuName = "Animator Data")]
-public class EntityAnimatorData : ScriptableObject, IEntityAnimatorData
+public readonly struct EntityAnimatorData
 {
-    //[SerializeField] private AnimatorFieldNameProxy _walkAnimation;
-    //[SerializeField] private AnimatorFieldNameProxy _sneakAnimation;
+    public int WalkAnimationHash { get; init; }
+    public int SneakAnimationHash { get; init; }
 
-    public int WalkAnimationHash => 0;//_walkAnimation.ToPoco().Hash;
-    public int SneakAnimationHash => 0;//_sneakAnimation.ToPoco().Hash;
+    [GenerateScriptableObjectProxy]
+    public EntityAnimatorData(int walkAnimationHash, int sneakAnimationHash)
+    {
+        WalkAnimationHash = walkAnimationHash;
+        SneakAnimationHash = sneakAnimationHash;
+    }
 }

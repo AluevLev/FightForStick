@@ -4,12 +4,12 @@ using IceFebruary.Physics;
 public class EntityHand : IHand
 {
     private readonly IRigidbody2D _hand;
-    private IFullDataComponent<IHingeJoint2D> _holder;
+    private IEntireComponent<IHingeJoint2D> _holder;
     public EntityHand(IRigidbody2D hand)
     {
         _hand = hand;
     }
-    public void Connect(IFullDataComponent<IHingeJoint2D> holder)
+    public void Connect(IEntireComponent<IHingeJoint2D> holder)
     {
         _holder = holder;
 

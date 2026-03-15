@@ -1,17 +1,15 @@
 namespace IceFebruary.Random
 {
-    using System;
     using System.Collections.Generic;
     using IceFebruary.Collections;
 
-    public struct Random
+    public class Random
     {
         private const float UintFloatMaxValue = uint.MaxValue;
-
         private uint _state;
         public uint State
         {
-            readonly get => _state;
+            get => _state;
             set => _state = value;
         }
         public Random(uint state)
@@ -28,11 +26,14 @@ namespace IceFebruary.Random
         }
         private uint RandomUnum(uint max) => ChangeState() % max;
         private float RandomFloat01() => ChangeState() / UintFloatMaxValue;
-        private readonly void FixOrder<T>(ref T min, ref T max) where T : IComparable<T>
+        private void FixOrder(ref int min, ref int max)
         {
-            int sign = min.CompareTo(max);
-
-            if (sign > 0)
+            if (min > max)
+                (min, max) = (max, min);
+        }
+        private void FixOrder(ref float min, ref float max)
+        {
+            if (min > max)
                 (min, max) = (max, min);
         }
         public int BetweenInt(int min, int max)

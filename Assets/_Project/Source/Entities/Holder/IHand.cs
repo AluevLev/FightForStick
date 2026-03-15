@@ -3,6 +3,6 @@ using IceFebruary.Physics;
 
 public interface IHand
 {
-    void Connect(IFullDataComponent<IHingeJoint2D> holder);
+    void Connect(IEntireComponent<IHingeJoint2D> holder);
     void Disconnect();
 }

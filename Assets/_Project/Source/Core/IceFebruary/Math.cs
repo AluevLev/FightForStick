@@ -5,7 +5,7 @@ namespace IceFebruary
     public static class Math
     {
         public const float Pi = SysMathF.PI;
-        public const float Epsilon = 1e-10f;
+        public const float Epsilon = 1e-5f;
         public const float Rad2Deg = 180f / Pi;
         public const float Deg2Rad = 1f / Rad2Deg;
         public static float Abs(float x) => SysMathF.Abs(x);
@@ -13,6 +13,22 @@ namespace IceFebruary
         public static float Sin(float x) => SysMathF.Sin(x);
         public static float Cos(float x) => SysMathF.Cos(x);
         public static float Atan2(float y, float x) => SysMathF.Atan2(y, x);
+        public static int Clamp(int x, int min, int max)
+        {
+            if (x < min)
+                return min;
+            if (x > max)
+                return max;
+            return x;
+        }
+        public static float Clamp(float x, float min, float max)
+        {
+            if (x < min)
+                return min;
+            if (x > max)
+                return max;
+            return x;
+        }
         public static T Clamp<T>(T x, T min, T max) where T : System.IComparable<T>
         {
             if (x.CompareTo(min) < 0)

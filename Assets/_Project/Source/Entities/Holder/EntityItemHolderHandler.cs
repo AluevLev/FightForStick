@@ -3,6 +3,7 @@ using IceFebruary.Physics;
 using IceFebruary.Shapes;
 using IceFebruary.Space;
 using IceFebruary.Space.PointProvider;
+
 public class EntityItemHolderHandler<T> : ITogglable, IItemHolderHandler where T : struct, IShape
 {
     private readonly IPhysics2D _physics2D;
@@ -32,21 +33,19 @@ public class EntityItemHolderHandler<T> : ITogglable, IItemHolderHandler where T
             return;
         if (!_humanPosition.TryGetPointSafe(out Vector2 entityPosition))
             return;
-        if (_physics2D.Overlap(out ICollider2D[] results, _overlapArea, cursorPosition) == 0)
+        if (_physics2D.Overlap(out IEntireComponent<ICollider2D>[] results, _overlapArea, cursorPosition) == 0)
             return;
 
         IPickable item = null;
 
-        foreach (ICollider2D result in results)
+        foreach (IEntireComponent<ICollider2D> result in results)
         {
-            /*
             IGameObject gameObject = result.GameObject;
 
             if (Vector2.Distance(gameObject.Transform.Position, entityPosition) >= _maxPickUpDistance)
                 continue;
             if (gameObject.TryGetComponent(out item))
                 break;
-            */
         }
 
         if (item != null)

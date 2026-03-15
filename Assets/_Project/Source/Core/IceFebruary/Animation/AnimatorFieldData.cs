@@ -9,5 +9,6 @@ namespace IceFebruary.Animation
             Animator = animator;
             Hash = hash;
         }
+        public static implicit operator int(AnimatorFieldData animator) => animator.Hash;
     }
 }

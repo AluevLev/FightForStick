@@ -1,7 +1,7 @@
 using VContainer.Unity;
 using IceFebruary;
 using IceFebruary.Physics;
-using UnityIceFebruary.Components;
+
 public class RagdollCore : ITogglable, IRagdollCore, IFixedTickable
 {
     private readonly IPhysicsBalancer[] _balancers;
@@ -14,14 +14,12 @@ public class RagdollCore : ITogglable, IRagdollCore, IFixedTickable
         {
             PhysicsLimbSettings physicsBalancer = settings[limb];
             PhysicsBalancerSettings physicsBalancerSettings = physicsBalancer.BalancerSettings;
-            /*
-            IGameObject gameObject = new UnityGameObject(physicsBalancer.Rigidbody2D.gameObject);
-            IRigidbody2D physicsBody = new UnityRigidbody2D(physicsBalancer.Rigidbody2D, gameObject);
+            
+            IRigidbody2D physicsBody = physicsBalancer.Rigidbody2D;
             IPhysicsBalancerCalculator physicsBalancerCalculator = new PhysicsBalancerCalculator(physicsBalancerSettings.Force);
 
-            IPhysicsBalancer balancer = new PhysicsBalancer(physicsBody, physicsBalancerCalculator, physicsBalancerSettings.DefaultTarget);
+            IPhysicsBalancer balancer = new PhysicsBalancer(physicsBody, physicsBalancerCalculator, physicsBalancerSettings.Target);
             _balancers[limb] = balancer;
-            */
         }
     }
     public void FixedTick()

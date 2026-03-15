@@ -28,7 +28,7 @@ public class FaceHandler : ITogglable, ITickable, IInitializable
         if (!Enabled)
             return;
 
-        _facialExpression.ChangeFace(_grimaceLibrary.GetStartFace());
+        _facialExpression.ChangeFace(_grimaceLibrary.DefaultFace);
 	}
 	private void FaceFollowTarget()
 	{

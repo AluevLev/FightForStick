@@ -1,9 +1,14 @@
-using UnityEngine;
+using IceFebruary.Proxy;
 using IceFebruary.Render;
 
-[CreateAssetMenu(fileName = "Mouth", menuName = "Face/Mouth")]
-public class Mouth : ScriptableObject
+
+public readonly struct Mouth
 {
-	[SerializeField] private ISprite _mouth;
-	public ISprite Value => _mouth;
+	public ISprite Value { get; init; }
+
+	[GenerateScriptableObjectProxy]
+	public Mouth(ISprite _mouth)
+	{
+		Value = _mouth;
+	}
 }

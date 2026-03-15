@@ -1,12 +1,16 @@
-using UnityEngine;
-[CreateAssetMenu(fileName = "Movement Settings", menuName = "Easy Data Holder/Movement Settings")]
-public class MovementSettings : ScriptableObject
-{
-    [SerializeField] private float _speed;
-    [SerializeField] private float _jumpForce;
-    [SerializeField] private float _jumpBoost;
+using IceFebruary.Proxy;
 
-    public float Speed => _speed;
-    public float JumpForce => _jumpForce;
-    public float JumpBoost => _jumpBoost;
+public readonly struct MovementSettings
+{
+    public float Speed { get; init; }
+    public float JumpForce { get; init; }
+    public float JumpBoost { get; init; }
+
+    [GenerateScriptableObjectProxy]
+    public MovementSettings(float speed, float jumpForce, float jumpBoost)
+    {
+        Speed = speed;
+        JumpForce = jumpForce;
+        JumpBoost = jumpBoost;
+    }
 }

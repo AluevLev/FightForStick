@@ -1,11 +1,15 @@
-using UnityEngine;
+using IceFebruary.Proxy;
 using IceFebruary.Render;
 
-[CreateAssetMenu(fileName = "Eyes", menuName = "Face/Eyes")]
-public class Eyes : ScriptableObject
+public readonly struct Eyes
 {
-    [SerializeField] private ISprite _eye1;
-    [SerializeField] private ISprite _eye2;
-    public ISprite Eye1 => _eye1;
-    public ISprite Eye2 => _eye2;
+    public ISprite Eye1 { get; init; }
+    public ISprite Eye2 { get; init; }
+
+    [GenerateScriptableObjectProxy]
+    public Eyes(ISprite eye1, ISprite eye2)
+    {
+        Eye1 = eye1;
+        Eye2 = eye2;
+    }
 }

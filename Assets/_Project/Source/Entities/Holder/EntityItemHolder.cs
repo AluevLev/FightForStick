@@ -14,12 +14,12 @@ public class EntityItemHolder : ITogglable, IItemHolder
         if (!Enabled)
             return;
 
-        IHingeJoint2D[] holders = item.Holders;
+        IEntireComponent<IHingeJoint2D>[] holders = item.Holders;
 
         int connections = Math.Min(_entityHands.Length, holders.Length);
 
-        //for (int connection = 0; connection < connections; connection++)
-        //    _entityHands[connection].Connect(holders[connection]);
+        for (int connection = 0; connection < connections; connection++)
+            _entityHands[connection].Connect(holders[connection]);
     }
     public void DropItemInHand()
     {
