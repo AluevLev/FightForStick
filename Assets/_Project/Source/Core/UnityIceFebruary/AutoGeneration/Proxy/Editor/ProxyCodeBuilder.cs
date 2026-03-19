@@ -1,10 +1,11 @@
-namespace UnityIceFebruary.AutoGeneration
+namespace UnityIceFebruary.AutoGeneration.Proxy
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
     using System.Text;
+    using IceFebruary.Proxy;
     using UnityEditor;
 
     public static class ProxyCodeBuilder

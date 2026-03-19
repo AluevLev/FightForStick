@@ -3,10 +3,10 @@ using IceFebruary.Render;
 
 public readonly struct Eyes
 {
-    public ISprite Eye1 { get; init; }
-    public ISprite Eye2 { get; init; }
+    public ISprite Eye1 { get; private init; }
+    public ISprite Eye2 { get; private init; }
 
-    [GenerateScriptableObjectProxy]
+    [ScriptableObjectProxy]
     public Eyes(ISprite eye1, ISprite eye2)
     {
         Eye1 = eye1;

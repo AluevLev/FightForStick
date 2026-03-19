@@ -6,7 +6,7 @@ namespace IceFebruary.Space.PointProvider
     {
         private readonly IPointProvider _pointProvider;
         private readonly ITransform _space;
-        [GenerateProxy(typeof(IPointProvider))]
+        [Proxy(typeof(IPointProvider))]
         public SpacePointProvider(IPointProvider pointProvider, ITransform space)
         {
             _space = space;

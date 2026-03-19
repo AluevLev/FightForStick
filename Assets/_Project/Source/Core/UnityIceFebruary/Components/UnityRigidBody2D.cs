@@ -6,7 +6,7 @@ namespace UnityIceFebruary.Components
 
     public class UnityRigidbody2D : IRigidbody2D
     {
-        public UnityEngine.Rigidbody2D Rigidbody2D { get; init; }
+        public UnityEngine.Rigidbody2D Rigidbody2D { get; private init; }
         public UnityRigidbody2D(UnityEngine.Rigidbody2D rigidbody2D)
         {
             Rigidbody2D = rigidbody2D;

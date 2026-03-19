@@ -7,7 +7,7 @@ namespace UnityIceFebruary.Components
 
     public class UnityCamera : ICamera
     {
-        public UnityEngine.Camera Camera { get; init; }
+        public UnityEngine.Camera Camera { get; private init; }
         public UnityCamera(UnityEngine.Camera camera)
         {
             Camera = camera;

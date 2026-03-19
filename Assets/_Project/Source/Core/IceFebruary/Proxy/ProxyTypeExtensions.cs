@@ -1,6 +1,5 @@
-namespace UnityIceFebruary.AutoGeneration
+namespace IceFebruary.Proxy
 {
-    using IceFebruary.Proxy;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -27,15 +26,12 @@ namespace UnityIceFebruary.AutoGeneration
             { typeof(void), "void" }
         };
         public static bool IsList(this Type type) => type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>);
-        public static bool HasAttribute<TAttribute>(this MemberInfo element, out TAttribute attribute) where TAttribute : Attribute
+        public static bool HasAttribute<TAttribute>(this MemberInfo element, out TAttribute attribute) where TAttribute : class
         {
-            attribute = element?.GetCustomAttribute<TAttribute>();
+            attribute = element?.GetCustomAttributes().OfType<TAttribute>().FirstOrDefault();
             return attribute != null;
         }
-        public static bool IsProxyable(this Type type) => type.GetConstructors()
-            .Any(c => c.HasAttribute(out GenerateProxy _) ||
-            c.HasAttribute(out GenerateScriptableObjectProxy _)) ||
-            type.HasAttribute(out GenerateInterfaceProxy _);
+        public static bool IsProxyable(this Type type) => type.GetConstructors().Any(constructor => constructor.HasAttribute(out IProxyAttribute _));
         public static string GetProxyName(this Type type) => $"{type.Name}Proxy";
         public static string GetSafetyTypeName(this Type type)
         {

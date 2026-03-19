@@ -3,7 +3,7 @@ namespace IceFebruary.Space.PointProvider
     using IceFebruary.Proxy;
     using IceFebruary.Space;
 
-    [GenerateInterfaceProxy]
+    [InterfaceProxy]
     public interface IPointProvider
     {
         /// <summary>

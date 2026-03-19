@@ -5,9 +5,9 @@ public readonly struct GrimaceLibrary
 {
     private readonly Eyes[] _eyes;
     private readonly Mouth[] _mouths;
-    public Face DefaultFace { get; init; }
+    public Face DefaultFace { get; private init; }
 
-    [GenerateScriptableObjectProxy]
+    [ScriptableObjectProxy]
     public GrimaceLibrary(Eyes[] eyes, Mouth[] mouths, Face defaultFace = default)
     {
         _eyes = eyes;

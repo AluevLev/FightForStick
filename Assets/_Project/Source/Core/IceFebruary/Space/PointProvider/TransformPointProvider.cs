@@ -5,7 +5,7 @@ namespace IceFebruary.Space.PointProvider
     public class TransformPointProvider : IPointProvider
     {
         private readonly ITransform _transform;
-        [GenerateProxy(typeof(IPointProvider))]
+        [Proxy(typeof(IPointProvider))]
         public TransformPointProvider(ITransform transform)
         {
             _transform = transform;

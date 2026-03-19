@@ -1,9 +1,10 @@
-namespace UnityIceFebruary.AutoGeneration
+namespace UnityIceFebruary.AutoGeneration.Proxy
 {
     using System;
     using System.IO;
     using System.Text;
     using UnityEngine;
+    using IceFebruary.Proxy;
 
     public static class ProxySaver
     {

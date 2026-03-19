@@ -8,7 +8,7 @@ public static class UnityComponentConverter
 {
     public static readonly Dictionary<Type, Func<Component, IComponent>> FabricAliases = new()
     {
-        { typeof(Camera), c => new UnityCamera((Camera)c) }
+        { typeof(Camera), component => new UnityCamera((Camera)component) }
     };
     public static readonly Dictionary<Type, Type> UnityAnalogs = new()
     {

@@ -4,7 +4,7 @@ namespace UnityIceFebruary.Components
 
     public class UnityCollider2D : ICollider2D
     {
-        private UnityEngine.Collider2D Сollider2D { get; init; }
+        public UnityEngine.Collider2D Сollider2D { get; private init; }
         public UnityCollider2D(UnityEngine.Collider2D collider2D)
         {
             Сollider2D = collider2D;

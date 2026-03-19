@@ -4,7 +4,7 @@ namespace IceFebruary.Shapes
 
     public readonly struct Rectangle : IShape
     {
-        public Vector2 Size { get; init; }
+        public Vector2 Size { get; private init; }
         public Rectangle(Vector2 size)
         {
             Size = size;

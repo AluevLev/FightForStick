@@ -5,7 +5,7 @@ namespace IceFebruary.Space.PointProvider
     public class AnglePointProvider : IPointProvider
     {
         private readonly Vector2 _vectorAngle;
-        [GenerateProxy(typeof(IPointProvider))]
+        [Proxy(typeof(IPointProvider))]
         public AnglePointProvider(float angle)
         {
             _vectorAngle = angle.GetVector();

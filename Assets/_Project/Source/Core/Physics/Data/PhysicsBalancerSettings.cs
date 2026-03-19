@@ -3,10 +3,10 @@ using IceFebruary.Proxy;
 
 public readonly struct PhysicsBalancerSettings
 {
-    public IPointProvider Target { get; init; }
-    public float Force { get; init; }
+    public IPointProvider Target { get; private init; }
+    public float Force { get; private init; }
 
-    [GenerateScriptableObjectProxy]
+    [ScriptableObjectProxy]
     public PhysicsBalancerSettings(IPointProvider target, float force)
     {
         Target = target;

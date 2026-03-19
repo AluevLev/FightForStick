@@ -2,8 +2,8 @@ namespace IceFebruary.Space
 {
     public readonly struct Vector2
     {
-        public float X { get; init; }
-        public float Y { get; init; }
+        public float X { get; private init; }
+        public float Y { get; private init; }
         public Vector2(float x, float y)
         {
             X = x;

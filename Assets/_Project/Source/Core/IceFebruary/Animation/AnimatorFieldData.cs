@@ -2,8 +2,8 @@ namespace IceFebruary.Animation
 {
     public readonly struct AnimatorFieldData
     {
-        public IAnimator Animator { get; init; }
-        public int Hash { get; init; }
+        public IAnimator Animator { get; private init; }
+        public int Hash { get; private init; }
         public AnimatorFieldData(IAnimator animator, int hash)
         {
             Animator = animator;

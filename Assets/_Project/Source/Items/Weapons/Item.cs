@@ -7,6 +7,6 @@ public class Item : IPickable
     {
         Holders = holders;
     }
-    public IEntireComponent<IHingeJoint2D>[] Holders { get; init; }
+    public IEntireComponent<IHingeJoint2D>[] Holders { get; private init; }
     public bool Enabled { get; set; } = true;
 }

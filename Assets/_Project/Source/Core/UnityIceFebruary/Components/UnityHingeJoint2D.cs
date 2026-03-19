@@ -6,7 +6,7 @@ namespace UnityIceFebruary.Components
 
     public class UnityHingeJoint2D : IHingeJoint2D
     {
-        public UnityEngine.HingeJoint2D HingeJoint2D { get; init; }
+        public UnityEngine.HingeJoint2D HingeJoint2D { get; private init; }
         public UnityHingeJoint2D(UnityEngine.HingeJoint2D hingeJoint2D)
         {
             HingeJoint2D = hingeJoint2D;

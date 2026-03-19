@@ -4,7 +4,7 @@ namespace UnityIceFebruary.Components
 
     public class UnityAnimator : IAnimator
     {
-        public UnityEngine.Animator Animator { get; init; }
+        public UnityEngine.Animator Animator { get; private init; }
         public UnityAnimator(UnityEngine.Animator animator)
         {
             Animator = animator;

@@ -4,9 +4,9 @@ using IceFebruary.Render;
 
 public readonly struct Mouth
 {
-	public ISprite Value { get; init; }
+	public ISprite Value { get; private init; }
 
-	[GenerateScriptableObjectProxy]
+	[ScriptableObjectProxy]
 	public Mouth(ISprite _mouth)
 	{
 		Value = _mouth;

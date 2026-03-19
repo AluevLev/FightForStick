@@ -2,10 +2,10 @@ using IceFebruary.Proxy;
 
 public readonly struct EntityAnimatorData
 {
-    public int WalkAnimationHash { get; init; }
-    public int SneakAnimationHash { get; init; }
+    public int WalkAnimationHash { get; private init; }
+    public int SneakAnimationHash { get; private init; }
 
-    [GenerateScriptableObjectProxy]
+    [ScriptableObjectProxy]
     public EntityAnimatorData(int walkAnimationHash, int sneakAnimationHash)
     {
         WalkAnimationHash = walkAnimationHash;
