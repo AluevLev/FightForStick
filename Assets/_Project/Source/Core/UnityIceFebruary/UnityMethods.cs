@@ -8,10 +8,11 @@ namespace UnityIceFebruary
     {
         public static Type GetUnityType<T>() where T : class, IComponent
         {
-            if (!UnityComponentConverter.UnityAnalogs.TryGetValue(typeof(T), out Type type))
-                return null;
+            //TODO: fix that shi
+            //if (!UnityMatchComponent.UnityAnalogs.TryGetValue(typeof(T), out Type type))
+            //    return null;
 
-            return type;
+            return null;//type;
         }
         public static IGameObject Create(GameObject gameObject)
         {
@@ -22,12 +23,13 @@ namespace UnityIceFebruary
         }
         public static IComponent Create(Component component)
         {
-            if (component == null)
+            //if (component == null)
                 return null;
-            if (!UnityComponentConverter.FabricAliases.TryGetValue(component.GetType(), out Func<Component, IComponent> fabric))
-                return null;
+            //TODO: fix that shi
+            //if (!UnityMatchComponent.FabricAliases.TryGetValue(component.GetType(), out Func<Component, IComponent> fabric))
+            //    return null;
 
-            return HierarchyCache.Upsert(component, fabric);
+            //return HierarchyCache.Upsert(component, fabric);
         }
     }
 

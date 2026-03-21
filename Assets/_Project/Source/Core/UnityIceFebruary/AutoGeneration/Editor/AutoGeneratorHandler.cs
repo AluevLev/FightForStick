@@ -29,7 +29,7 @@ namespace UnityIceFebruary.AutoGeneration
             EditorApplication.delayCall += () =>
             {
                 ProxyGenerator.Generate(allTypes);
-                MatchGenerator.Generate(allTypes);
+                UnityMatchComponentGenerator.Generate(allTypes);
             };
         }
     }

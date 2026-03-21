@@ -3,11 +3,15 @@ namespace UnityIceFebruary.Components
     using IceFebruary.Physics;
     using IceFebruary.Space;
     using UnityIceFebruary.Adaptation;
+    using UnityIceFebruary.AutoGeneration.Match;
 
+    using HingeJoint2D = UnityEngine.HingeJoint2D;
+
+    [UnityAnalog(typeof(HingeJoint2D))]
     public class UnityHingeJoint2D : IHingeJoint2D
     {
-        public UnityEngine.HingeJoint2D HingeJoint2D { get; private init; }
-        public UnityHingeJoint2D(UnityEngine.HingeJoint2D hingeJoint2D)
+        public HingeJoint2D HingeJoint2D { get; private init; }
+        public UnityHingeJoint2D(HingeJoint2D hingeJoint2D)
         {
             HingeJoint2D = hingeJoint2D;
         }

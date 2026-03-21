@@ -4,11 +4,15 @@ namespace UnityIceFebruary.Components
     using IceFebruary.Render;
     using UnityIceFebruary.Adaptation;
     using UnityIceFebruary.Components;
+    using UnityIceFebruary.AutoGeneration.Match;
 
+    using Camera = UnityEngine.Camera;
+
+    [UnityAnalog(typeof(Camera))]
     public class UnityCamera : ICamera
     {
-        public UnityEngine.Camera Camera { get; private init; }
-        public UnityCamera(UnityEngine.Camera camera)
+        public Camera Camera { get; private init; }
+        public UnityCamera(Camera camera)
         {
             Camera = camera;
         }

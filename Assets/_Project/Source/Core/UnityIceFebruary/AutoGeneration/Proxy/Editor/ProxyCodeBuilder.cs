@@ -1,31 +1,60 @@
 namespace UnityIceFebruary.AutoGeneration.Proxy
 {
+    using IceFebruary.Proxy;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
     using System.Text;
-    using IceFebruary.Proxy;
     using UnityEditor;
 
     public static class ProxyCodeBuilder
     {
         public static void SetWarning(this StringBuilder stringBuilder) => stringBuilder.AppendLine("// AUTO-GENERATED. DO NOT EDIT.");
-        public static void SetStartBrace(this StringBuilder stringBuilder) => stringBuilder.AppendLine("{");
-        public static void SetEndBrace(this StringBuilder stringBuilder) => stringBuilder.AppendLine("}");
-        public static void SetUsings(this StringBuilder stringBuilder, ParameterInfo[] parameters)
+        public static void SetStartBrace(this StringBuilder stringBuilder, int tabs = 0) => stringBuilder.AppendLine($"{GetTabs(tabs)}{{"); 
+        public static void SetEndBrace(this StringBuilder stringBuilder, int tabs = 0) => stringBuilder.AppendLine($"{GetTabs(tabs)}}}");
+        public static string GetTabs(int tabs) => tabs > 0 ? new('\t', tabs) : string.Empty;
+        public static void SetUsingsWithParameters(this StringBuilder stringBuilder, ParameterInfo[] parameters)
         {
-            stringBuilder.AppendLine("using UnityEngine;");
+            HashSet<string> namespaces = new()
+            {
+                "System",
+                "UnityEngine"
+            };
 
-            if (parameters.Any(parameter => parameter.ParameterType.IsGenericType))
-                stringBuilder.AppendLine("using System.Collections.Generic;");
+            bool needLinq = false;
 
-            if (parameters.Any(parameter => parameter.ParameterType.IsArray || parameter.ParameterType.IsList()))
-                stringBuilder.AppendLine("using System.Linq;");
+            foreach (ParameterInfo parameter in parameters)
+            {
+                Type t = parameter.ParameterType;
+                GetUsing(t, namespaces);
+                needLinq = t.IsArray && t.GetElementType().IsProxyable() || t.IsList() && t.GetGenericArguments()[0].IsProxyable();
+            }
 
-            stringBuilder.AppendLine();
+            if (needLinq)
+                namespaces.Add("System.Linq");
+
+            foreach (string @namespace in namespaces.OrderBy(x => x))
+                stringBuilder.AppendLine($"using {@namespace};");
         }
-        public static void SetTitle(this StringBuilder stringBuilder, Type classProxy, Type inheritType = null, string attribute = "")
+        public static void GetUsing(Type type, HashSet<string> namespaces)
+        {
+            if (type == null)
+                return;
+
+            string @namespace = type.Namespace;
+
+            if (!string.IsNullOrEmpty(@namespace))
+                namespaces.Add(@namespace);
+            if (type.IsGenericType)
+                foreach (Type element in type.GetGenericArguments())
+                    GetUsing(element, namespaces);
+            if (type.IsArray)
+                GetUsing(type.GetElementType(), namespaces);
+            if (type.IsNested && type.DeclaringType != null)
+                GetUsing(type.DeclaringType, namespaces);
+        }
+        public static void SetConstructorTitle(this StringBuilder stringBuilder, Type classProxy, Type inheritType = null, string attribute = "")
         {
             if (!string.IsNullOrEmpty(attribute))
                 stringBuilder.AppendLine($"[{attribute}]");

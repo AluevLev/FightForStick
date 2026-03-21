@@ -28,9 +28,9 @@ namespace UnityIceFebruary.AutoGeneration.Proxy
 
             ProxyCodeBuilder.SetWarning(stringBuilder);
 
-            if (type.HasAttribute(out IProxyConstructor _))
+            if (type.HasAttributeInConstructor(out IProxyConstructor attribute))
             {
-                ProxyConstructorData? data = type.GetProxyConstructorData();
+                ProxyConstructorData? data = type.GetProxyConstructorData(attribute);
 
                 if (!data.HasValue)
                     return;
@@ -43,13 +43,13 @@ namespace UnityIceFebruary.AutoGeneration.Proxy
                 ProcessGenerateInterfaceProxy(type, stringBuilder);
             }
 
-            ProxySaver.SaveProxy(stringBuilder, type);
+            CSSaver.SaveProxy(stringBuilder, type);
         }
         private static void ProcessConstructorProxy(ProxyConstructorData data, StringBuilder stringBuilder)
         {
-            stringBuilder.SetUsings(data.Parameters);
+            stringBuilder.SetUsingsWithParameters(data.Parameters);
 
-            stringBuilder.SetTitle(data.ClassProxy, data.InheritProxy, data.Attribute);
+            stringBuilder.SetConstructorTitle(data.ClassProxy, data.InheritProxy, data.Attribute);
 
             stringBuilder.SetStartBrace();
 
@@ -59,12 +59,9 @@ namespace UnityIceFebruary.AutoGeneration.Proxy
 
             stringBuilder.SetEndBrace();
         }
-        public static ProxyConstructorData? GetProxyConstructorData(this Type type)
+        public static ProxyConstructorData? GetProxyConstructorData(this Type type, IProxyConstructor attribute = null)
         {
-            IProxyConstructor attribute = null;
-            type.GetConstructors().FirstOrDefault(c => c.HasAttribute(out attribute));
-
-            if (attribute == null)
+            if (attribute == null && !type.HasAttributeInConstructor(out attribute))
                 return null;
 
             if (attribute is Proxy proxy)
