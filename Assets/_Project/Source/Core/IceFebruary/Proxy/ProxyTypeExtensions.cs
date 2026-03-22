@@ -46,22 +46,25 @@ namespace IceFebruary.Proxy
 
             return hasConstructor;
         }
-        public static bool IsProxyable(this Type type) => type.GetConstructors().Any(constructor => constructor.HasAttribute(out IProxyAttribute _));
-        public static string GetProxyName(this Type type) => $"{type.Name}Proxy";
+        public static bool IsProxyable(this Type type) => type.GetConstructors().Any(constructor => constructor.HasAttribute(out IProxyAttribute _)) || type.HasAttribute(out IProxyAttribute _);
+        public static string ToProxyName(this string type) => $"{type}Proxy";
         public static string GetSafetyTypeName(this Type type)
         {
             if (_typeAlias.TryGetValue(type, out string key))
                 return key;
 
+            string typeName = type.Name;
+            string typeFullName = type.FullName;
+
             if (type.IsGenericParameter)
-                return type.Name;
+                return typeName;
 
             if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
                 return $"{Nullable.GetUnderlyingType(type).GetSafetyTypeName()}?";
 
             if (type.IsGenericType)
             {
-                string name = type.Name.Split('`')[0];
+                string name = typeName.Split('`')[0];
                 IEnumerable<string> args = type.GetGenericArguments().Select(type => type.GetSafetyTypeName());
                 return $"{name}<{string.Join(", ", args)}>";
             }
@@ -70,14 +73,12 @@ namespace IceFebruary.Proxy
                 return $"{type.GetElementType().GetSafetyTypeName()}[{new string(',', type.GetArrayRank() - 1)}]";
 
             if (type.IsProxyable())
-                return type.GetProxyName();
-
-            string typeName = type.Name;
+                return typeName.ToProxyName();
 
             if (type.IsNested && type.DeclaringType != null)
                 return $"{type.DeclaringType.GetSafetyTypeName()}.{typeName}";
 
-            return typeName;
+            return typeFullName;
         }
     }
 }

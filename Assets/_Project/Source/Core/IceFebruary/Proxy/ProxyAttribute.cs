@@ -4,7 +4,7 @@ namespace IceFebruary.Proxy
 
     public static class ProxyAttribute
     {
-        public static string GetProxyAssetMenuAttribute(Type type) => $"CreateAssetMenu(fileName = \"{type.GetProxyName()}\", menuName = \"Proxy/{type.Name}\")";
+        public static string GetProxyAssetMenuAttribute(Type type) => $"UnityEngine.CreateAssetMenu(fileName = \"{type.Name.ToProxyName()}\", menuName = \"Proxy/{type.Name}\")";
         public static readonly string Serializable = "System.Serializable";
     }
 }

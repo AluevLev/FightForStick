@@ -3,7 +3,6 @@ namespace UnityIceFebruary.AutoGeneration.Proxy
     using IceFebruary.Proxy;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Text;
     using UnityEditor;
     using UnityEngine;
@@ -26,7 +25,7 @@ namespace UnityIceFebruary.AutoGeneration.Proxy
 
             StringBuilder stringBuilder = new();
 
-            ProxyCodeBuilder.SetWarning(stringBuilder);
+            stringBuilder.SetWarning();
 
             if (type.HasAttributeInConstructor(out IProxyConstructor attribute))
             {
@@ -47,8 +46,6 @@ namespace UnityIceFebruary.AutoGeneration.Proxy
         }
         private static void ProcessConstructorProxy(ProxyConstructorData data, StringBuilder stringBuilder)
         {
-            stringBuilder.SetUsingsWithParameters(data.Parameters);
-
             stringBuilder.SetConstructorTitle(data.ClassProxy, data.InheritProxy, data.Attribute);
 
             stringBuilder.SetStartBrace();
