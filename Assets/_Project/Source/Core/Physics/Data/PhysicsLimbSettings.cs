@@ -1,11 +1,15 @@
-using UnityEngine;
 using IceFebruary.Physics;
+using IceFebruary.Proxy;
 
-[System.Serializable]
 public struct PhysicsLimbSettings
 {
-    [SerializeField] private IRigidbody2D _rigidbody2D;
-    [SerializeField] private PhysicsBalancerSettings _balancerSettings;
-    public readonly IRigidbody2D Rigidbody2D => _rigidbody2D;
-    public readonly PhysicsBalancerSettings BalancerSettings => _balancerSettings;
+    public IRigidbody2D Rigidbody2D { get; private init; }
+    public PhysicsBalancerSettings BalancerSettings { get; private init; }
+
+    [Proxy]
+    public PhysicsLimbSettings(IRigidbody2D rigidbody2D, PhysicsBalancerSettings balancerSettings)
+    {
+        Rigidbody2D = rigidbody2D;
+        BalancerSettings = balancerSettings;
+    }
 }

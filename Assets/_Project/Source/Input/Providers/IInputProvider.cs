@@ -1,4 +1,5 @@
 using IceFebruary.Space;
+
 public interface IInputProvider
 {
     float HorizontalMovement { get; }

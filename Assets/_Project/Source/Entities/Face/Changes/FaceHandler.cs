@@ -1,7 +1,7 @@
-using VContainer.Unity;
 using IceFebruary;
 using IceFebruary.Space.Follow;
-public class FaceHandler : ITogglable, ITickable, IInitializable
+
+public class FaceHandler : ITogglable
 {
 	private readonly GrimaceLibrary _grimaceLibrary;
 
@@ -15,22 +15,14 @@ public class FaceHandler : ITogglable, ITickable, IInitializable
 		_faceFollower = transformFollower;
 		_grimaceLibrary = grimaceLibrary;
 	}
-	public void Initialize()
-	{
-		SetStartFace();
-	}
-	public void Tick()
-	{
-		FaceFollowTarget();
-	}
-	private void SetStartFace()
+	public void SetStartFace()
 	{
         if (!Enabled)
             return;
 
         _facialExpression.ChangeFace(_grimaceLibrary.DefaultFace);
 	}
-	private void FaceFollowTarget()
+	public void FaceFollowTarget()
 	{
 		if (!Enabled)
 			return;

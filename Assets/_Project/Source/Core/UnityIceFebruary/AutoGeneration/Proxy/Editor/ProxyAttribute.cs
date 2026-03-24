@@ -1,5 +1,6 @@
-namespace IceFebruary.Proxy
+namespace UnityIceFebruary.AutoGeneration.Proxy
 {
+    using IceFebruary.Proxy;
     using System;
 
     public static class ProxyAttribute

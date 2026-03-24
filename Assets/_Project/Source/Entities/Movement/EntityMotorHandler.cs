@@ -1,8 +1,7 @@
-using VContainer.Unity;
 using IceFebruary;
 using IceFebruary.Physics;
 
-public class EntityMotorHandler : ITogglable, IMotorHandler, IFixedTickable
+public class EntityMotorHandler : ITogglable, IMotorHandler
 {
     private readonly IRigidbody2D _entityPhysics;
     private readonly ILazyOverlap _areaCaster;
@@ -16,19 +15,26 @@ public class EntityMotorHandler : ITogglable, IMotorHandler, IFixedTickable
         _areaCaster = groundCheck;
         _movementCalculator = movementCalculator;
     }
-    public void Jump() => _jumpTrigger.Charge();
-    public void FixedTick()
+    public void Jump()
     {
-        _jumpTrigger.ProcessLife();
+        if (!Enabled)
+            return;
 
-        MoveMotor();
+        _jumpTrigger.Charge();
     }
-    public void MoveMotor()
+    public void Move()
     {
         if (!Enabled)
             return;
 
         _entityPhysics.AddForce(_movementCalculator.CalculateMovementVector(MovementDirection), ForceMode2D.Force);
+    }
+    public void ProcessMotor()
+    {
+        if (!Enabled)
+            return;
+
+        _jumpTrigger.Process();
 
         if (_jumpTrigger.Active && _areaCaster.Overlap(out _))
             _entityPhysics.AddForce(_movementCalculator.CalculateJumpVector(MovementDirection), ForceMode2D.Force);

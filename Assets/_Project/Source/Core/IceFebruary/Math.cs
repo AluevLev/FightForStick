@@ -38,6 +38,16 @@ namespace IceFebruary
             return x;
         }
         public static float Lerp(float x, float y, float interpolation) => x + (y - x) * Clamp01(interpolation);
+        public static float LerpAngle(float x, float y, float interpolation)
+        {
+            float delta = GetOnPeriod(y - x, 360f);
+
+            if (delta > 180)
+                delta -= 360;
+
+            return x + delta * Clamp01(interpolation);
+        }
+        public static float GetOnPeriod(float x, float period) => ((x % period) + period) % x;
         public static float Clamp01(float x) => Clamp(x, 0f, 1f);
         public static T Min<T>(T x, T y) where T : System.IComparable<T> => x.CompareTo(y) < 0 ? x : y;
         public static T Max<T>(T x, T y) where T : System.IComparable<T> => x.CompareTo(y) > 0 ? x : y;

@@ -1,8 +1,8 @@
-using VContainer.Unity;
+using IceFebruary.Execution;
 using IceFebruary;
 using IceFebruary.Animation;
 
-public class EntityAnimation : ITogglable, IAnimation, IFixedTickable
+public class EntityAnimation : ITogglable, IAnimation, IFixedFrame
 {
     private readonly AnimatorVariable<float> _movementFloat;
     private readonly IMotorHandler _movable;
@@ -12,7 +12,7 @@ public class EntityAnimation : ITogglable, IAnimation, IFixedTickable
         _movable = movable;
         _movementFloat = movementFloat;
     }
-    public void FixedTick()
+    public void OnFixedFrame()
     {
         Animate();
     }

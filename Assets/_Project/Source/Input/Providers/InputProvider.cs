@@ -1,9 +1,6 @@
-using IceFebruary.Space;
-using UnityEngine;
-using VContainer.Unity;
 using UnityIceFebruary.Adaptation;
 
-public class InputProvider : IInputProvider, ITickable
+public class InputProvider : IInputProvider
 {
     private readonly GameInputAction _controls;
     private readonly GameInputAction.PlayerActions _playerActions;
@@ -20,7 +17,7 @@ public class InputProvider : IInputProvider, ITickable
         _controls = controls;
         _playerActions = _controls.Player;
     }
-    public void Tick()
+    public void UpdateValue()
     {
         HorizontalMovement = _playerActions.HorizontalMovement.ReadValue<float>();
         VerticalMovement = _playerActions.VerticalMovement.ReadValue<float>();

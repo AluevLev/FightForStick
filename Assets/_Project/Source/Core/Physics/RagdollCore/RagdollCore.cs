@@ -1,8 +1,8 @@
-using VContainer.Unity;
 using IceFebruary;
 using IceFebruary.Physics;
+using IceFebruary.Execution;
 
-public class RagdollCore : ITogglable, IRagdollCore, IFixedTickable
+public class RagdollCore : ITogglable, IRagdollCore, IFixedFrame
 {
     private readonly IPhysicsBalancer[] _balancers;
     public bool Enabled { get; set; } = true;
@@ -22,7 +22,7 @@ public class RagdollCore : ITogglable, IRagdollCore, IFixedTickable
             _balancers[limb] = balancer;
         }
     }
-    public void FixedTick()
+    public void OnFixedFrame()
     {
         ProcessLimbs();
     }

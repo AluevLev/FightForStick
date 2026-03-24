@@ -1,7 +1,6 @@
-using VContainer.Unity;
 using IceFebruary;
 
-public class PlayerItemHolderController : ITogglable, IController, ITickable
+public class PlayerItemHolderController : ITogglable, IController
 {
     private readonly IInputProvider _inputProvider;
     private readonly IItemHolderHandler _playerHolderHandler;
@@ -10,10 +9,6 @@ public class PlayerItemHolderController : ITogglable, IController, ITickable
     {
         _inputProvider = inputProvider;
         _playerHolderHandler = playerHolderHandler;
-    }
-    public void Tick()
-    {
-        ProcessInput();
     }
     public void ProcessInput()
     {

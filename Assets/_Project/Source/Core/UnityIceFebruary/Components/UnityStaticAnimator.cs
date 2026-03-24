@@ -20,7 +20,7 @@ namespace UnityIceFebruary.Components
                 Get = (animator, hash) => (T)(object)animator.GetInteger(hash);
                 Set = (animator, hash, value) => animator.SetInteger(hash, (int)(object)value);
             }
-                
+            
             else if (typeof(T) == typeof(float))
             {
                 Get = (animator, hash) => (T)(object)animator.GetFloat(hash);
