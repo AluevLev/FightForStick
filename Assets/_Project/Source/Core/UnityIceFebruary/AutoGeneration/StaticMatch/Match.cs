@@ -1,4 +1,4 @@
-namespace UnityIceFebruary.AutoGeneration.Match
+namespace UnityIceFebruary.AutoGeneration
 {
     using System;
 

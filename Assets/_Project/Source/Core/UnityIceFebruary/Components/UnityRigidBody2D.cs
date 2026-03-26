@@ -3,17 +3,19 @@ namespace UnityIceFebruary.Components
     using IceFebruary.Space;
     using IceFebruary.Physics;
     using UnityIceFebruary.Adaptation;
-    using UnityIceFebruary.AutoGeneration.Match;
+    using UnityIceFebruary.AutoGeneration;
 
     using Rigidbody2D = UnityEngine.Rigidbody2D;
 
     [UnityAnalog(typeof(Rigidbody2D))]
-    public class UnityRigidbody2D : IRigidbody2D
+    public class UnityRigidbody2D : IRigidbody2D, IUnityAnalog
     {
         public Rigidbody2D Rigidbody2D { get; private init; }
+        public UnityEngine.Component Original { get; private init; }
         public UnityRigidbody2D(Rigidbody2D rigidbody2D)
         {
             Rigidbody2D = rigidbody2D;
+            Original = rigidbody2D;
         }
         public bool Enabled
         {

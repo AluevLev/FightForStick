@@ -1,4 +1,4 @@
-namespace UnityIceFebruary.AutoGeneration.Proxy
+namespace UnityIceFebruary.AutoGeneration
 {
     using IceFebruary.Proxy;
     using System;

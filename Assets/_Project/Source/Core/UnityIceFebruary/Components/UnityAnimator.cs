@@ -1,18 +1,19 @@
 namespace UnityIceFebruary.Components
 {
     using IceFebruary.Animation;
-    using UnityIceFebruary.AutoGeneration.Match;
+    using UnityIceFebruary.AutoGeneration;
 
     using Animator = UnityEngine.Animator;
 
     [UnityAnalog(typeof(Animator))]
-    public class UnityAnimator : IAnimator
+    public class UnityAnimator : IAnimator, IUnityAnalog
     {
         public Animator Animator { get; private init; }
-        
+        public UnityEngine.Component Original { get; private init; }
         public UnityAnimator(Animator animator)
         {
             Animator = animator;
+            Original = animator;
         }
         public bool Enabled
         {

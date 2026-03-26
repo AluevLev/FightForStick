@@ -3,29 +3,33 @@ using IceFebruary.Space;
 
 public class ObjectPool
 {
+    private readonly IObjectManager _objectManager;
     private readonly IGameObject _prefab;
-    private readonly int _poolSize;
+    
     private readonly IGameObject[] _pool;
+    private readonly int _poolSize;
+
     private int _currentIndex;
-    public ObjectPool(IGameObject prefab, int poolSize)
+    public ObjectPool(IObjectManager objectManager, IGameObject prefab, int poolSize)
     {
-        _poolSize = poolSize;
-        _pool = new IGameObject[poolSize];
+        _objectManager = objectManager;
         _prefab = prefab;
 
+        _pool = new IGameObject[poolSize];
+        _poolSize = poolSize;
+        
         for (int objectInPoolIndex = 0; objectInPoolIndex < _poolSize; objectInPoolIndex++)
             _pool[objectInPoolIndex] = InstantiateObjectInPool();
     }
     public IGameObject InstantiateObjectInPool()
     {
-        //TODO aaa
-        IGameObject objectInPool = null;//Object.Instantiate(_prefab);
+        IGameObject objectInPool = _objectManager.Create(_prefab);
 
         objectInPool.Enabled = false;
 
         return objectInPool;
     }
-    public void Spawn(Vector2 position/*, Quaternion rotation*/)
+    public void Spawn(Vector2 position)
     {
         IGameObject spawnObject = null;
 

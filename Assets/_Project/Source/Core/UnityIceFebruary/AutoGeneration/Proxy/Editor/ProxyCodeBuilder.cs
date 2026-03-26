@@ -1,4 +1,4 @@
-namespace UnityIceFebruary.AutoGeneration.Proxy
+namespace UnityIceFebruary.AutoGeneration
 {
     using IceFebruary.Proxy;
     using System;
@@ -23,6 +23,8 @@ namespace UnityIceFebruary.AutoGeneration.Proxy
 
             if (inheritType != null)
                 stringBuilder.AppendLine($" : {(inheritType.IsProxyable() ? inheritType.Name.ToProxyName() : inheritType.FullName)}");
+            else
+                stringBuilder.AppendLine();
         }
         public static void SetFields(this StringBuilder stringBuilder, ParameterInfo[] parameters)
         {
@@ -62,7 +64,7 @@ namespace UnityIceFebruary.AutoGeneration.Proxy
             string parameterName = $"_{parameter.Name}";
 
             if (type.IsProxyable())
-                return $"{parameterName}?.ToPoco()";
+                return $"{parameterName}.ToPoco()";
 
             Type elementType = type.GetElementType();
 

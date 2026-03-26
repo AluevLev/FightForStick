@@ -5,8 +5,6 @@ namespace UnityIceFebruary.AutoGeneration
     using System.Collections.Generic;
     using System.Linq;
     using UnityEditor;
-    using UnityIceFebruary.AutoGeneration.Match;
-    using UnityIceFebruary.AutoGeneration.Proxy;
 
     public class AutoGeneratorHandler : AssetPostprocessor
     {

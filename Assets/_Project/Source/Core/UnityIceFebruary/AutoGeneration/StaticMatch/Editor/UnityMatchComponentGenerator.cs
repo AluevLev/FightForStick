@@ -1,11 +1,10 @@
-namespace UnityIceFebruary.AutoGeneration.Match
+namespace UnityIceFebruary.AutoGeneration
 {
     using IceFebruary.Proxy;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using UnityIceFebruary.AutoGeneration.Proxy;
 
     public static class UnityMatchComponentGenerator
     {

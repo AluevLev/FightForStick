@@ -6,17 +6,17 @@ namespace UnityIceFebruary
 
     public class UnityGameObject : IGameObject, ITransform
     {
-        private readonly UnityEngine.GameObject _gameObject;
+        public UnityEngine.GameObject GameObject { get; private init; }
         private readonly UnityEngine.Transform _transform;
         public UnityGameObject(UnityEngine.GameObject gameObject)
         {
-            _gameObject = gameObject;
+            GameObject = gameObject;
             _transform = gameObject.transform;
         }
         public bool Enabled
         {
-            get => _gameObject.activeSelf;
-            set => _gameObject.SetActive(value);
+            get => GameObject.activeSelf;
+            set => GameObject.SetActive(value);
         }
         public ITransform Transform => this;
         public bool TryGetComponent<T>(out T component) where T : class, IComponent
@@ -29,9 +29,9 @@ namespace UnityIceFebruary
                 return false;
             }
 
-            if (_gameObject.TryGetComponent(type, out UnityEngine.Component getted))
+            if (GameObject.TryGetComponent(type, out UnityEngine.Component getted))
             {
-                component = UnityMethods.Create(getted) as T;
+                component = UnityMethods.Upsert(getted) as T;
                 return component != null;
             }
 

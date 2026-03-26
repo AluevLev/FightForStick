@@ -2,6 +2,7 @@ namespace UnityIceFebruary
 {
     using UnityEngine;
     using IceFebruary;
+    using UnityIceFebruary.Components;
     using System;
 
     public static class UnityMethods
@@ -13,14 +14,14 @@ namespace UnityIceFebruary
 
             return type;
         }
-        public static IGameObject Create(GameObject gameObject)
+        public static IGameObject Upsert(GameObject gameObject)
         {
             if (gameObject == null)
                 return null;
 
-            return HierarchyCache.Upsert(gameObject, g => new UnityGameObject(g));
+            return UnityHierarchyCache.Upsert(gameObject, g => new UnityGameObject(g));
         }
-        public static IComponent Create(Component component)
+        public static IComponent Upsert(Component component)
         {
             if (component == null)
                 return null;
@@ -28,8 +29,24 @@ namespace UnityIceFebruary
             if (!UnityMatchComponent.FabricAliases.TryGetValue(component.GetType(), out Func<Component, IComponent> fabric))
                 return null;
 
-            return HierarchyCache.Upsert(component, fabric);
+            return UnityHierarchyCache.Upsert(component, fabric);
+        }
+        public static void Remove(IGameObject gameObject)
+        {
+            if (gameObject == null)
+                return;
+
+            if (gameObject is not UnityGameObject unityGameObject)
+                return;
+
+            UnityHierarchyCache.Remove(unityGameObject.GameObject);
+        }
+        public static void Remove(IUnityAnalog component)
+        {
+            if (component == null)
+                return;
+
+            UnityHierarchyCache.Remove(component.Original);
         }
     }
-
 }
