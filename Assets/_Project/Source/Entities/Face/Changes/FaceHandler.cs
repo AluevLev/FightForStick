@@ -7,15 +7,14 @@ public class FaceHandler : ITogglable
 
 	private readonly IFacialExpression _facialExpression;
 	private readonly ITransformFollower _faceFollower;
-
-	public bool Enabled { get; set; } = true;
 	public FaceHandler(IFacialExpression facialExpression, ITransformFollower transformFollower, GrimaceLibrary grimaceLibrary)
 	{
 		_facialExpression = facialExpression;
 		_faceFollower = transformFollower;
 		_grimaceLibrary = grimaceLibrary;
 	}
-	public void SetStartFace()
+    public bool Enabled { get; set; } = true;
+    public void SetStartFace()
 	{
         if (!Enabled)
             return;
@@ -24,7 +23,7 @@ public class FaceHandler : ITogglable
 	}
 	public void FaceFollowTarget()
 	{
-		if (!Enabled)
+        if (!Enabled)
 			return;
 
 		_faceFollower.Follow();

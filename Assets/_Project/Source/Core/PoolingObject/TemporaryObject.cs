@@ -2,10 +2,10 @@ using IceFebruary;
 
 public class TemporaryObject
 {
-    private readonly IGameObject _gameObject;
-    public TemporaryObject(IGameObject gameObject)
+    private readonly ITogglable _togglable;
+    public TemporaryObject(ITogglable togglable)
     {
-        _gameObject = gameObject;
+        _togglable = togglable;
     }
-    public void Destroy() => _gameObject.Enabled = false;
+    public void Destroy() => _togglable.Enabled = false;
 }

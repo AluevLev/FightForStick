@@ -4,7 +4,7 @@ namespace UnityIceFebruary
     using IceFebruary.Space;
     using UnityIceFebruary.Adaptation;
 
-    public class UnityGameObject : IGameObject, ITransform
+    public class UnityGameObject : IGameObject, ITransform, ITogglable
     {
         public UnityEngine.GameObject GameObject { get; private init; }
         private readonly UnityEngine.Transform _transform;
@@ -18,6 +18,7 @@ namespace UnityIceFebruary
             get => GameObject.activeSelf;
             set => GameObject.SetActive(value);
         }
+        public bool IsValid => GameObject != null;
         public ITransform Transform => this;
         public bool TryGetComponent<T>(out T component) where T : class, IComponent
         {

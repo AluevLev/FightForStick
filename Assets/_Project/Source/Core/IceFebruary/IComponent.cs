@@ -1,7 +1,7 @@
 namespace IceFebruary
 {
-    public interface IComponent : ITogglable
+    public interface IComponent
     {
-
+        
     }
 }

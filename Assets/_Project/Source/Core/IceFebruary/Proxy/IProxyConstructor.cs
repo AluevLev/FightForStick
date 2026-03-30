@@ -1,6 +1,6 @@
 namespace IceFebruary.Proxy
 {
-    public interface IProxyConstructor : IProxyAttribute
+    public interface IProxyConstructor
     {
 
     }

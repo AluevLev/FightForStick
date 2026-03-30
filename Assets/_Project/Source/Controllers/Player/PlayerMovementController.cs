@@ -4,12 +4,12 @@ public class PlayerMovementController : ITogglable, IController
 {
     private readonly IInputProvider _inputProvider;
     private readonly IMotorHandler _playerMotorHandler;
-    public bool Enabled { get; set; } = true;
     public PlayerMovementController(IMotorHandler entityMotorHandler, IInputProvider inputProvider)
     {
         _playerMotorHandler = entityMotorHandler;
         _inputProvider = inputProvider;
     }
+    public bool Enabled { get; set; } = true;
     public void ProcessInput()
     {
         if (!Enabled)

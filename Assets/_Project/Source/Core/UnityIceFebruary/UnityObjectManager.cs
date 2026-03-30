@@ -21,7 +21,6 @@ namespace UnityIceFebruary
 
             UnityEngine.Object.Destroy(unityGameObject.GameObject);
             UnityMethods.Remove(gameObject);
-            gameObject = null;
         }
         public void Destroy(IComponent component)
         {
@@ -30,7 +29,6 @@ namespace UnityIceFebruary
 
             UnityEngine.Object.Destroy(unityComponent.Original);
             UnityMethods.Remove(unityComponent);
-            component = null;
         }
     }
 }

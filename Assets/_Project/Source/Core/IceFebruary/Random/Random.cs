@@ -50,7 +50,7 @@ namespace IceFebruary.Random
         }
         public bool FiftyFifty => (ChangeState() & 1) == 0;
         public float Percent => BetweenFloat(0f, 1f);
-        public T InArray<T>(T[] array) => array.Exist() ? array[BetweenInt(0, array.Length)] : default;
-        public T InList<T>(List<T> list) => list.Exist() ? list[BetweenInt(0, list.Count)] : default;
+        public T InArray<T>(T[] array) => array.Exists() ? array[BetweenInt(0, array.Length)] : default;
+        public T InList<T>(List<T> list) => list.Exists() ? list[BetweenInt(0, list.Count)] : default;
     }
 }

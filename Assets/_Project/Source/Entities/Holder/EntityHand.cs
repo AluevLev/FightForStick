@@ -16,11 +16,11 @@ public class EntityHand : IHand
         _hand.Position = _holder.GameObject.Transform.TransformPoint(_holder.Component.Anchor);
 
         _holder.Component.ConnectedBody = _hand;
-        _holder.Component.Enabled = true;
+        //_holder.Component.Enabled = true;
     }
     public void Disconnect()
     {
-        _holder.Component.Enabled = false;
+        //_holder.Component.Enabled = false;
         _holder.Component.ConnectedBody = null;
         _holder = null;
     }

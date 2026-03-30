@@ -1,6 +1,6 @@
 namespace IceFebruary
 {
-    public interface IGameObject : ITogglable
+    public interface IGameObject
     {
         ITransform Transform { get; }
         bool TryGetComponent<T>(out T component) where T : class, IComponent;

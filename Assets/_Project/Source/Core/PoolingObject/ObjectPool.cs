@@ -25,7 +25,7 @@ public class ObjectPool
     {
         IGameObject objectInPool = _objectManager.Create(_prefab);
 
-        objectInPool.Enabled = false;
+        //objectInPool.Enabled = false;
 
         return objectInPool;
     }
@@ -43,7 +43,7 @@ public class ObjectPool
                 _pool[objectInPoolIndex] = objectInPool;
             }
 
-            if (!objectInPool.Enabled)
+            if (true/*!objectInPool.Enabled*/)
             {
                 spawnObject = objectInPool;
                 break;
@@ -56,8 +56,8 @@ public class ObjectPool
             _currentIndex = (_currentIndex + 1) % _poolSize;
         }
 
-        spawnObject.Enabled = false;
+        //spawnObject.Enabled = false;
         spawnObject.Transform.Position = position;
-        spawnObject.Enabled = true;
+        //spawnObject.Enabled = true;
     }
 }

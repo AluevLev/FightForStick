@@ -1,4 +1,4 @@
-namespace IceFebruary.Execution
+namespace IceFebruary.Time
 {
     public interface IFixedFrame
     {
