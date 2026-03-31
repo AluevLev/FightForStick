@@ -13,19 +13,19 @@ public class Stickman
     private readonly GrimaceLibrary _grimaceLibrary;
     private readonly AnimatorTrigger _pulseFieldName;
 
-    private readonly IDestroyable<ITransform> _groundCheck;
-    private readonly IDestroyable<IAnimator> _face;
-    private readonly IDestroyable<IAnimator> _physicsAnimator;
-    private readonly IDestroyable<IRigidbody2D> _pushBody;
-    private readonly IDestroyable<IRigidbody2D>[] _hands;
-    private readonly IDestroyable<ISpriteRenderer> _eye1;
-    private readonly IDestroyable<ISpriteRenderer> _eye2;
-    private readonly IDestroyable<ISpriteRenderer> _mouth;
+    private readonly ITransform _groundCheck;
+    private readonly IAnimator _face;
+    private readonly IAnimator _physicsAnimator;
+    private readonly IRigidbody2D _pushBody;
+    private readonly IRigidbody2D[] _hands;
+    private readonly ISpriteRenderer _eye1;
+    private readonly ISpriteRenderer _eye2;
+    private readonly ISpriteRenderer _mouth;
 
     public Stickman(RagdollScema ragdollScema, GroundCheckSettings groundCheckSettings, MovementSettings movementSettings,
         PickUpSettings pickUpSettings, GrimaceLibrary grimaceLibrary, AnimatorTrigger pulseFieldName,
-        IDestroyable<ITransform> groundCheck, IDestroyable<IAnimator> face, IDestroyable<IAnimator> physicsAnimator, IDestroyable<IRigidbody2D> pushBody,
-        IDestroyable<IRigidbody2D>[] hands, IDestroyable<ISpriteRenderer> eye1, IDestroyable<ISpriteRenderer> eye2, IDestroyable<ISpriteRenderer> mouth)
+        ITransform groundCheck, IAnimator face, IAnimator physicsAnimator, IRigidbody2D pushBody,
+        IRigidbody2D[] hands, ISpriteRenderer eye1, ISpriteRenderer eye2, ISpriteRenderer mouth)
     {
         _groundCheckSettings = groundCheckSettings;
         _movementSettings = movementSettings;

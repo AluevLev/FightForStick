@@ -4,7 +4,7 @@ using IceFebruary.Shapes;
 using IceFebruary.Space;
 using IceFebruary.Space.PointProvider;
 
-public class EntityItemHolderHandler<T> : ITogglable, IItemHolderHandler where T : struct, IShape
+public class EntityItemHolderHandler<T> : IItemHolderHandler where T : struct, IShape
 {
     private readonly IPhysics2D _physics2D;
     private readonly IItemHolder _entityItemHolder;
@@ -14,7 +14,6 @@ public class EntityItemHolderHandler<T> : ITogglable, IItemHolderHandler where T
     private readonly float _maxPickUpDistance;
 
     private IPickable _itemInHand;
-    public bool Enabled { get; set; } = true;
     public EntityItemHolderHandler(IPhysics2D physics2D, IItemHolder entityItemHolder, IPointProvider cursor, IPointProvider humanPosition, T overlapArea, float maxPickUpDistance)
     {
         _physics2D = physics2D;
@@ -27,8 +26,6 @@ public class EntityItemHolderHandler<T> : ITogglable, IItemHolderHandler where T
 
     public void PickUp()
     {
-        if (!Enabled)
-            return;
         if (!_cursor.TryGetPointSafe(out Vector2 cursorPosition))
             return;
         if (!_humanPosition.TryGetPointSafe(out Vector2 entityPosition))
@@ -60,9 +57,6 @@ public class EntityItemHolderHandler<T> : ITogglable, IItemHolderHandler where T
     }
     public void Drop()
     {
-        if (!Enabled)
-            return;
-
         _entityItemHolder.DropItemInHand();
 
         _itemInHand = null;

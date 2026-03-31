@@ -4,6 +4,6 @@ namespace UnityIceFebruary.Components
 
     public interface IUnityAnalog
     {
-        Component Original { get; }
+        Object Original { get; }
     }
 }

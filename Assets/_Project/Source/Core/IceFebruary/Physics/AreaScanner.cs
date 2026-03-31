@@ -4,7 +4,7 @@ namespace IceFebruary.Physics
     using IceFebruary.Space;
     using IceFebruary.Space.PointProvider;
 
-    public class AreaScanner<T> : ILazyOverlap where T : struct, IShape
+    public class AreaScanner<T> : IOverlapper where T : struct, IShape
     {
         private readonly IPhysics2D _physics2D;
         private readonly T _shape;

@@ -1,6 +1,4 @@
-using IceFebruary;
-
-public class PlayerMovementController : ITogglable, IController
+public class PlayerMovementController : IController
 {
     private readonly IInputProvider _inputProvider;
     private readonly IMotorHandler _playerMotorHandler;
@@ -9,12 +7,8 @@ public class PlayerMovementController : ITogglable, IController
         _playerMotorHandler = entityMotorHandler;
         _inputProvider = inputProvider;
     }
-    public bool Enabled { get; set; } = true;
     public void ProcessInput()
     {
-        if (!Enabled)
-            return;
-
         float horizontal = _inputProvider.HorizontalMovement;
         float vertical = _inputProvider.VerticalMovement;
 

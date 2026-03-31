@@ -1,22 +1,12 @@
 namespace IceFebruary
 {
-    public class Trigger : ITogglable
+    public class Trigger
     {
         private bool _charged;
         public bool Active { get; private set; }
-        public bool Enabled { get; set; } = true;
-        public void Charge()
-        {
-            if (!Enabled)
-                return;
-
-            _charged = true;
-        }
+        public void Charge() => _charged = true;
         public void Process()
         {
-            if (!Enabled)
-                _charged = false;
-
             Active = _charged;
             _charged = false;
         }

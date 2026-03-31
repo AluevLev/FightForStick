@@ -1,19 +1,15 @@
 using IceFebruary;
 using IceFebruary.Physics;
 
-public class EntityItemHolder : ITogglable, IItemHolder
+public class EntityItemHolder : IItemHolder
 {
     private readonly IHand[] _entityHands;
-    public bool Enabled { get; set; } = true;
     public EntityItemHolder(IHand[] entityHands)
     {
         _entityHands = entityHands;
     }
     public void PickUpItem(IPickable item)
     {
-        if (!Enabled)
-            return;
-
         IEntireComponent<IHingeJoint2D>[] holders = item.Holders;
 
         int connections = Math.Min(_entityHands.Length, holders.Length);
@@ -23,9 +19,6 @@ public class EntityItemHolder : ITogglable, IItemHolder
     }
     public void DropItemInHand()
     {
-        if (!Enabled)
-            return;
-
         foreach (IHand hand in _entityHands)
             hand.Disconnect();
     }

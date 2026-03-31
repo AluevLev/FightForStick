@@ -1,25 +1,19 @@
 namespace UnityIceFebruary
 {
     using IceFebruary;
-    using IceFebruary.Space;
-    using UnityIceFebruary.Adaptation;
+    using UnityIceFebruary.Components;
 
-    public class UnityGameObject : IGameObject, ITransform, ITogglable
+    public class UnityGameObject : IGameObject, IUnityAnalog
     {
         public UnityEngine.GameObject GameObject { get; private init; }
-        private readonly UnityEngine.Transform _transform;
+        public UnityEngine.Object Original { get; private init; }
         public UnityGameObject(UnityEngine.GameObject gameObject)
         {
             GameObject = gameObject;
-            _transform = gameObject.transform;
+            Original = GameObject;
+            Transform = UnityMethods.Upsert(gameObject.transform) as ITransform;
         }
-        public bool Enabled
-        {
-            get => GameObject.activeSelf;
-            set => GameObject.SetActive(value);
-        }
-        public bool IsValid => GameObject != null;
-        public ITransform Transform => this;
+        public ITransform Transform { get; private init; }
         public bool TryGetComponent<T>(out T component) where T : class, IComponent
         {
             System.Type type = UnityMethods.GetUnityType<T>();
@@ -39,29 +33,5 @@ namespace UnityIceFebruary
             component = null;
             return false;
         }
-        public Vector2 Position
-        {
-            get => _transform.position.ToIce();
-            set
-            {
-                if (!Enabled)
-                    return;
-
-                _transform.position = value.ToUnity2D();
-            }
-        }
-        public Vector2 LocalPosition
-        {
-            get => _transform.localPosition.ToIce();
-            set
-            {
-                if (!Enabled)
-                    return;
-
-                _transform.localPosition = value.ToUnity2D();
-            }
-        }
-        public Vector2 TransformDirection(Vector2 vector2) => _transform.TransformDirection(vector2.ToUnity3D()).ToIce();
-        public Vector2 TransformPoint(Vector2 vector2) => _transform.TransformPoint(vector2.ToUnity3D()).ToIce();
     }
 }

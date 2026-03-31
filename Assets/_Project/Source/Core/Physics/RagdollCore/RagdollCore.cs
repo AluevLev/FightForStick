@@ -1,11 +1,9 @@
-using IceFebruary;
 using IceFebruary.Physics;
 using IceFebruary.Time;
 
-public class RagdollCore : ITogglable, IRagdollCore, IFixedFrame
+public class RagdollCore : IRagdollCore, IFixedFrame
 {
     private readonly IPhysicsBalancer[] _balancers;
-    public bool Enabled { get; set; } = true;
     public RagdollCore(PhysicsLimbSettings[] settings)
     {
         _balancers = new IPhysicsBalancer[settings.Length];
@@ -28,9 +26,6 @@ public class RagdollCore : ITogglable, IRagdollCore, IFixedFrame
     }
     public void ProcessLimbs()
     {
-        if (!Enabled)
-            return;
-
         foreach (IPhysicsBalancer physicsBalancer in _balancers)
             physicsBalancer.LookAtTarget();
     }

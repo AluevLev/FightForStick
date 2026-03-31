@@ -41,12 +41,15 @@ namespace UnityIceFebruary
 
             UnityHierarchyCache.Remove(unityGameObject.GameObject);
         }
-        public static void Remove(IUnityAnalog component)
+        public static void Remove(IComponent component)
         {
             if (component == null)
                 return;
 
-            UnityHierarchyCache.Remove(component.Original);
+            if (component is not IUnityAnalog analog)
+                return;
+
+            UnityHierarchyCache.Remove(analog.Original as Component);
         }
     }
 }

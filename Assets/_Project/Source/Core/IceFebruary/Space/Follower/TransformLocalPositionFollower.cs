@@ -4,7 +4,7 @@ namespace IceFebruary.Space.Follow
     using IceFebruary.Space;
     using IceFebruary.Space.PointProvider;
 
-    public class TransformLocalPositionFollower : ITogglable, ITransformFollower
+    public class TransformLocalPositionFollower : ITransformFollower
     {
         private readonly IPointProvider _target;
         private readonly ITransform _transform;
@@ -18,8 +18,6 @@ namespace IceFebruary.Space.Follow
         }
         public void Follow()
         {
-            if (!Enabled)
-                return;
             if (!_target.TryGetPointSafe(out Vector2 target))
                 return;
 

@@ -1,6 +1,6 @@
 namespace IceFebruary.Physics
 {
-    public interface ILazyOverlap
+    public interface IOverlapper
     {
         bool Overlap(out IEntireComponent<ICollider2D>[] colliders2D);
     }

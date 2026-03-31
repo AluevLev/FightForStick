@@ -1,10 +1,9 @@
-using IceFebruary;
 using IceFebruary.Physics;
 using IceFebruary.Space;
 using IceFebruary.Space.Follow;
 using IceFebruary.Space.PointProvider;
 
-public class PhysicsBalancer : ITogglable, ITargetPossessing, IPhysicsBalancer
+public class PhysicsBalancer : ITargetPossessing, IPhysicsBalancer
 {
     private readonly IRigidbody2D _physicsBody;
     private readonly IPhysicsBalancerCalculator _physicsBalancerCalculator;
@@ -13,7 +12,6 @@ public class PhysicsBalancer : ITogglable, ITargetPossessing, IPhysicsBalancer
     private IPointProvider _targetPoint;
 
     public float AdditionalAngle { get; set; }
-    public bool Enabled { get; set; } = true;
     public PhysicsBalancer(IRigidbody2D physics, IPhysicsBalancerCalculator physicsBalancerCalculator, IPointProvider defaultPointProvider = null)
     {
         _physicsBody = physics;
@@ -27,8 +25,6 @@ public class PhysicsBalancer : ITogglable, ITargetPossessing, IPhysicsBalancer
     public void Relax() => _targetPoint = null;
     public void LookAtTarget()
     {
-        if (!Enabled)
-            return;
         if (!_targetPoint.TryGetPointSafe(out Vector2 point))
             return;
 

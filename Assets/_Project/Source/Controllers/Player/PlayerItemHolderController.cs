@@ -1,6 +1,4 @@
-using IceFebruary;
-
-public class PlayerItemHolderController : ITogglable, IController
+public class PlayerItemHolderController : IController
 {
     private readonly IInputProvider _inputProvider;
     private readonly IItemHolderHandler _playerHolderHandler;
@@ -12,9 +10,6 @@ public class PlayerItemHolderController : ITogglable, IController
     }
     public void ProcessInput()
     {
-        if (!Enabled)
-            return;
-
         if (_inputProvider.IsPickingUp)
             _playerHolderHandler.PickUp();
         if (_inputProvider.IsDroppingItem)

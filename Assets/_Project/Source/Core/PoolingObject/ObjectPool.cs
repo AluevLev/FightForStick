@@ -1,12 +1,13 @@
 using IceFebruary;
 using IceFebruary.Space;
 
+
 public class ObjectPool
 {
     private readonly IObjectManager _objectManager;
     private readonly IGameObject _prefab;
     
-    private readonly IGameObject[] _pool;
+    private readonly IToggleable<IGameObject>[] _pool;
     private readonly int _poolSize;
 
     private int _currentIndex;
@@ -15,39 +16,34 @@ public class ObjectPool
         _objectManager = objectManager;
         _prefab = prefab;
 
-        _pool = new IGameObject[poolSize];
+        _pool = new IToggleable<IGameObject>[poolSize];
         _poolSize = poolSize;
         
         for (int objectInPoolIndex = 0; objectInPoolIndex < _poolSize; objectInPoolIndex++)
             _pool[objectInPoolIndex] = InstantiateObjectInPool();
     }
-    public IGameObject InstantiateObjectInPool()
+    public IToggleable<IGameObject> InstantiateObjectInPool()
     {
-        IGameObject objectInPool = _objectManager.Create(_prefab);
+        IToggleable<IGameObject> objectInPool = _objectManager.Create(_prefab);
 
-        //objectInPool.Enabled = false;
+        objectInPool.Enabled = false;
 
         return objectInPool;
     }
     public void Spawn(Vector2 position)
     {
-        IGameObject spawnObject = null;
+        IToggleable<IGameObject> spawnObject = null;
+        IGameObject innerSpawnObject = null;
 
         for (int objectInPoolIndex = 0; objectInPoolIndex < _poolSize; objectInPoolIndex++)
         {
-            IGameObject objectInPool = _pool[objectInPoolIndex];
-
-            if (objectInPool == null)
+            if (H.Get(ref _pool[objectInPoolIndex], out innerSpawnObject, out IToggleable<IGameObject> toggleable))
             {
-                objectInPool = InstantiateObjectInPool();
-                _pool[objectInPoolIndex] = objectInPool;
-            }
-
-            if (true/*!objectInPool.Enabled*/)
-            {
-                spawnObject = objectInPool;
+                spawnObject = toggleable;
                 break;
             }
+
+            _pool[objectInPoolIndex] = InstantiateObjectInPool();
         }
 
         if (spawnObject == null)
@@ -56,8 +52,8 @@ public class ObjectPool
             _currentIndex = (_currentIndex + 1) % _poolSize;
         }
 
-        //spawnObject.Enabled = false;
-        spawnObject.Transform.Position = position;
-        //spawnObject.Enabled = true;
+        spawnObject.Enabled = false;
+        innerSpawnObject.Transform.Position = position;
+        spawnObject.Enabled = true;
     }
 }

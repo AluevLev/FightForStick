@@ -1,6 +1,6 @@
 namespace IceFebruary
 {
-    public interface ITogglable
+    public interface IToggleable<out T> : IInnerPossessable<T>
     {
         bool Enabled { get; set; }
     }

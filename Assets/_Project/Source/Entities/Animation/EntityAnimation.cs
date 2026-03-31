@@ -1,12 +1,10 @@
 using IceFebruary.Time;
-using IceFebruary;
 using IceFebruary.Animation;
 
-public class EntityAnimation : ITogglable, IAnimation, IFixedFrame
+public class EntityAnimation : IAnimation, IFixedFrame
 {
     private readonly AnimatorVariable<float> _movementFloat;
     private readonly IMotorHandler _movable;
-    public bool Enabled { get; set; } = true;
     public EntityAnimation(IMotorHandler movable, AnimatorVariable<float> movementFloat)
     {
         _movable = movable;
@@ -18,9 +16,6 @@ public class EntityAnimation : ITogglable, IAnimation, IFixedFrame
     }
     private void Animate()
     {
-        if (!Enabled)
-            return;
-
         _movementFloat.Value = _movable.MovementDirection;
     }
 }
