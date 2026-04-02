@@ -13,7 +13,7 @@ namespace IceFebruary
         public static float Sin(float x) => SysMathF.Sin(x);
         public static float Cos(float x) => SysMathF.Cos(x);
         public static float Atan2(float y, float x) => SysMathF.Atan2(y, x);
-        public static int Clamp(int x, int min, int max)
+        public static int Clamp(this int x, int min, int max)
         {
             if (x < min)
                 return min;
@@ -21,7 +21,7 @@ namespace IceFebruary
                 return max;
             return x;
         }
-        public static float Clamp(float x, float min, float max)
+        public static float Clamp(this float x, float min, float max)
         {
             if (x < min)
                 return min;
@@ -29,7 +29,7 @@ namespace IceFebruary
                 return max;
             return x;
         }
-        public static T Clamp<T>(T x, T min, T max) where T : System.IComparable<T>
+        public static T Clamp<T>(this T x, T min, T max) where T : System.IComparable<T>
         {
             if (x.CompareTo(min) < 0)
                 return min;
@@ -37,6 +37,9 @@ namespace IceFebruary
                 return max;
             return x;
         }
+        public static bool InBounds(this int x, int min, int max) => x >= min && x <= max;
+        public static bool InBounds(this float x, float min, float max) => x >= min && x <= max;
+        public static bool InBounds<T>(this T x, T min, T max) where T : System.IComparable<T> => x.CompareTo(min) >= 0 && x.CompareTo(max) <= 0;
         public static float Lerp(float x, float y, float interpolation) => x + (y - x) * Clamp01(interpolation);
         public static float LerpAngle(float x, float y, float interpolation)
         {
