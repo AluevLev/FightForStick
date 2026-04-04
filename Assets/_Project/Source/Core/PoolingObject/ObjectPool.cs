@@ -35,14 +35,13 @@ public class ObjectPool
     public void Spawn(Vector2 position)
     {
         IEntity<IGameObject> target = null;
-        IGameObject inner = null;
 
         for (int i = 0; i < _poolSize; i++)
         {
             int currentIndex = (_lastObjectIndex + i) % _poolSize;
-            ref IEntity<IGameObject> slot = ref _pool[currentIndex];
+            IEntity<IGameObject> slot = _pool[currentIndex];
 
-            bool alive = EntityHelper.EnsureAlive(ref slot, out IGameObject _);
+            bool alive = slot.TryGetInner(out _);
 
             if (!alive)
                 slot = InstantiateObjectInPool();
@@ -55,17 +54,14 @@ public class ObjectPool
             }
         }
 
-        if (target == null)
-        {
-            target = _pool[_lastObjectIndex];
-            _lastObjectIndex = (_lastObjectIndex + 1) % _poolSize;
-        }
+        if (!target.TryGetInner(out IGameObject inner))
+            return;
 
-        if (EntityHelper.EnsureAlive(ref target, out inner))
-        {
-            target.Enabled = false;
-            inner.Transform.Position = position;
-            target.Enabled = true;
-        }
+        target = _pool[_lastObjectIndex];
+        _lastObjectIndex = (_lastObjectIndex + 1) % _poolSize;
+
+        target.Enabled = false;
+        inner.Transform.Position = position;
+        target.Enabled = true;
     }
 }

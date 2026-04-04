@@ -4,17 +4,17 @@ namespace IceFebruary.Space.PointProvider
 
     public class TransformPointProvider : IPointProvider
     {
-        private readonly ITransform _transform;
+        private readonly IEntity<ITransform> _transform;
         [Proxy(typeof(IPointProvider))]
-        public TransformPointProvider(ITransform transform)
+        public TransformPointProvider(IEntity<ITransform> transform)
         {
             _transform = transform;
         }
         public bool TryGetPoint(out Vector2 point)
         {
-            bool hasValue = _transform != null;
+            bool hasValue = _transform.TryGetInner(out ITransform inner);
 
-            point = hasValue ? _transform.Position : default;
+            point = hasValue ? inner.Position : default;
 
             return hasValue;
         }

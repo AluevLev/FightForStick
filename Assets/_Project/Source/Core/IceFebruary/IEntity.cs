@@ -1,9 +1,11 @@
 namespace IceFebruary
 {
-    public interface IEntity<T> where T : class
+    using System;
+
+    public interface IEntity<out T> : IDisposable where T : class
     {
-        bool TryGetInner(out T inner);
+        T Inner { get; }
         bool Enabled { get; set; }
-        void Destroy();
+        bool Disposed { get; }
     }
 }

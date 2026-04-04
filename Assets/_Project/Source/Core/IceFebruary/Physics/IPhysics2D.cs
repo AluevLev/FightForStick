@@ -5,6 +5,6 @@ namespace IceFebruary.Physics
 
     public interface IPhysics2D
     {
-        int Overlap<T>(out IEntireComponent<ICollider2D>[] results, T shape, Vector2 position, float angle = 0f, ContactFilter2D contactFilter2D = default) where T : struct, IShape;
+        int Overlap(out IEntireComponent<ICollider2D>[] results, IShape shape, Vector2 position, float angle = 0f, ContactFilter2D contactFilter2D = default);
     }
 }

@@ -1,6 +1,6 @@
 using IceFebruary.Space;
 
-public class EntityMovementCalculator
+public class EntityMovementCalculator : IMovementCalculator
 {
     private readonly MovementSettings _movementSettings;
     public EntityMovementCalculator(MovementSettings movementSettings)

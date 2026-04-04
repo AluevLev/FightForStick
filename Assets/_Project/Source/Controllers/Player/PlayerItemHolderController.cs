@@ -1,4 +1,6 @@
-public class PlayerItemHolderController : IController
+using IceFebruary.Time;
+
+public class PlayerItemHolderController : IFrame
 {
     private readonly IInputProvider _inputProvider;
     private readonly IItemHolderHandler _playerHolderHandler;
@@ -8,7 +10,7 @@ public class PlayerItemHolderController : IController
         _inputProvider = inputProvider;
         _playerHolderHandler = playerHolderHandler;
     }
-    public void ProcessInput()
+    public void OnFrame()
     {
         if (_inputProvider.IsPickingUp)
             _playerHolderHandler.PickUp();

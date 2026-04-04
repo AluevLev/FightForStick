@@ -1,5 +1,6 @@
 using IceFebruary.Physics;
 using IceFebruary.Time;
+using IceFebruary;
 
 public class RagdollCore : IRagdollCore, IFixedFrame
 {
@@ -13,7 +14,7 @@ public class RagdollCore : IRagdollCore, IFixedFrame
             PhysicsLimbSettings physicsBalancer = settings[limb];
             PhysicsBalancerSettings physicsBalancerSettings = physicsBalancer.BalancerSettings;
             
-            IRigidbody2D physicsBody = physicsBalancer.Rigidbody2D;
+            IEntity<IRigidbody2D> physicsBody = physicsBalancer.Rigidbody2D;
             IPhysicsBalancerCalculator physicsBalancerCalculator = new PhysicsBalancerCalculator(physicsBalancerSettings.Force);
 
             IPhysicsBalancer balancer = new PhysicsBalancer(physicsBody, physicsBalancerCalculator, physicsBalancerSettings.Target);

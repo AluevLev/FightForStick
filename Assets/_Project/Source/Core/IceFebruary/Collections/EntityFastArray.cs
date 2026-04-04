@@ -2,30 +2,28 @@ namespace IceFebruary.Collections
 {
     using System.Collections.Generic;
 
-    public class EntityFastArray<TEntity, TInner>
-        where TEntity : class, IEntity<TInner>
-        where TInner : class
+    public class EntityFastArray<T> where T : class
     {
-        private TEntity[] _entities;
+        private IEntity<T>[] _entities;
         private int _length;
-        private Stack<int> _freeIndexes = new();
+        private readonly Stack<int> _freeIndexes = new();
         public int Length => _length;
         public EntityFastArray(int startLength)
         {
             _length = Math.Clamp(startLength, 4, int.MaxValue);
-            _entities = new TEntity[_length];
+            _entities = new IEntity<T>[_length];
 
             for (int index = 0; index < _length; index++)
                 _freeIndexes.Push(index);
         }
-        public void Register(TEntity obj)
+        public void Register(IEntity<T> obj)
         {
-            if (!EntityHelper.EnsureAlive<TEntity, TInner>(ref obj, out _))
+            if (!obj.TryGetInner(out _))
                 return;
 
             if (_freeIndexes.Count == 0)
                 for (int entityIndex = 0; entityIndex < _length; entityIndex++)
-                    if (!EntityHelper.EnsureAlive<TEntity, TInner>(ref _entities[entityIndex], out _))
+                    if (!_entities[entityIndex].TryGetInner(out _))
                         _freeIndexes.Push(entityIndex);
 
             if (_freeIndexes.Count == 0)
@@ -42,27 +40,27 @@ namespace IceFebruary.Collections
 
             _entities[_freeIndexes.Pop()] = obj;
         }
-        public bool TryGetEntity(int index, out TInner inner)
+        public bool TryGetEntity(int index, out T inner)
         {
+            inner = null;
+
             if (!index.InBounds(0, _length))
-            {
-                inner = null;
                 return false;
-            }
 
-            if (_entities[index] == null)
-            {
-                inner = null;
+            ref IEntity<T> entity = ref _entities[index];
+
+            if (entity == null)
                 return false;
-            }
 
-            if (!EntityHelper.EnsureAlive(ref _entities[index], out inner))
+            if (entity.Disposed)
             {
+                entity = null;
                 _freeIndexes.Push(index);
                 return false;
             }
 
-            return _entities[index].Enabled;
+            inner = entity.Inner;
+            return entity.Enabled;
         }
     }
 }

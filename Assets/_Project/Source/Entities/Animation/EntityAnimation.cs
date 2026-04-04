@@ -12,10 +12,6 @@ public class EntityAnimation : IAnimation, IFixedFrame
     }
     public void OnFixedFrame()
     {
-        Animate();
-    }
-    private void Animate()
-    {
         _movementFloat.Value = _movable.MovementDirection;
     }
 }

@@ -6,7 +6,6 @@ namespace IceFebruary.Space.PointProvider
         {
             if (pointProvider != null)
                 return pointProvider.TryGetPoint(out point);
-
             point = default;
             return false;
         }

@@ -7,22 +7,24 @@ namespace UnityIceFebruary
 
     public class UnityTime : ITime
     {
-        private EntityFastArray<IEntity<IFrame>, IFrame> _frameArray = new(1024);
-        private EntityFastArray<IEntity<IFixedFrame>, IFixedFrame> _fixedFrameArray = new(1024);
-
+        private readonly EntityFastArray<IFrame> _frameArray;
+        private readonly EntityFastArray<IFixedFrame> _fixedFrameArray;
+        public UnityTime(int startArraySize = 2048)
+        {
+            _frameArray = new(startArraySize);
+            _fixedFrameArray = new(startArraySize);
+        }
         public float FixedFrameRate
         {
             get => Time.fixedDeltaTime;
             set => Time.fixedDeltaTime = value;
         }
-
         public void OnFrame()
         {
             for (int index = 0; index < _frameArray.Length; index++)
                 if (_frameArray.TryGetEntity(index, out IFrame inner))
                     inner.OnFrame();
         }
-
         public void OnFixedFrame()
         {
             for (int index = 0; index < _fixedFrameArray.Length; index++)
@@ -31,12 +33,12 @@ namespace UnityIceFebruary
         }
         public void LaunchIFrame(IEntity<IFrame> entity)
         {
-            if (entity.TryGetInner(out IFrame inner))
+            if (entity.TryGetInner(out _))
                 _frameArray.Register(entity);
         }
         public void LaunchIFixedFrame(IEntity<IFixedFrame> entity)
         {
-            if (entity.TryGetInner(out IFixedFrame inner))
+            if (entity.TryGetInner(out _))
                 _fixedFrameArray.Register(entity);
         }
     }

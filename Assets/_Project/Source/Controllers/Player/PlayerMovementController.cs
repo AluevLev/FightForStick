@@ -1,13 +1,15 @@
-public class PlayerMovementController : IController
+using IceFebruary.Time;
+
+public class PlayerMovementController : IFrame
 {
     private readonly IInputProvider _inputProvider;
     private readonly IMotorHandler _playerMotorHandler;
-    public PlayerMovementController(IMotorHandler entityMotorHandler, IInputProvider inputProvider)
+    public PlayerMovementController(IInputProvider inputProvider, IMotorHandler entityMotorHandler)
     {
-        _playerMotorHandler = entityMotorHandler;
         _inputProvider = inputProvider;
+        _playerMotorHandler = entityMotorHandler;
     }
-    public void ProcessInput()
+    public void OnFrame()
     {
         float horizontal = _inputProvider.HorizontalMovement;
         float vertical = _inputProvider.VerticalMovement;

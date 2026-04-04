@@ -82,7 +82,7 @@ public class PlayerLifetimeScope : LifetimeScope
 
         }, Lifetime.Scoped);
 
-        builder.Register<IItemHolderHandler, EntityItemHolderHandler<Dot>>(Lifetime.Scoped);
+        //builder.Register<IItemHolderHandler, EntityItemHolderHandler<Dot>>(Lifetime.Scoped);
     }
     private void RegisterAnimation(IContainerBuilder builder)
     {

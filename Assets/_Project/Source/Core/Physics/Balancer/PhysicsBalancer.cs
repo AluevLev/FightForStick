@@ -1,3 +1,4 @@
+using IceFebruary;
 using IceFebruary.Physics;
 using IceFebruary.Space;
 using IceFebruary.Space.Follow;
@@ -5,14 +6,14 @@ using IceFebruary.Space.PointProvider;
 
 public class PhysicsBalancer : ITargetPossessing, IPhysicsBalancer
 {
-    private readonly IRigidbody2D _physicsBody;
+    private readonly IEntity<IRigidbody2D> _physicsBody;
     private readonly IPhysicsBalancerCalculator _physicsBalancerCalculator;
 
     private readonly IPointProvider _defaultPointProvider;
     private IPointProvider _targetPoint;
 
     public float AdditionalAngle { get; set; }
-    public PhysicsBalancer(IRigidbody2D physics, IPhysicsBalancerCalculator physicsBalancerCalculator, IPointProvider defaultPointProvider = null)
+    public PhysicsBalancer(IEntity<IRigidbody2D> physics, IPhysicsBalancerCalculator physicsBalancerCalculator, IPointProvider defaultPointProvider = null)
     {
         _physicsBody = physics;
         _defaultPointProvider = defaultPointProvider;
@@ -25,11 +26,11 @@ public class PhysicsBalancer : ITargetPossessing, IPhysicsBalancer
     public void Relax() => _targetPoint = null;
     public void LookAtTarget()
     {
-        if (!_targetPoint.TryGetPointSafe(out Vector2 point))
+        if (!_physicsBody.TryGetInnerSafe(out IRigidbody2D innerPhysics) || !_targetPoint.TryGetPointSafe(out Vector2 point))
             return;
 
-        float torque = _physicsBalancerCalculator.CalculateAngle(_physicsBody.Rotation, point.Angle + AdditionalAngle);
+        float torque = _physicsBalancerCalculator.CalculateAngle(innerPhysics.Rotation, point.Angle + AdditionalAngle);
 
-        _physicsBody.MoveRotation(torque);
+        innerPhysics.MoveRotation(torque);
     }
 }
