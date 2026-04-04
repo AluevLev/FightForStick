@@ -26,7 +26,7 @@ public class PhysicsBalancer : ITargetPossessing, IPhysicsBalancer
     public void Relax() => _targetPoint = null;
     public void LookAtTarget()
     {
-        if (!_physicsBody.TryGetInnerSafe(out IRigidbody2D innerPhysics) || !_targetPoint.TryGetPointSafe(out Vector2 point))
+        if (!_physicsBody.TryGetInner(out IRigidbody2D innerPhysics) || !_targetPoint.TryGetPointSafe(out Vector2 point))
             return;
 
         float torque = _physicsBalancerCalculator.CalculateAngle(innerPhysics.Rotation, point.Angle + AdditionalAngle);
