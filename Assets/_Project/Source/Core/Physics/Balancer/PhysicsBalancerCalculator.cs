@@ -1,6 +1,6 @@
 using IceFebruary;
 
-public class PhysicsBalancerCalculator : IPhysicsBalancerCalculator
+public sealed class PhysicsBalancerCalculator : IPhysicsBalancerCalculator
 {
     private readonly float _force;
     public PhysicsBalancerCalculator(float force)

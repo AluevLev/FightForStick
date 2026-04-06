@@ -6,7 +6,7 @@ namespace UnityIceFebruary.Components
     using Animator = UnityEngine.Animator;
 
     [UnityAnalog(typeof(Animator))]
-    public class UnityAnimator : IAnimator, IUnityAnalog
+    public sealed class UnityAnimator : IAnimator, IUnityAnalog
     {
         public Animator Animator { get; private init; }
         public UnityEngine.Object Original { get; private init; }

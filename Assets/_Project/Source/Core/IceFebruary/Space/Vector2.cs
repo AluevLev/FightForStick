@@ -31,6 +31,7 @@ namespace IceFebruary.Space
         public static bool operator !=(Vector2 a, Vector2 b) => !(a == b);
         public override bool Equals(object obj) => (obj is Vector2 other) && this == other;
         public override int GetHashCode() => System.HashCode.Combine(X, Y);
+        public static float SqrDistance(Vector2 a, Vector2 b) => (a - b).SqrLength;
         public static float Distance(Vector2 a, Vector2 b) => (a - b).Length;
         public static Vector2 Normalize(Vector2 v)
         {

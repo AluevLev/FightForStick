@@ -4,14 +4,16 @@ using IceFebruary.Shapes;
 using IceFebruary.Space;
 using IceFebruary.Space.PointProvider;
 
-public class EntityItemHolderHandler : IItemHolderHandler
+public sealed class EntityItemHolderHandler : IItemHolderHandler
 {
+    private readonly IEntireComponent<ICollider2D>[] _itemBuffer = new IEntireComponent<ICollider2D>[8];
+
     private readonly IPhysics2D _physics2D;
     private readonly IItemHolder _entityItemHolder;
     private readonly IPointProvider _cursor;
     private readonly IPointProvider _humanPosition;
     private readonly IShape _overlapArea;
-    private readonly float _maxPickUpDistance;
+    private readonly float _sqrMaxPickUpDistance;
 
     private IPickable _itemInHand;
     public EntityItemHolderHandler(IPhysics2D physics2D, IItemHolder entityItemHolder, IPointProvider cursor, IPointProvider humanPosition, IShape overlapArea, float maxPickUpDistance)
@@ -21,7 +23,7 @@ public class EntityItemHolderHandler : IItemHolderHandler
         _cursor = cursor;
         _humanPosition = humanPosition;
         _overlapArea = overlapArea;
-        _maxPickUpDistance = maxPickUpDistance;
+        _sqrMaxPickUpDistance = maxPickUpDistance * maxPickUpDistance;
     }
 
     public void PickUp()
@@ -30,16 +32,16 @@ public class EntityItemHolderHandler : IItemHolderHandler
             return;
         if (!_humanPosition.TryGetPointSafe(out Vector2 entityPosition))
             return;
-        if (_physics2D.Overlap(out IEntireComponent<ICollider2D>[] results, _overlapArea, cursorPosition) == 0)
+        if (_physics2D.Overlap(_overlapArea, cursorPosition) == 0)
             return;
 
         IPickable item = null;
 
-        foreach (IEntireComponent<ICollider2D> result in results)
+        foreach (IEntireComponent<ICollider2D> result in _itemBuffer)
         {
             IGameObject gameObject = result.GameObject;
 
-            if (Vector2.Distance(gameObject.Transform.Position, entityPosition) >= _maxPickUpDistance)
+            if (Vector2.SqrDistance(gameObject.Transform.Position, entityPosition) >= _sqrMaxPickUpDistance)
                 continue;
             if (gameObject.TryGetComponent(out item))
                 break;

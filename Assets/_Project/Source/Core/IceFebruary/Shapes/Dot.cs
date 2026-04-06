@@ -1,7 +1,8 @@
 namespace IceFebruary.Shapes
 {
-    public class Dot : IShape
+    public sealed record Dot : IShape
     {
-
+        public static readonly Dot Instance = new();
+        private Dot() { }
     }
 }

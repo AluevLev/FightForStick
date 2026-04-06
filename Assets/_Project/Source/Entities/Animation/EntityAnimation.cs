@@ -1,7 +1,7 @@
 using IceFebruary.Time;
 using IceFebruary.Animation;
 
-public class EntityAnimation : IAnimation, IFixedFrame
+public sealed class EntityAnimation : IAnimation, IFixedFrame
 {
     private readonly AnimatorVariable<float> _movementFloat;
     private readonly IMotorHandler _movable;

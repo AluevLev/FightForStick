@@ -1,6 +1,6 @@
 using IceFebruary.Time;
 
-public class PlayerItemHolderController : IFrame
+public sealed class PlayerItemHolderController : IFrame
 {
     private readonly IInputProvider _inputProvider;
     private readonly IItemHolderHandler _playerHolderHandler;

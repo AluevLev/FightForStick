@@ -2,7 +2,7 @@ namespace UnityIceFebruary.Components
 {
     using IceFebruary;
 
-    public class UnityEntireComponent<T> : IEntireComponent<T> where T : IComponent
+    public sealed class UnityEntireComponent<T> : IEntireComponent<T> where T : IComponent
     {
         public UnityEntireComponent(T unityComponent, IGameObject gameObject)
         {

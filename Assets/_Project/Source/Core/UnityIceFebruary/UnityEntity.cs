@@ -3,41 +3,37 @@ namespace UnityIceFebruary
     using IceFebruary;
     using UnityIceFebruary.Components;
 
-    public class UnityEntity<T> : IEntity<T> where T : class, IUnityAnalog
+    public sealed class UnityEntity<T> : IEntity<T> where T : class, IUnityAnalog
     {
-        public T Inner { get; private set; }
-        private bool _destroyed;
+        public T RawInner { get; private set; }
         public UnityEntity(T inner, bool? enabled)
         {
-            Inner = inner;
-            if (enabled.HasValue)
-                Enabled = enabled.Value;
-        }
-        public bool Disposed
-        {
-            get
+            if (inner == null || inner.Original == null)
             {
-                if (_destroyed)
-                    return true;
-                if (Inner == null || Inner.Original == null)
-                    SetDestroyed();
-                return _destroyed;
+                SetDisposed();
+                return;
             }
+
+            RawInner = inner;
+            Enabled = enabled ?? UnityToggler.Get(RawInner.Original);
         }
+        private bool _enabled;
         public bool Enabled
         {
-            get => UnityToggler.Get(Inner.Original);
-            set => UnityToggler.Set(Inner.Original, value);
+            get => _enabled;
+            set
+            {
+                _enabled = value;
+                UnityToggler.Set(RawInner.Original, _enabled);
+            }
         }
+        public bool Disposed { get; private set; }
         public void Dispose()
         {
-            UnityEngine.Object.Destroy(Inner.Original);
-            SetDestroyed();
+            UnityEngine.Object.Destroy(RawInner.Original);
+            SetDisposed();
+            RawInner = null;
         }
-        private void SetDestroyed()
-        {
-            _destroyed = true;
-            Inner = null;
-        }
+        private void SetDisposed() => Disposed = true;
     }
 }

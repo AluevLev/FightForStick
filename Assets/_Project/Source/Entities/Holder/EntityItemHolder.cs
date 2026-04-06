@@ -1,7 +1,7 @@
 using IceFebruary;
 using IceFebruary.Physics;
 
-public class EntityItemHolder : IItemHolder
+public sealed class EntityItemHolder : IItemHolder
 {
     private readonly IHand[] _entityHands;
     public EntityItemHolder(IHand[] entityHands)

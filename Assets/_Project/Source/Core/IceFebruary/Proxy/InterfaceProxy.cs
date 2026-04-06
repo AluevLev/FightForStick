@@ -3,7 +3,7 @@ namespace IceFebruary.Proxy
     using System;
 
     [AttributeUsage(AttributeTargets.Interface)]
-    public class InterfaceProxy : Attribute, IProxyInterface
+    public sealed class InterfaceProxy : Attribute, IProxyInterface
     {
 
     }

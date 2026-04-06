@@ -1,6 +1,6 @@
 using IceFebruary.Space.Follow;
 
-public class FaceHandler
+public sealed class FaceHandler
 {
 	private readonly GrimaceLibrary _grimaceLibrary;
 

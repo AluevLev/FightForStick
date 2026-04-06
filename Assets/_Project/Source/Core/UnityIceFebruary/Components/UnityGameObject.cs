@@ -3,7 +3,7 @@ namespace UnityIceFebruary
     using IceFebruary;
     using UnityIceFebruary.Components;
 
-    public class UnityGameObject : IGameObject, IUnityAnalog
+    public sealed class UnityGameObject : IGameObject, IUnityAnalog
     {
         public UnityEngine.GameObject GameObject { get; private init; }
         public UnityEngine.Object Original { get; private init; }

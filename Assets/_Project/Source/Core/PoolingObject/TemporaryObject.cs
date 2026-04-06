@@ -1,4 +1,4 @@
-public class TemporaryObject
+public sealed class TemporaryObject
 {
     /*
     private readonly ITogglable _togglable;

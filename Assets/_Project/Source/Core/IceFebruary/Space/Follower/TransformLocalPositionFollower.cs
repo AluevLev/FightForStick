@@ -4,7 +4,7 @@ namespace IceFebruary.Space.Follow
     using IceFebruary.Space;
     using IceFebruary.Space.PointProvider;
 
-    public class TransformLocalPositionFollower : ITransformFollower
+    public sealed class TransformLocalPositionFollower : ITransformFollower
     {
         private readonly IPointProvider _target;
         private readonly ITransform _transform;

@@ -19,7 +19,7 @@ namespace UnityIceFebruary.AutoGeneration
             if (!string.IsNullOrEmpty(attribute))
                 stringBuilder.AppendLine($"[{attribute}]");
 
-            stringBuilder.Append($"public class {classProxy.Name.ToProxyName()}");
+            stringBuilder.Append($"public sealed class {classProxy.Name.ToProxyName()}");
 
             if (inheritType != null)
                 stringBuilder.AppendLine($" : {(inheritType.IsProxyable() ? inheritType.Name.ToProxyName() : inheritType.FullName)}");

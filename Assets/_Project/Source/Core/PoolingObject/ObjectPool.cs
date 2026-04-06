@@ -2,7 +2,7 @@ using IceFebruary;
 using IceFebruary.Space;
 
 
-public class ObjectPool
+public sealed class ObjectPool
 {
     private readonly IObjectManager _objectManager;
     private readonly IGameObject _prefab;

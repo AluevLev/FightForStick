@@ -2,7 +2,7 @@ namespace IceFebruary.Collections
 {
     using System.Collections.Generic;
 
-    public class EntityFastArray<T> where T : class
+    public sealed class EntityFastArray<T> where T : class
     {
         private IEntity<T>[] _entities;
         private int _length;
@@ -59,7 +59,7 @@ namespace IceFebruary.Collections
                 return false;
             }
 
-            inner = entity.Inner;
+            inner = entity.RawInner;
             return entity.Enabled;
         }
     }

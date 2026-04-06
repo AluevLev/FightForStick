@@ -4,7 +4,7 @@ namespace IceFebruary
 
     public interface IEntity<out T> : IDisposable where T : class
     {
-        T Inner { get; }
+        T RawInner { get; }
         bool Enabled { get; set; }
         bool Disposed { get; }
     }

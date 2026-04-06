@@ -6,7 +6,7 @@ namespace UnityIceFebruary.Components
 
     using Transform = UnityEngine.Transform;
 
-    public class UnityTransform : ITransform, IUnityAnalog
+    public sealed class UnityTransform : ITransform, IUnityAnalog
     {
         public Transform Transform { get; private init; }
         public UnityEngine.Object Original { get; private init; }

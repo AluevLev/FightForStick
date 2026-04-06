@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LocalCollisionFilter : MonoBehaviour
+public sealed class LocalCollisionFilter : MonoBehaviour
 {
     [SerializeField] private Collider2D[] _colliders2D;
     private void Awake()

@@ -3,7 +3,7 @@ namespace IceFebruary.Random
     using System.Collections.Generic;
     using IceFebruary.Collections;
 
-    public class Random
+    public sealed class Random
     {
         private const float UintFloatMaxValue = uint.MaxValue;
         private uint _state;

@@ -2,7 +2,7 @@ namespace IceFebruary.Space.PointProvider
 {
     using IceFebruary.Proxy;
 
-    public class TransformPointProvider : IPointProvider
+    public sealed class TransformPointProvider : IPointProvider
     {
         private readonly IEntity<ITransform> _transform;
         [Proxy(typeof(IPointProvider))]

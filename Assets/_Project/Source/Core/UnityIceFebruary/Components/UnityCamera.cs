@@ -9,7 +9,7 @@ namespace UnityIceFebruary.Components
     using Camera = UnityEngine.Camera;
 
     [UnityAnalog(typeof(Camera))]
-    public class UnityCamera : ICamera, IUnityAnalog
+    public sealed class UnityCamera : ICamera, IUnityAnalog
     {
         public Camera Camera { get; private init; }
         public UnityEngine.Object Original { get; private init; }

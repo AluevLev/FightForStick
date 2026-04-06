@@ -6,7 +6,7 @@ namespace UnityIceFebruary.AutoGeneration
     using System.Linq;
     using UnityEditor;
 
-    public class AutoGeneratorHandler : AssetPostprocessor
+    public sealed class AutoGeneratorHandler : AssetPostprocessor //CURRENTLY ABADONED
     {
         /// <summary>
         /// You can change a value of this field if you have to stop generate proxies.

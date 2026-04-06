@@ -1,11 +1,13 @@
 namespace IceFebruary
 {
-    public class Trigger
+    using IceFebruary.Time;
+
+    public sealed class Trigger : IFixedFrame
     {
         private bool _charged;
         public bool Active { get; private set; }
         public void Charge() => _charged = true;
-        public void Process()
+        public void OnFixedFrame()
         {
             Active = _charged;
             _charged = false;

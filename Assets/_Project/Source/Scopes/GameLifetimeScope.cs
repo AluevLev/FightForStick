@@ -2,7 +2,7 @@ using VContainer;
 using VContainer.Unity;
 using UnityEngine;
 
-public class GameLifetimeScope : LifetimeScope
+public sealed class GameLifetimeScope : LifetimeScope
 {
     [SerializeField] private MovementSettings _movementSettings;
     [SerializeField] private GroundCheckSettings _groundCheckSettings;

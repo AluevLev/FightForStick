@@ -6,7 +6,7 @@ namespace UnityIceFebruary.Components
     using Collider2D = UnityEngine.Collider2D;
 
     [UnityAnalog(typeof(Collider2D))]
-    public class UnityCollider2D : ICollider2D, IUnityAnalog
+    public sealed class UnityCollider2D : ICollider2D, IUnityAnalog
     {
         public Collider2D Сollider2D { get; private init; }
         public UnityEngine.Object Original { get; private init; }

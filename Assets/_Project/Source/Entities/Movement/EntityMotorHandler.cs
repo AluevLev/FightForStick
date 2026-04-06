@@ -1,7 +1,8 @@
 using IceFebruary;
 using IceFebruary.Physics;
+using IceFebruary.Time;
 
-public class EntityMotorHandler : IMotorHandler
+public sealed class EntityMotorHandler : IMotorHandler, IFixedFrame
 {
     private readonly IEntity<IRigidbody2D> _entityPhysics;
     private readonly IOverlapper _areaCaster;
@@ -15,16 +16,16 @@ public class EntityMotorHandler : IMotorHandler
         _movementCalculator = movementCalculator;
     }
     public void Jump() => _jumpTrigger.Charge();
-    public void Move()
+    public void OnFixedFrame()
     {
-        if (_entityPhysics.TryGetInner(out IRigidbody2D inner))
-            inner.AddForce(_movementCalculator.CalculateMovementVector(MovementDirection), ForceMode2D.Force);
-    }
-    public void ProcessMotor()
-    {
-        _jumpTrigger.Process();
+        _jumpTrigger.OnFixedFrame();
 
-        if (_jumpTrigger.Active && _entityPhysics.TryGetInner(out IRigidbody2D inner) && _areaCaster.Overlap(out _))
-            inner.AddForce(_movementCalculator.CalculateJumpVector(MovementDirection), ForceMode2D.Force);
+        if (_entityPhysics.TryGetInner(out IRigidbody2D inner))
+        {
+            inner.AddForce(_movementCalculator.CalculateMovementVector(MovementDirection), ForceMode2D.Force);
+
+            if (_jumpTrigger.Active && _areaCaster.Overlap())
+                inner.AddForce(_movementCalculator.CalculateJumpVector(MovementDirection), ForceMode2D.Force);
+        }
     }
 }

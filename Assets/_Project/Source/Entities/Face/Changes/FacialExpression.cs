@@ -1,7 +1,7 @@
 using IceFebruary.Animation;
 using IceFebruary.Render;
 
-public class FacialExpression : IFacialExpression
+public sealed class FacialExpression : IFacialExpression
 {
     private readonly AnimatorTrigger _pulseTrigger;
 

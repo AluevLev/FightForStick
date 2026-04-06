@@ -4,7 +4,7 @@ using IceFebruary.Space;
 using IceFebruary.Space.Follow;
 using IceFebruary.Space.PointProvider;
 
-public class PhysicsBalancer : ITargetPossessing, IPhysicsBalancer
+public sealed class PhysicsBalancer : ITargetPossessing, IPhysicsBalancer
 {
     private readonly IEntity<IRigidbody2D> _physicsBody;
     private readonly IPhysicsBalancerCalculator _physicsBalancerCalculator;

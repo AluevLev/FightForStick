@@ -1,7 +1,7 @@
 using IceFebruary;
 using IceFebruary.Physics;
 
-public class EntityHand : IHand
+public sealed class EntityHand : IHand
 {
     private readonly IEntity<IRigidbody2D> _hand;
     private IEntireComponent<IHingeJoint2D> _holder;

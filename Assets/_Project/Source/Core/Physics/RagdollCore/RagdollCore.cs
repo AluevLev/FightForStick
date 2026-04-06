@@ -2,7 +2,7 @@ using IceFebruary.Physics;
 using IceFebruary.Time;
 using IceFebruary;
 
-public class RagdollCore : IRagdollCore, IFixedFrame
+public sealed class RagdollCore : IRagdollCore, IFixedFrame
 {
     private readonly IPhysicsBalancer[] _balancers;
     public RagdollCore(PhysicsLimbSettings[] settings)

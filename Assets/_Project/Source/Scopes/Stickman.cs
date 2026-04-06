@@ -6,7 +6,7 @@ using IceFebruary.Space;
 using IceFebruary.Space.PointProvider;
 using IceFebruary.Time;
 
-public class Stickman
+public sealed class Stickman //TODO: fixx this bruh
 {
     private readonly ITime _time;
     private readonly IPhysics2D _physics2D;
@@ -71,7 +71,7 @@ public class Stickman
             _itemHolder,
             _cursorPointProvider,
             groundCheckPointProvider,
-            new Dot(),
+            Dot.Instance,
             _pickUpSettings.MaxPickUpDistance);
 
         _animation = new(new EntityAnimation(_motorHandler, _movementField));

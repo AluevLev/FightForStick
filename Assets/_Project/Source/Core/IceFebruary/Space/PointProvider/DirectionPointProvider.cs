@@ -2,7 +2,7 @@ namespace IceFebruary.Space.PointProvider
 {
     using IceFebruary.Proxy;
 
-    public class DirectionPointProvider : IPointProvider
+    public sealed class DirectionPointProvider : IPointProvider
     {
         private readonly IPointProvider _from;
         private readonly IPointProvider _to;

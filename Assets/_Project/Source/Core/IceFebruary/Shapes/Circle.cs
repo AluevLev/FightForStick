@@ -1,11 +1,11 @@
 namespace IceFebruary.Shapes
 {
-    public class Circle : IShape
+    public sealed record Circle : IShape
     {
         public float Radius { get; private init; }
         public Circle(float radius)
         {
-            Radius = radius;
+            Radius = Math.Abs(radius);
         }
     }
 }

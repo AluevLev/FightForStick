@@ -1,6 +1,6 @@
 using IceFebruary.Time;
 
-public class PlayerMovementController : IFrame
+public sealed class PlayerMovementController : IFrame
 {
     private readonly IInputProvider _inputProvider;
     private readonly IMotorHandler _playerMotorHandler;

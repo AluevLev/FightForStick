@@ -2,7 +2,7 @@ namespace IceFebruary.Space.PointProvider
 {
     using IceFebruary.Render;
 
-    public class CursorPointProvider : IPointProvider
+    public sealed class CursorPointProvider : IPointProvider
     {
         private readonly IInputProvider _inputProvider;
         private readonly ICamera _mainCamera;

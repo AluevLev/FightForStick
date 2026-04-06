@@ -4,7 +4,7 @@ namespace IceFebruary.Physics
     using IceFebruary.Space;
     using IceFebruary.Space.PointProvider;
 
-    public class AreaScanner : IOverlapper
+    public sealed class AreaScanner : IOverlapper
     {
         private readonly IPhysics2D _physics2D;
         private readonly IShape _shape;
@@ -19,7 +19,7 @@ namespace IceFebruary.Physics
             _angleDirection = angleDirection;
             _contactFilter2D = contactFilter;
         }
-        public bool Overlap(out IEntireComponent<ICollider2D>[] colliders2D)
+        public bool Overlap(IEntireComponent<ICollider2D>[] colliders2D)
         {
             if (!_position.TryGetPointSafe(out Vector2 position) || !_angleDirection.TryGetPointSafe(out Vector2 angleDirection))
             {
@@ -27,7 +27,7 @@ namespace IceFebruary.Physics
                 return false;
             }
 
-            int count = _physics2D.Overlap(out colliders2D, _shape, position, angleDirection.Angle, _contactFilter2D);
+            int count = _physics2D.Overlap(_shape, position, angleDirection.Angle, _contactFilter2D, colliders2D);
 
             return count > 0;
         }

@@ -8,7 +8,7 @@ namespace UnityIceFebruary.Components
     using HingeJoint2D = UnityEngine.HingeJoint2D;
 
     [UnityAnalog(typeof(HingeJoint2D))]
-    public class UnityHingeJoint2D : IHingeJoint2D, IUnityAnalog
+    public sealed class UnityHingeJoint2D : IHingeJoint2D, IUnityAnalog
     {
         public HingeJoint2D HingeJoint2D { get; private init; }
         public UnityEngine.Object Original { get; private init; }

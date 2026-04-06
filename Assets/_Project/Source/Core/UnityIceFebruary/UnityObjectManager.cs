@@ -2,7 +2,7 @@ namespace UnityIceFebruary
 {
     using IceFebruary;
 
-    public class UnityObjectManager : IObjectManager
+    public sealed class UnityObjectManager : IObjectManager
     {
         public IEntity<IGameObject> Create(IGameObject gameObject)
         {

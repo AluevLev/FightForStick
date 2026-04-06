@@ -2,7 +2,7 @@ namespace IceFebruary.Space.PointProvider
 {
     using IceFebruary.Proxy;
 
-    public class AnglePointProvider : IPointProvider
+    public sealed class AnglePointProvider : IPointProvider
     {
         private readonly Vector2 _vectorAngle;
         [Proxy(typeof(IPointProvider))]

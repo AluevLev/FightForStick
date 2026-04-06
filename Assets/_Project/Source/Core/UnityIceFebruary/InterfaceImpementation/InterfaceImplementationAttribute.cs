@@ -4,5 +4,5 @@ namespace UnityIceFebruary.InterfaceImplementation
     using System;
 
     [AttributeUsage(AttributeTargets.Field)]
-    public class InterfaceImplementation : PropertyAttribute { }
+    public sealed class InterfaceImplementation : PropertyAttribute { }
 }

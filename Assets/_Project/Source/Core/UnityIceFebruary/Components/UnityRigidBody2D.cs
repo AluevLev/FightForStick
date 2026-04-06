@@ -7,7 +7,7 @@ namespace UnityIceFebruary.Components
     using Rigidbody2D = UnityEngine.Rigidbody2D;
 
     [UnityAnalog(typeof(Rigidbody2D))]
-    public class UnityRigidbody2D : IRigidbody2D, IUnityAnalog
+    public sealed class UnityRigidbody2D : IRigidbody2D, IUnityAnalog
     {
         public Rigidbody2D Rigidbody2D { get; private init; }
         public UnityEngine.Object Original { get; private init; }

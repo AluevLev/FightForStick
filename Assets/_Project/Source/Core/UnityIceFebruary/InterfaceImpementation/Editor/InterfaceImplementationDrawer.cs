@@ -7,7 +7,7 @@ namespace UnityIceFebruary.InterfaceImplementation
     using System.Collections.Generic;
 
     [CustomPropertyDrawer(typeof(InterfaceImplementation))]
-    public class InterfaceImplementationDrawer : PropertyDrawer
+    public sealed class InterfaceImplementationDrawer : PropertyDrawer
     {
         private readonly int spacing = 2;
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
