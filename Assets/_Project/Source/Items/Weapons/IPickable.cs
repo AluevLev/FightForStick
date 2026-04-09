@@ -1,7 +1,7 @@
 using IceFebruary.Physics;
 using IceFebruary;
 
-public interface IPickable : IComponent
+public interface IPickable
 {
-    IEntireComponent<IHingeJoint2D>[] Holders { get; }
+    IComponent<IHingeJoint2D>[] Holders { get; }
 }

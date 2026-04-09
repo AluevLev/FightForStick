@@ -1,13 +1,14 @@
 namespace UnityIceFebruary
 {
     using UnityEngine;
+    using UnityIceFebruary.Components;
     using System;
     using System.Runtime.CompilerServices;
     using IceFebruary;
 
     public static class UnityHierarchyCache
     {
-        private static readonly ConditionalWeakTable<Component, IComponent> _components = new();
+        private static readonly ConditionalWeakTable<Component, IUnityAnalog> _components = new();
         private static readonly ConditionalWeakTable<GameObject, IGameObject> _gameObjects = new();
         public static IGameObject Upsert(GameObject original, Func<GameObject, IGameObject> factory)
         {
@@ -15,7 +16,7 @@ namespace UnityIceFebruary
                 return null;
             return _gameObjects.GetValue(original, c => factory(c));
         }
-        public static T Upsert<T>(Component original, Func<Component, T> fabric) where T : IComponent
+        public static T Upsert<T>(Component original, Func<Component, T> fabric) where T : IUnityAnalog
         {
             if (original == null)
                 return default;

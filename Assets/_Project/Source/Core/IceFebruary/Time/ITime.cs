@@ -1,6 +1,6 @@
 namespace IceFebruary.Time
 {
-    public interface ITime : IFrame, IFixedFrame
+    public interface ITime
     {
         float FixedFrameRate { get; set; }
         void LaunchIFrame(IEntity<IFrame> frame);

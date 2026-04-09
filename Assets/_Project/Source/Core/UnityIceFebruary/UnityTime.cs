@@ -5,7 +5,7 @@ namespace UnityIceFebruary
     using IceFebruary.Time;
     using UnityEngine;
 
-    public sealed class UnityTime : ITime
+    public sealed class UnityTime : ITime, IFrame, IFixedFrame
     {
         private readonly EntityFastArray<IFrame> _frameArray;
         private readonly EntityFastArray<IFixedFrame> _fixedFrameArray;

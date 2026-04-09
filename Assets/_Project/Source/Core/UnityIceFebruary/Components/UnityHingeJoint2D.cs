@@ -20,7 +20,7 @@ namespace UnityIceFebruary.Components
         public Vector2 Anchor
         {
             get => HingeJoint2D.anchor.ToIce();
-            set => HingeJoint2D.anchor = value.ToUnity2D();
+            set => HingeJoint2D.anchor = value.ToUnity();
         }
         public IRigidbody2D ConnectedBody
         {

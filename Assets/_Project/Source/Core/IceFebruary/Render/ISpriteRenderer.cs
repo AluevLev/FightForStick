@@ -1,6 +1,6 @@
 namespace IceFebruary.Render
 {
-    public interface ISpriteRenderer : IComponent
+    public interface ISpriteRenderer
     {
         ISprite Sprite { get; set; }
     }

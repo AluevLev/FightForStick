@@ -27,7 +27,7 @@ namespace IceFebruary.Space
         public static Vector2 operator *(Vector2 a, float f) => new(a.X * f, a.Y * f);
         public static Vector2 operator *(float f, Vector2 a) => a * f;
         public static Vector2 operator /(Vector2 a, float f) => new(a.X / f, a.Y / f);
-        public static bool operator ==(Vector2 a, Vector2 b) => a.X == b.X && a.Y == b.Y;
+        public static bool operator ==(Vector2 a, Vector2 b) => Math.Abs(a.X - b.X) < Math.Epsilon && Math.Abs(a.Y - b.Y) < Math.Epsilon;
         public static bool operator !=(Vector2 a, Vector2 b) => !(a == b);
         public override bool Equals(object obj) => (obj is Vector2 other) && this == other;
         public override int GetHashCode() => System.HashCode.Combine(X, Y);
@@ -54,5 +54,6 @@ namespace IceFebruary.Space
 
             return new(x * cos - y * sin, x * sin + y * cos);
         }
+        public static implicit operator Vector3(Vector2 v) => new(v.X, v.Y, 0f);
     }
 }

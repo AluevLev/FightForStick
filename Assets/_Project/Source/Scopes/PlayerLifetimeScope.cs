@@ -3,7 +3,7 @@ using VContainer.Unity;
 using UnityEngine;
 using IceFebruary.Shapes;
 
-public sealed class PlayerLifetimeScope : LifetimeScope
+public sealed class PlayerLifetimeScope : LifetimeScope //I will delete this class soon
 {
     [Header("Scriptable Object Data")]
     [SerializeField] private GroundCheckSettings _groundCheckSettings;
@@ -86,7 +86,7 @@ public sealed class PlayerLifetimeScope : LifetimeScope
     }
     private void RegisterAnimation(IContainerBuilder builder)
     {
-        builder.Register<IAnimation, EntityAnimation>(Lifetime.Scoped).WithParameter(_physicsAnimator);
+        //builder.Register<IBoneAnimation, EntityBoneAnimation>(Lifetime.Scoped).WithParameter(_physicsAnimator);
     }
     private void RegisterControllers(IContainerBuilder builder)
     {

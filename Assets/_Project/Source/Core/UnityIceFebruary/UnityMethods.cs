@@ -7,7 +7,7 @@ namespace UnityIceFebruary
 
     public static class UnityMethods
     {
-        public static Type GetUnityType<T>() where T : class, IComponent
+        public static Type GetUnityType<T>() where T : class
         {
             if (!UnityMatchComponent.UnityAnalogs.TryGetValue(typeof(T), out Type type))
                 return null;
@@ -21,32 +21,26 @@ namespace UnityIceFebruary
 
             return UnityHierarchyCache.Upsert(gameObject, g => new UnityGameObject(g));
         }
-        public static IComponent Upsert(Component component)
+        public static IUnityAnalog Upsert(Component component)
         {
             if (component == null)
                 return null;
 
-            if (!UnityMatchComponent.FabricAliases.TryGetValue(component.GetType(), out Func<Component, IComponent> fabric))
+            if (!UnityMatchComponent.FabricAliases.TryGetValue(component.GetType(), out Func<Component, IUnityAnalog> fabric))
                 return null;
 
             return UnityHierarchyCache.Upsert(component, fabric);
         }
-        public static void Remove(IGameObject gameObject)
+        public static void Remove(UnityGameObject gameObject)
         {
             if (gameObject == null)
                 return;
 
-            if (gameObject is not UnityGameObject unityGameObject)
-                return;
-
-            UnityHierarchyCache.Remove(unityGameObject.GameObject);
+            UnityHierarchyCache.Remove(gameObject.GameObject);
         }
-        public static void Remove(IComponent component)
+        public static void Remove(IUnityAnalog analog)
         {
-            if (component == null)
-                return;
-
-            if (component is not IUnityAnalog analog)
+            if (analog == null)
                 return;
 
             UnityHierarchyCache.Remove(analog.Original as Component);

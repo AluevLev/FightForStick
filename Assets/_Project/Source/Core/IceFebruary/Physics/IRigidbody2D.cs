@@ -2,7 +2,7 @@ namespace IceFebruary.Physics
 {
     using IceFebruary.Space;
 
-    public interface IRigidbody2D : IComponent
+    public interface IRigidbody2D
     {
         Vector2 LinearVelocity { get; set; }
         float AngularVelocity { get; set; }

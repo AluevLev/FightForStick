@@ -58,7 +58,7 @@ public sealed class Stickman //TODO: fixx this bruh
             _groundCheckSettings.ContactFilter2D);
 
         _movementCalculator = new EntityMovementCalculator(_movementSettings);
-        _motorHandler = new EntityMotorHandler(_pushBody, _areaCaster, _movementCalculator);
+        //_motorHandler = new EntityMotorHandler(_pushBody, _areaCaster, _movementCalculator); I will delete this
 
         IHand[] hands = new IHand[_handsPhysics.Length];
 
@@ -74,7 +74,7 @@ public sealed class Stickman //TODO: fixx this bruh
             Dot.Instance,
             _pickUpSettings.MaxPickUpDistance);
 
-        _animation = new(new EntityAnimation(_motorHandler, _movementField));
+        _animation = new(new EntityBoneAnimation(_motorHandler, _movementField));
         _playerController = new(new PlayerMovementController(_inputProvider, _motorHandler));
         _itemHolderController = new(new PlayerItemHolderController(_inputProvider, _itemHolderHandler));
 
@@ -89,7 +89,7 @@ public sealed class Stickman //TODO: fixx this bruh
     private readonly EntityMotorHandler _motorHandler;
     private readonly EntityItemHolder _itemHolder;
     private readonly EntityItemHolderHandler _itemHolderHandler;
-    private readonly Entity<EntityAnimation> _animation;
+    private readonly Entity<EntityBoneAnimation> _animation;
     private readonly Entity<PlayerMovementController> _playerController;
     private readonly Entity<PlayerItemHolderController> _itemHolderController;
 }
