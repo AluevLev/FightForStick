@@ -2,12 +2,13 @@ namespace IceFebruary.Space.PointProvider
 {
     using IceFebruary.Proxy;
 
-    public sealed class SpacePointProvider : IPointProvider
+    public sealed class SpacePointProvider// : IPointProvider
     {
+        /*
         private readonly IPointProvider _pointProvider;
-        private readonly IEntity<ITransform> _space;
+        private readonly IDestroyable<ITransform> _space;
         [Proxy(typeof(IPointProvider))]
-        public SpacePointProvider(IPointProvider pointProvider, IEntity<ITransform> space)
+        public SpacePointProvider(IPointProvider pointProvider, IDestroyable<ITransform> space)
         {
             _space = space;
             _pointProvider = pointProvider;
@@ -23,5 +24,6 @@ namespace IceFebruary.Space.PointProvider
             point = default;
             return false;
         }
+        */
     }
 }

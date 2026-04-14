@@ -7,7 +7,7 @@ using IceFebruary.Space.PointProvider;
 using IceFebruary.Time;
 
 public sealed class Stickman //TODO: fixx this bruh
-{
+{/*
     private readonly ITime _time;
     private readonly IPhysics2D _physics2D;
     private readonly IPointProvider _cursorPointProvider;
@@ -19,15 +19,15 @@ public sealed class Stickman //TODO: fixx this bruh
     private readonly PickUpSettings _pickUpSettings;
     private readonly AnimatorVariable<float> _movementField;
 
-    private readonly IEntity<ITransform> _groundCheck;
-    private readonly IEntity<IRigidbody2D> _pushBody;
-    private readonly IEntity<IRigidbody2D>[] _handsPhysics;
+    private readonly IDestroyable<ITransform> _groundCheck;
+    private readonly IDestroyable<IRigidbody2D> _pushBody;
+    private readonly IDestroyable<IRigidbody2D>[] _handsPhysics;
 
     public Stickman(IPhysics2D physics2D, IPointProvider cursorPointProvider, IInputProvider inputProvider, ITime time,
         RagdollScema ragdollSchema, GroundCheckSettings groundCheckSettings, MovementSettings movementSettings,
         PickUpSettings pickUpSettings, AnimatorVariable<float> movementField,
-        IEntity<ITransform> groundCheck, IEntity<IRigidbody2D> pushBody,
-        IEntity<IRigidbody2D>[] handsPhysics)
+        IDestroyable<ITransform> groundCheck, IDestroyable<IRigidbody2D> pushBody,
+        IDestroyable<IRigidbody2D>[] handsPhysics)
     {
         _time = time;
         _physics2D = physics2D;
@@ -91,5 +91,5 @@ public sealed class Stickman //TODO: fixx this bruh
     private readonly EntityItemHolderHandler _itemHolderHandler;
     private readonly Entity<EntityBoneAnimation> _animation;
     private readonly Entity<PlayerMovementController> _playerController;
-    private readonly Entity<PlayerItemHolderController> _itemHolderController;
+    private readonly Entity<PlayerItemHolderController> _itemHolderController;*/
 }

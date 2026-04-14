@@ -4,19 +4,19 @@ namespace IceFebruary.Collections
 
     public sealed class EntityFastArray<T> where T : class
     {
-        private IEntity<T>[] _entities;
+        private Entity<T>[] _entities;
         private int _length;
         private readonly Stack<int> _freeIndexes = new();
         public int Length => _length;
         public EntityFastArray(int startLength)
         {
             _length = Math.Clamp(startLength, 4, int.MaxValue);
-            _entities = new IEntity<T>[_length];
+            _entities = new Entity<T>[_length];
 
             for (int index = 0; index < _length; index++)
                 _freeIndexes.Push(index);
         }
-        public void Register(IEntity<T> obj)
+        public void Register(Entity<T> obj)
         {
             if (!obj.TryGetInner(out _))
                 return;
@@ -47,12 +47,12 @@ namespace IceFebruary.Collections
             if (!index.InBounds(0, _length))
                 return false;
 
-            ref IEntity<T> entity = ref _entities[index];
+            ref Entity<T> entity = ref _entities[index];
 
             if (entity == null)
                 return false;
 
-            if (entity.Disposed)
+            if (entity.Destructor.Destroyed)
             {
                 entity = null;
                 _freeIndexes.Push(index);
@@ -60,7 +60,7 @@ namespace IceFebruary.Collections
             }
 
             inner = entity.RawInner;
-            return entity.Enabled;
+            return entity.Toggle.Enabled;
         }
     }
 }

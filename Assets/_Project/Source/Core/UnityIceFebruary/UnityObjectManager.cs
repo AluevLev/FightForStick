@@ -4,7 +4,8 @@ namespace UnityIceFebruary
 
     public sealed class UnityObjectManager : IObjectManager
     {
-        public IEntity<IGameObject> Create(IGameObject gameObject)
+        /*
+        public IDestroyable<IGameObject> Create(IGameObject gameObject)
         {
             if (gameObject is not UnityGameObject unityGameObject)
                 return null;
@@ -13,5 +14,6 @@ namespace UnityIceFebruary
 
             return null;//new UnityToggleable<UnityGameObject>(UnityMethods.Upsert(newGameObject) as UnityGameObject); TODO
         }
+        */
     }
 }

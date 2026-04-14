@@ -3,7 +3,7 @@ namespace IceFebruary.Time
     public interface ITime
     {
         float FixedFrameRate { get; set; }
-        void LaunchIFrame(IEntity<IFrame> frame);
-        void LaunchIFixedFrame(IEntity<IFixedFrame> fixedFrame);
+        void LaunchIFrame(Entity<IFrame> frame);
+        void LaunchIFixedFrame(Entity<IFixedFrame> fixedFrame);
     }
 }

@@ -7,7 +7,7 @@ public sealed class ObjectPool
     private readonly IObjectManager _objectManager;
     private readonly IGameObject _prefab;
     
-    private readonly IEntity<IGameObject>[] _pool;
+    private readonly Entity<IGameObject>[] _pool;
     private readonly int _poolSize;
 
     private int _lastObjectIndex;
@@ -16,7 +16,7 @@ public sealed class ObjectPool
         _objectManager = objectManager;
         _prefab = prefab;
 
-        _pool = new IEntity<IGameObject>[poolSize];
+        _pool = new Entity<IGameObject>[poolSize];
         _poolSize = poolSize;
         
         for (int objectInPoolIndex = 0; objectInPoolIndex < _poolSize; objectInPoolIndex++)
@@ -24,29 +24,30 @@ public sealed class ObjectPool
 
         _lastObjectIndex = _poolSize - 1;
     }
-    public IEntity<IGameObject> InstantiateObjectInPool()
+    public Entity<IGameObject> InstantiateObjectInPool()
     {
-        IEntity<IGameObject> objectInPool = _objectManager.Create(_prefab);
+        //Entity<IGameObject> objectInPool = _objectManager.Create(_prefab);
 
-        objectInPool.Enabled = false;
+        //objectInPool.Enabled = false;
 
-        return objectInPool;
+        //return objectInPool;
+        return null;
     }
     public void Spawn(Vector2 position)
     {
-        IEntity<IGameObject> target = null;
+        Entity<IGameObject> target = null;
 
         for (int i = 0; i < _poolSize; i++)
         {
             int currentIndex = (_lastObjectIndex + i) % _poolSize;
-            IEntity<IGameObject> slot = _pool[currentIndex];
+            Entity  <IGameObject> slot = _pool[currentIndex];
 
             bool alive = slot.TryGetInner(out _);
 
             if (!alive)
                 slot = InstantiateObjectInPool();
 
-            if (!alive || !slot.Enabled)
+            //if (!alive || !slot.Enabled)
             {
                 target = slot;
                 _lastObjectIndex = (currentIndex + 1) % _poolSize;
@@ -60,8 +61,8 @@ public sealed class ObjectPool
         target = _pool[_lastObjectIndex];
         _lastObjectIndex = (_lastObjectIndex + 1) % _poolSize;
 
-        target.Enabled = false;
+        //target.Enabled = false;
         inner.Transform.Position = position;
-        target.Enabled = true;
+        //target.Enabled = true;
     }
 }

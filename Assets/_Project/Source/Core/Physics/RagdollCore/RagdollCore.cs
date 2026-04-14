@@ -12,13 +12,13 @@ public sealed class RagdollCore : IFixedFrame
         for (int limb = 0; limb < settings.Length; limb++)
         {
             PhysicsLimbSettings physicsBalancer = settings[limb];
-            PhysicsBalancerSettings physicsBalancerSettings = physicsBalancer.BalancerSettings;
+            //PhysicsBalancerSettings physicsBalancerSettings = physicsBalancer.BalancerSettings;
             
-            IEntity<IRigidbody2D> physicsBody = physicsBalancer.Rigidbody2D;
-            IPhysicsBalancerCalculator physicsBalancerCalculator = new PhysicsBalancerCalculator(physicsBalancerSettings.Force);
+            //IDestroyable<IRigidbody2D> physicsBody = physicsBalancer.Rigidbody2D;
+            //IPhysicsBalancerCalculator physicsBalancerCalculator = new PhysicsBalancerCalculator(physicsBalancerSettings.Force);
 
-            IPhysicsBalancer balancer = new PhysicsBalancer(physicsBody, physicsBalancerCalculator, physicsBalancerSettings.Target);
-            _balancers[limb] = balancer;
+            //IPhysicsBalancer balancer = new PhysicsBalancer(physicsBody, physicsBalancerCalculator, physicsBalancerSettings.Target);
+            //_balancers[limb] = balancer;
         }
     }
     public void OnFixedFrame()
