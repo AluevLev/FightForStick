@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Rotor2D : MonoBehaviour
+public sealed class Rotor2D : MonoBehaviour
 {
 	
 }

@@ -1,6 +1,6 @@
 namespace IceFebruary.Render
 {
-    public interface ISprite
+    public interface ISprite : IBaseEntity
     {
 
     }

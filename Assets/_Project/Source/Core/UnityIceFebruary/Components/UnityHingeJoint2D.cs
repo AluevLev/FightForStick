@@ -8,24 +8,18 @@ namespace UnityIceFebruary.Components
     using HingeJoint2D = UnityEngine.HingeJoint2D;
 
     [UnityAnalog(typeof(HingeJoint2D))]
-    public sealed class UnityHingeJoint2D : IHingeJoint2D, IUnityAnalog
+    public sealed class UnityHingeJoint2D : UnityBaseEntity<HingeJoint2D>, IHingeJoint2D
     {
-        public HingeJoint2D HingeJoint2D { get; private init; }
-        public UnityEngine.Object Original { get; private init; }
-        public UnityHingeJoint2D(HingeJoint2D hingeJoint2D)
-        {
-            HingeJoint2D = hingeJoint2D;
-            Original = hingeJoint2D;
-        }
+        public UnityHingeJoint2D(HingeJoint2D hingeJoint2D) : base(hingeJoint2D) { }
         public Vector2 Anchor
         {
-            get => HingeJoint2D.anchor.ToIce();
-            set => HingeJoint2D.anchor = value.ToUnity();
+            get => Original.anchor.ToIce();
+            set => Original.anchor = value.ToUnity();
         }
         public IRigidbody2D ConnectedBody
         {
-            get => UnityMethods.Upsert(HingeJoint2D.connectedBody) as IRigidbody2D;
-            set => HingeJoint2D.connectedBody = (value as UnityRigidbody2D)?.Rigidbody2D;
+            get => UnityMethods.Upsert(Original.connectedBody) as IRigidbody2D;
+            set => Original.connectedBody = (value as UnityRigidbody2D)?.Original;
         }
     }
 }

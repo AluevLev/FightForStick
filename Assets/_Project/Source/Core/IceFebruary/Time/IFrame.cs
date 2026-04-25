@@ -1,7 +1,7 @@
 namespace IceFebruary.Time
 {
-    public interface IFrame
+    public interface IFrame : IBaseEntity
     {
-        void OnFrame();
+        void OnFrame(float frameLength);
     }
 }

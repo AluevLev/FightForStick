@@ -1,16 +1,16 @@
+using IceFebruary;
 using IceFebruary.Time;
 
-public sealed class PlayerItemHolderController : IFrame
+public sealed class PlayerItemHolderController : BaseEntity, IFrame
 {
     private readonly IInputProvider _inputProvider;
     private readonly IItemHolderHandler _playerHolderHandler;
-    public bool Enabled { get; set; } = true;
-    public PlayerItemHolderController(IInputProvider inputProvider, IItemHolderHandler playerHolderHandler)
+    public PlayerItemHolderController(IInputProvider inputProvider, IItemHolderHandler playerHolderHandler) : base()
     {
         _inputProvider = inputProvider;
         _playerHolderHandler = playerHolderHandler;
     }
-    public void OnFrame()
+    public void OnFrame(float frameLength)
     {
         if (_inputProvider.IsPickingUp)
             _playerHolderHandler.PickUp();

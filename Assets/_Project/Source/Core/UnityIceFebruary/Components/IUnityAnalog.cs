@@ -2,8 +2,8 @@ namespace UnityIceFebruary.Components
 {
     using UnityEngine;
 
-    public interface IUnityAnalog
+    public interface IUnityAnalog<T> where T : Object
     {
-        Object Original { get; }
+        T Original { get; }
     }
 }

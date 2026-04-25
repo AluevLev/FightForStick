@@ -16,8 +16,8 @@ public readonly struct GrimaceLibrary
     }
     public Face? GetFace(int angryness, int mood)
     {
-        Eyes eyes = _eyes.GetSafetyElement(angryness);
-        Mouth mouth = _mouths.GetSafetyElement(mood);
+        if (!_eyes.TryGetElement(angryness, out Eyes eyes) & _mouths.TryGetElement(mood, out Mouth mouth))
+            return null;
 
         return new(eyes.Eye1, eyes.Eye2, mouth.Value);
     }

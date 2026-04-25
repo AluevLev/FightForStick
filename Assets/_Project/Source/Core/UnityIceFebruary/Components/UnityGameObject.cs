@@ -1,16 +1,12 @@
 namespace UnityIceFebruary
 {
     using IceFebruary;
-    using UnityIceFebruary.Components;
+    using UnityEngine;
 
-    public sealed class UnityGameObject : IGameObject, IUnityAnalog
+    public sealed class UnityGameObject : UnityBaseEntity<GameObject>, IGameObject
     {
-        public UnityEngine.GameObject GameObject { get; private init; }
-        public UnityEngine.Object Original { get; private init; }
-        public UnityGameObject(UnityEngine.GameObject gameObject)
+        public UnityGameObject(GameObject gameObject) : base(gameObject)
         {
-            GameObject = gameObject;
-            Original = GameObject;
             Transform = UnityMethods.Upsert(gameObject.transform) as ITransform;
         }
         public ITransform Transform { get; private init; }
@@ -24,7 +20,7 @@ namespace UnityIceFebruary
                 return false;
             }
 
-            if (GameObject.TryGetComponent(type, out UnityEngine.Component getted))
+            if (Original.TryGetComponent(type, out Component getted))
             {
                 component = UnityMethods.Upsert(getted) as T;
                 return component != null;

@@ -6,7 +6,7 @@ using IceFebruary.Space.PointProvider;
 
 public sealed class EntityItemHolderHandler : IItemHolderHandler
 {
-    private readonly IComponent<ICollider2D>[] _itemBuffer = new IComponent<ICollider2D>[8];
+    private readonly Component<ICollider2D>[] _itemBuffer = new Component<ICollider2D>[8];
 
     private readonly IPhysics2D _physics2D;
     private readonly IItemHolder _entityItemHolder;
@@ -37,7 +37,7 @@ public sealed class EntityItemHolderHandler : IItemHolderHandler
 
         IPickable item = null;
 
-        foreach (IComponent<ICollider2D> result in _itemBuffer)
+        foreach (Component<ICollider2D> result in _itemBuffer)
         {
             IGameObject gameObject = result.GameObject;
 

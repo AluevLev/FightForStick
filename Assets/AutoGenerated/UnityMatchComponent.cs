@@ -1,11 +1,12 @@
 // AUTO-GENERATED. DO NOT EDIT.
+using IceFebruary;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityIceFebruary.Components;
 public static class UnityMatchComponent
 {
-    public static readonly Dictionary<Type, Func<Component, IUnityAnalog>> FabricAliases = new()
+    public static readonly Dictionary<Type, Func<UnityEngine.Object, IBaseEntity>> FabricAliases = new()
 	{
         { typeof(Animator), component => new UnityAnimator((Animator)component) },
         { typeof(Camera), component => new UnityCamera((Camera)component) },

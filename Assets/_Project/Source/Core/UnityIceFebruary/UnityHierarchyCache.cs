@@ -1,28 +1,19 @@
 namespace UnityIceFebruary
 {
-    using UnityEngine;
-    using UnityIceFebruary.Components;
     using System;
     using System.Runtime.CompilerServices;
     using IceFebruary;
 
     public static class UnityHierarchyCache
     {
-        private static readonly ConditionalWeakTable<Component, IUnityAnalog> _components = new();
-        private static readonly ConditionalWeakTable<GameObject, IGameObject> _gameObjects = new();
-        public static IGameObject Upsert(GameObject original, Func<GameObject, IGameObject> factory)
+        private static readonly ConditionalWeakTable<UnityEngine.Object, IBaseEntity> _objects = new();
+        public static IBaseEntity Upsert<T>(T unityObject, Func<T, IBaseEntity> factory) where T : UnityEngine.Object
         {
-            if (original == null)
+            if (unityObject == null)
                 return null;
-            return _gameObjects.GetValue(original, c => factory(c));
+
+            return _objects.GetValue(unityObject, obj => factory((T)obj));
         }
-        public static T Upsert<T>(Component original, Func<Component, T> fabric) where T : IUnityAnalog
-        {
-            if (original == null)
-                return default;
-            return (T)_components.GetValue(original, c => fabric(c));
-        }
-        public static void Remove(GameObject original) => _gameObjects.Remove(original);
-        public static void Remove(Component original) => _components.Remove(original);
+        public static void Remove<T>(T unityObject) where T : UnityEngine.Object => _objects.Remove(unityObject);
     }
 }

@@ -7,38 +7,32 @@ namespace UnityIceFebruary.Components
     using Rigidbody2D = UnityEngine.Rigidbody2D;
 
     [UnityAnalog(typeof(Rigidbody2D))]
-    public sealed class UnityRigidbody2D : IRigidbody2D, IUnityAnalog
+    public sealed class UnityRigidbody2D : UnityBaseEntity<Rigidbody2D>, IRigidbody2D
     {
-        public Rigidbody2D Rigidbody2D { get; private init; }
-        public UnityEngine.Object Original { get; private init; }
-        public UnityRigidbody2D(Rigidbody2D rigidbody2D)
-        {
-            Rigidbody2D = rigidbody2D;
-            Original = rigidbody2D;
-        }
+        public UnityRigidbody2D(Rigidbody2D rigidbody2D) : base(rigidbody2D) { }
         public Vector2 Position
         {
-            get => Rigidbody2D.position.ToIce();
-            set => Rigidbody2D.position = value.ToUnity();
+            get => Original.position.ToIce();
+            set => Original.position = value.ToUnity();
         }
         public float Rotation
         {
-            get => Rigidbody2D.rotation;
-            set => Rigidbody2D.rotation = value;
+            get => Original.rotation;
+            set => Original.rotation = value;
         }
         public Vector2 LinearVelocity
         {
-            get => Rigidbody2D.linearVelocity.ToIce();
-            set => Rigidbody2D.linearVelocity = value.ToUnity();
+            get => Original.linearVelocity.ToIce();
+            set => Original.linearVelocity = value.ToUnity();
         }
         public float AngularVelocity
         {
-            get => Rigidbody2D.angularVelocity;
-            set => Rigidbody2D.angularVelocity = value;
+            get => Original.angularVelocity;
+            set => Original.angularVelocity = value;
         }
-        public void AddForce(Vector2 force, ForceMode2D forceMode) => Rigidbody2D.AddForce(force.ToUnity(), (UnityEngine.ForceMode2D)forceMode);
-        public void AddTorque(float torque, ForceMode2D forceMode) => Rigidbody2D.AddTorque(torque, (UnityEngine.ForceMode2D)forceMode);
-        public void MovePosition(Vector2 position) => Rigidbody2D.MovePosition(position.ToUnity());
-        public void MoveRotation(float rotation) => Rigidbody2D.MoveRotation(rotation);
+        public void AddForce(Vector2 force, ForceMode2D forceMode) => Original.AddForce(force.ToUnity(), (UnityEngine.ForceMode2D)forceMode);
+        public void AddTorque(float torque, ForceMode2D forceMode) => Original.AddTorque(torque, (UnityEngine.ForceMode2D)forceMode);
+        public void MovePosition(Vector2 position) => Original.MovePosition(position.ToUnity());
+        public void MoveRotation(float rotation) => Original.MoveRotation(rotation);
     }
 }

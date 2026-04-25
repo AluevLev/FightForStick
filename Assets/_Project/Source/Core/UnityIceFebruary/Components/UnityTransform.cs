@@ -6,26 +6,20 @@ namespace UnityIceFebruary.Components
 
     using Transform = UnityEngine.Transform;
 
-    public sealed class UnityTransform : ITransform, IUnityAnalog
+    public sealed class UnityTransform : UnityBaseEntity<Transform>, ITransform
     {
-        public Transform Transform { get; private init; }
-        public UnityEngine.Object Original { get; private init; }
-        public UnityTransform(Transform transform)
-        {
-            Transform = transform;
-            Original = Transform;
-        }
+        public UnityTransform(Transform transform) : base(transform) { }
         public Vector2 Position
         {
-            get => Transform.position.ToIce();
-            set => Transform.position = value.ToUnity();
+            get => Original.position.ToIce();
+            set => Original.position = value.ToUnity();
         }
         public Vector2 LocalPosition
         {
-            get => Transform.localPosition.ToIce();
-            set => Transform.localPosition = value.ToUnity();
+            get => Original.localPosition.ToIce();
+            set => Original.localPosition = value.ToUnity();
         }
-        public Vector2 TransformDirection(Vector2 vector2) => Transform.TransformDirection(vector2.ToUnity()).ToIce();
-        public Vector2 TransformPoint(Vector2 vector2) => Transform.TransformPoint(vector2.ToUnity()).ToIce();
+        public Vector2 TransformDirection(Vector2 vector2) => Original.TransformDirection(vector2.ToUnity()).ToIce();
+        public Vector2 TransformPoint(Vector2 vector2) => Original.TransformPoint(vector2.ToUnity()).ToIce();
     }
 }

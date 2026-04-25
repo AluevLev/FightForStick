@@ -1,6 +1,6 @@
 namespace IceFebruary.Time
 {
-    public interface IFixedFrame
+    public interface IFixedFrame : IBaseEntity
     {
         void OnFixedFrame();
     }

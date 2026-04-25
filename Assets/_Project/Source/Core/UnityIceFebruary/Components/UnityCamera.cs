@@ -9,16 +9,10 @@ namespace UnityIceFebruary.Components
     using Camera = UnityEngine.Camera;
 
     [UnityAnalog(typeof(Camera))]
-    public sealed class UnityCamera : ICamera, IUnityAnalog
+    public sealed class UnityCamera : UnityBaseEntity<Camera>, ICamera
     {
-        public Camera Camera { get; private init; }
-        public UnityEngine.Object Original { get; private init; }
-        public UnityCamera(Camera camera)
-        {
-            Camera = camera;
-            Original = camera;
-        }
-        public Vector2 ScreenToWorldPoint(Vector2 onScreenPosition) => Camera.ScreenToWorldPoint(onScreenPosition.ToUnity()).ToIce();
-        public Vector2 WorldToScreenPoint(Vector2 inWorldPosition) => Camera.WorldToScreenPoint(inWorldPosition.ToUnity()).ToIce();
+        public UnityCamera(Camera camera) : base(camera) { }
+        public Vector2 ScreenToWorldPoint(Vector2 onScreenPosition) => Original.ScreenToWorldPoint(onScreenPosition.ToUnity()).ToIce();
+        public Vector2 WorldToScreenPoint(Vector2 inWorldPosition) => Original.WorldToScreenPoint(inWorldPosition.ToUnity()).ToIce();
     }
 }

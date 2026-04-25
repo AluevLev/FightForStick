@@ -2,65 +2,49 @@ namespace IceFebruary.Collections
 {
     using System.Collections.Generic;
 
-    public sealed class EntityFastArray<T> where T : class
+    public sealed class EntityFastArray<T> where T : class, IBaseEntity
     {
-        private Entity<T>[] _entities;
-        private int _length;
         private readonly Stack<int> _freeIndexes = new();
-        public int Length => _length;
+        private T[] _entities;
+        public T[] Entities
+        {
+            get => _entities;
+            private set => _entities = value;
+        }
+        public int Length { get; private set; }
         public EntityFastArray(int startLength)
         {
-            _length = Math.Clamp(startLength, 4, int.MaxValue);
-            _entities = new Entity<T>[_length];
+            Length = Math.Clamp(startLength, 4, int.MaxValue);
 
-            for (int index = 0; index < _length; index++)
+            Entities = new T[Length];
+
+            for (int index = 0; index < Length; index++)
                 _freeIndexes.Push(index);
         }
-        public void Register(Entity<T> obj)
+        public void Register(T obj)
         {
-            if (!obj.TryGetInner(out _))
+            if (!obj.Exists())
                 return;
 
             if (_freeIndexes.Count == 0)
-                for (int entityIndex = 0; entityIndex < _length; entityIndex++)
-                    if (!_entities[entityIndex].TryGetInner(out _))
+                for (int entityIndex = 0; entityIndex < Length; entityIndex++)
+                    if (!Entities[entityIndex].Exists())
                         _freeIndexes.Push(entityIndex);
 
             if (_freeIndexes.Count == 0)
             {
-                int doubledLength = _length * 2;
+                int length = Length;
+                int doubledLength = length * 2;
 
                 System.Array.Resize(ref _entities, doubledLength);
 
-                for (int index = _length; index < doubledLength; index++)
+                for (int index = length; index < doubledLength; index++)
                     _freeIndexes.Push(index);
 
-                _length = doubledLength;
+                Length = doubledLength;
             }
 
-            _entities[_freeIndexes.Pop()] = obj;
-        }
-        public bool TryGetEntity(int index, out T inner)
-        {
-            inner = null;
-
-            if (!index.InBounds(0, _length))
-                return false;
-
-            ref Entity<T> entity = ref _entities[index];
-
-            if (entity == null)
-                return false;
-
-            if (entity.Destructor.Destroyed)
-            {
-                entity = null;
-                _freeIndexes.Push(index);
-                return false;
-            }
-
-            inner = entity.RawInner;
-            return entity.Toggle.Enabled;
+            Entities[_freeIndexes.Pop()] = obj;
         }
     }
 }

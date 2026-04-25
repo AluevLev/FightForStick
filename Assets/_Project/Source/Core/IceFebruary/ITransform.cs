@@ -2,7 +2,7 @@ namespace IceFebruary
 {
     using IceFebruary.Space;
 
-    public interface ITransform
+    public interface ITransform : IBaseEntity
     {
         Vector2 Position { get; set; }
         Vector2 LocalPosition { get; set; }

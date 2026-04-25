@@ -1,7 +1,7 @@
 namespace IceFebruary
 {
-    public interface IObjectManager
+    public interface IObjectManager : IBaseEntity
     {
-        //IDestroyable<IGameObject> Create(IGameObject gameObject);
+        IGameObject Create(IGameObject gameObject);
     }
 }

@@ -1,6 +1,5 @@
 namespace UnityIceFebruary
 {
-    using UnityEngine;
     using IceFebruary;
     using UnityIceFebruary.Components;
     using System;
@@ -14,36 +13,19 @@ namespace UnityIceFebruary
 
             return type;
         }
-        public static IGameObject Upsert(GameObject gameObject)
+        public static IBaseEntity Upsert<T>(T unityObject) where T : UnityEngine.Object
         {
-            if (gameObject == null)
+            if (unityObject == null || !UnityMatchComponent.FabricAliases.TryGetValue(unityObject.GetType(), out Func<UnityEngine.Object, IBaseEntity> factory))
                 return null;
 
-            return UnityHierarchyCache.Upsert(gameObject, g => new UnityGameObject(g));
+            return UnityHierarchyCache.Upsert(unityObject, factory);
         }
-        public static IUnityAnalog Upsert(Component component)
-        {
-            if (component == null)
-                return null;
-
-            if (!UnityMatchComponent.FabricAliases.TryGetValue(component.GetType(), out Func<Component, IUnityAnalog> fabric))
-                return null;
-
-            return UnityHierarchyCache.Upsert(component, fabric);
-        }
-        public static void Remove(UnityGameObject gameObject)
-        {
-            if (gameObject == null)
-                return;
-
-            UnityHierarchyCache.Remove(gameObject.GameObject);
-        }
-        public static void Remove(IUnityAnalog analog)
+        public static void Remove<T>(IUnityAnalog<T> analog) where T : UnityEngine.Object
         {
             if (analog == null)
                 return;
 
-            UnityHierarchyCache.Remove(analog.Original as Component);
+            UnityHierarchyCache.Remove(analog.Original);
         }
     }
 }

@@ -1,7 +1,7 @@
 namespace IceFebruary.Physics
 {
-    public interface IOverlapper
+    public interface IOverlapper : IBaseEntity
     {
-        bool Overlap(IComponent<ICollider2D>[] colliders2D = null);
+        bool Overlap(Component<ICollider2D>[] colliders2D = null);
     }
 }
