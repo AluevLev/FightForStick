@@ -6,8 +6,17 @@ using IceFebruary.Space;
 using IceFebruary.Space.PointProvider;
 using IceFebruary.Time;
 
-public sealed class Stickman //TODO: fixx this bruh
-{/*
+public sealed class Stickman //TODO: fixx this bruh, asap
+{
+    public Stickman(IMotorHandler motorHandler, IItemHolderHandler itemHolderHandler)
+    {
+
+    }
+    
+    
+    
+    
+    /*
     private readonly ITime _time;
     private readonly IPhysics2D _physics2D;
     private readonly IPointProvider _cursorPointProvider;

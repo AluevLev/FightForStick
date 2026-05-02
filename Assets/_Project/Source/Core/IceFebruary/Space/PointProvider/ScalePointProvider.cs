@@ -14,14 +14,11 @@ namespace IceFebruary.Space.PointProvider
         }
         public bool TryGetPoint(out Vector2 point)
         {
-            if (_pointProvider.TryGetPoint(out Vector2 startPoint))
-            {
-                point = startPoint * _scale;
-                return true;
-            }
+            bool success = _pointProvider.TryGetPoint(out Vector2 startPoint);
 
-            point = default;
-            return false;
+            point = success ? startPoint * _scale : default;
+
+            return success;
         }
     }
 }

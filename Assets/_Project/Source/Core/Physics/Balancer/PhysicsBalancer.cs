@@ -3,35 +3,36 @@ using IceFebruary.Physics;
 using IceFebruary.Space;
 using IceFebruary.Space.Follow;
 using IceFebruary.Space.PointProvider;
+using IceFebruary.Space.AngleProvider;
 
-public sealed class PhysicsBalancer : ITargetPossessing, IPhysicsBalancer
+public sealed class PhysicsBalancer : ITargetPossessing<IAngleProvider>, IPhysicsBalancer
 {
     private readonly IRigidbody2D _physicsBody;
     private readonly IPhysicsBalancerCalculator _physicsBalancerCalculator;
 
-    private readonly IPointProvider _defaultPointProvider;
-    private IPointProvider _targetPoint;
+    private readonly IAngleProvider _defaultAngleProvider;
+    private IAngleProvider _targetAngle;
 
-    public float AdditionalAngle { get; set; }
-    public PhysicsBalancer(IRigidbody2D physics, IPhysicsBalancerCalculator physicsBalancerCalculator, IPointProvider defaultPointProvider = null)
+    public Rotor2 AdditionalAngle { get; set; }
+    public PhysicsBalancer(IRigidbody2D physics, IPhysicsBalancerCalculator physicsBalancerCalculator, IAngleProvider defaultAngleProvider = null)
     {
         _physicsBody = physics;
-        _defaultPointProvider = defaultPointProvider;
+        _defaultAngleProvider = defaultAngleProvider;
         _physicsBalancerCalculator = physicsBalancerCalculator;
 
-        SetTarget(_defaultPointProvider);
+        SetTarget(_defaultAngleProvider);
     }
 
-    public void SetTarget(IPointProvider targetProvider) => _targetPoint = targetProvider;
-    public void ResetTarget() => _targetPoint = _defaultPointProvider;
-    public void Relax() => _targetPoint = null;
+    public void SetTarget(IAngleProvider targetProvider) => _targetAngle = targetProvider;
+    public void ResetTarget() => _targetAngle = _defaultAngleProvider;
+    public void Relax() => _targetAngle = null;
     public void LookAtTarget()
     {
-        if (!_physicsBody.Exists() || !_targetPoint.TryGetPointSafe(out Vector2 point))
+        if (!_physicsBody.Exists() || !_targetAngle.TryGetAngleSafe(out Rotor2 angle))
             return;
 
-        float torque = _physicsBalancerCalculator.CalculateAngle(_physicsBody.Rotation, point.Angle + AdditionalAngle);
+        Rotor2 rotation = _physicsBalancerCalculator.CalculateAngle(_physicsBody.Rotation, angle * AdditionalAngle);
 
-        _physicsBody.MoveRotation(torque);
+        _physicsBody.MoveRotation(rotation);
     }
 }

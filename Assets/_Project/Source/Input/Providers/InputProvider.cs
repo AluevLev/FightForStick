@@ -1,6 +1,7 @@
+using IceFebruary;
 using UnityIceFebruary.Adaptation;
 
-public sealed class InputProvider : IInputProvider
+public sealed class InputProvider : BaseEntity, IInputProvider
 {
     private readonly GameInputAction _controls;
     private readonly GameInputAction.PlayerActions _playerActions;

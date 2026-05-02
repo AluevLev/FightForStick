@@ -2,9 +2,6 @@ namespace IceFebruary.Random
 {
     using System.Collections.Generic;
 
-    /// <summary>
-    /// ATTENTION: Recommended for visual use only. This random is difficult to test.
-    /// </summary>
     public static class GlobalRandom
     {
         private static readonly Random _random = new(1);

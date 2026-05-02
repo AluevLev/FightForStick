@@ -8,9 +8,6 @@ namespace UnityIceFebruary.AutoGeneration
 
     public sealed class AutoGeneratorHandler : AssetPostprocessor //CURRENTLY ABADONED
     {
-        /// <summary>
-        /// You can change a value of this field if you have to stop generate proxies.
-        /// </summary>
         private static readonly bool _generateCodeAutomatically = false; 
         private static void OnPostprocessAllAssets(string[] imported, string[] deleted, string[] moved, string[] movedNames)
         {

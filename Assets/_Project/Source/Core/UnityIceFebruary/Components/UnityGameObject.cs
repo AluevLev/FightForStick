@@ -7,9 +7,9 @@ namespace UnityIceFebruary
     {
         public UnityGameObject(GameObject gameObject) : base(gameObject)
         {
-            Transform = UnityMethods.Upsert(gameObject.transform) as ITransform;
+            Transform = UnityMethods.Upsert(gameObject.transform) as ITransform2D;
         }
-        public ITransform Transform { get; private init; }
+        public ITransform2D Transform { get; private init; }
         public bool TryGetComponent<T>(out T component) where T : class
         {
             System.Type type = UnityMethods.GetUnityType<T>();

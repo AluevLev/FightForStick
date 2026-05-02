@@ -1,4 +1,6 @@
+using IceFebruary.Space;
+
 public interface IPhysicsBalancerCalculator
 {
-    float CalculateAngle(float currentRotation, float targetAngle);
+    Rotor2 CalculateAngle(Rotor2 currentRotation, Rotor2 targetAngle);
 }

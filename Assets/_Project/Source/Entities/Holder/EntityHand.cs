@@ -28,6 +28,6 @@ public sealed class EntityHand : IHand
         hingeJoint2D.Enabled = false;
         hingeJoint2D.ConnectedBody = null;
     }
-    public bool Unpack(out IRigidbody2D rigidbody2D, out IHingeJoint2D hingeJoint2D, out IGameObject handGameObject, out IGameObject holderGameObject) =>
+    private bool Unpack(out IRigidbody2D rigidbody2D, out IHingeJoint2D hingeJoint2D, out IGameObject handGameObject, out IGameObject holderGameObject) =>
         !_hand.Unpack(out rigidbody2D, out handGameObject) & !_holder.Unpack(out hingeJoint2D, out holderGameObject);
 }

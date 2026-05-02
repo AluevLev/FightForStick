@@ -15,10 +15,10 @@ namespace UnityIceFebruary.Components
             get => Original.position.ToIce();
             set => Original.position = value.ToUnity();
         }
-        public float Rotation
+        public Rotor2 Rotation
         {
-            get => Original.rotation;
-            set => Original.rotation = value;
+            get => Original.transform.rotation.ToIce();
+            set => Original.SetRotation(Rotation.ToUnity());
         }
         public Vector2 LinearVelocity
         {
@@ -33,6 +33,6 @@ namespace UnityIceFebruary.Components
         public void AddForce(Vector2 force, ForceMode2D forceMode) => Original.AddForce(force.ToUnity(), (UnityEngine.ForceMode2D)forceMode);
         public void AddTorque(float torque, ForceMode2D forceMode) => Original.AddTorque(torque, (UnityEngine.ForceMode2D)forceMode);
         public void MovePosition(Vector2 position) => Original.MovePosition(position.ToUnity());
-        public void MoveRotation(float rotation) => Original.MoveRotation(rotation);
+        public void MoveRotation(Rotor2 rotation) => Original.MoveRotation(rotation.ToUnity());
     }
 }

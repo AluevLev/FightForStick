@@ -9,6 +9,7 @@ namespace IceFebruary
         public const float Rad2Deg = 180f / Pi;
         public const float Deg2Rad = 1f / Rad2Deg;
         public static float Abs(float x) => SysMathF.Abs(x);
+        public static int Sign(float x) => SysMathF.Sign(x);
         public static float Sqrt(float x) => SysMathF.Sqrt(x);
         public static float Sin(float x) => SysMathF.Sin(x);
         public static float Cos(float x) => SysMathF.Cos(x);
@@ -29,18 +30,11 @@ namespace IceFebruary
                 return max;
             return x;
         }
-        public static T Clamp<T>(this T x, T min, T max) where T : System.IComparable<T>
-        {
-            if (x.CompareTo(min) < 0)
-                return min;
-            if (x.CompareTo(max) > 0)
-                return max;
-            return x;
-        }
         public static bool InBounds(this int x, int min, int max) => x >= min && x <= max;
         public static bool InBounds(this float x, float min, float max) => x >= min && x <= max;
-        public static bool InBounds<T>(this T x, T min, T max) where T : System.IComparable<T> => x.CompareTo(min) >= 0 && x.CompareTo(max) <= 0;
         public static float Lerp(float x, float y, float interpolation) => x + (y - x) * Clamp01(interpolation);
+        /*  Rudiment. Tbh idk would i use this. I hope no, but just in case I'll leave this here under the comments
+            Pis
         public static float LerpAngle(float x, float y, float interpolation)
         {
             float delta = GetOnPeriod(y - x, 360f);
@@ -50,9 +44,12 @@ namespace IceFebruary
 
             return x + delta * Clamp01(interpolation);
         }
-        public static float GetOnPeriod(float x, float period) => ((x % period) + period) % x;
+        public static float GetOnPeriod(float x, float period) => ((x % period) + period) % period;
+        */
         public static float Clamp01(float x) => Clamp(x, 0f, 1f);
-        public static T Min<T>(T x, T y) where T : System.IComparable<T> => x.CompareTo(y) < 0 ? x : y;
-        public static T Max<T>(T x, T y) where T : System.IComparable<T> => x.CompareTo(y) > 0 ? x : y;
+        public static int Min(int x, int y) => x < y ? x : y;
+        public static int Max(int x, int y) => x > y ? x : y;
+        public static float Min(float x, float y) => x < y ? x : y;
+        public static float Max(float x, float y) => x > y ? x : y;
     }
 }

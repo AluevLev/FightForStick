@@ -3,7 +3,7 @@ using VContainer.Unity;
 using UnityEngine;
 using IceFebruary.Shapes;
 
-public sealed class PlayerLifetimeScope : LifetimeScope //I will delete this class soon
+public sealed class PlayerLifetimeScope : LifetimeScope //I will delete this class once upon a time
 {
     [Header("Scriptable Object Data")]
     [SerializeField] private GroundCheckSettings _groundCheckSettings;

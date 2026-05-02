@@ -1,4 +1,5 @@
 using IceFebruary;
+using IceFebruary.Animation;
 using IceFebruary.Physics;
 using IceFebruary.Time;
 
@@ -7,21 +8,22 @@ public sealed class EntityMotorHandler : BaseEntity, IMotorHandler, IFixedFrame
     private readonly IRigidbody2D _pushBody;
     private readonly IMovementCalculator _movementCalculator;
     private readonly IOverlapper _areaCaster;
-    private readonly EntityBoneAnimation _boneAnimation;
+    private readonly AnimatorVariable<float> _movementFloat;
     private readonly Trigger _jumpTrigger = new();
     public float MovementDirection { get; set; }
-    public EntityMotorHandler(IRigidbody2D pushBody, IOverlapper groundCheck, IMovementCalculator movementCalculator, EntityBoneAnimation boneAnimation)
+    public EntityMotorHandler(IRigidbody2D pushBody, IOverlapper groundCheck, IMovementCalculator movementCalculator, AnimatorVariable<float> movementFloat)
     {
         _pushBody = pushBody;
         _areaCaster = groundCheck;
         _movementCalculator = movementCalculator;
-        _boneAnimation = boneAnimation;
+        _movementFloat = movementFloat;
     }
     public void Jump() => _jumpTrigger.Charge();
     public void OnFixedFrame()
     {
-        _jumpTrigger.OnFixedFrame();
-        _boneAnimation.OnFixedFrame();
+        //_jumpTrigger.OnFixedFrame();
+
+        _movementFloat.Value = MovementDirection;
 
         if (_pushBody.Exists())
         {

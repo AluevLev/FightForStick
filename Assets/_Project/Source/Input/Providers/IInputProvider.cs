@@ -1,7 +1,7 @@
 using IceFebruary;
 using IceFebruary.Space;
 
-public interface IInputProvider
+public interface IInputProvider : IBaseEntity
 {
     float HorizontalMovement { get; }
     float VerticalMovement { get; }

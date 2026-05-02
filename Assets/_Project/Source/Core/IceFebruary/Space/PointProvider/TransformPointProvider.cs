@@ -2,23 +2,21 @@ namespace IceFebruary.Space.PointProvider
 {
     using IceFebruary.Proxy;
 
-    public sealed class TransformPointProvider// : IPointProvider
+    public sealed class TransformPointProvider : IPointProvider
     {
-        /*
-        private readonly IDestroyable<ITransform> _transform;
+        private readonly ITransform2D _transform;
         [Proxy(typeof(IPointProvider))]
-        public TransformPointProvider(IDestroyable<ITransform> transform)
+        public TransformPointProvider(ITransform2D transform)
         {
             _transform = transform;
         }
         public bool TryGetPoint(out Vector2 point)
         {
-            bool hasValue = _transform.TryGetInner(out ITransform inner);
+            bool success = _transform.Exists();
 
-            point = hasValue ? inner.Position : default;
+            point = success ? _transform.Position : default;
 
-            return hasValue;
+            return success;
         }
-        */
     }
 }

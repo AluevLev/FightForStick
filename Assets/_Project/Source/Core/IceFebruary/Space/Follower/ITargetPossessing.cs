@@ -1,10 +1,8 @@
 namespace IceFebruary.Space.Follow
 {
-    using IceFebruary.Space.PointProvider;
-
-    public interface ITargetPossessing
+    public interface ITargetPossessing<T>
     {
-        void SetTarget(IPointProvider targetProvider);
+        void SetTarget(T target);
         void ResetTarget();
     }
 }

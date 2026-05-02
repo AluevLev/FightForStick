@@ -13,7 +13,7 @@ namespace IceFebruary.Space.PointProvider
         }
         public bool TryGetPoint(out Vector2 point)
         {
-            bool hasValue = _mainCamera != null && _inputProvider != null;
+            bool hasValue = _mainCamera.Exists() && _inputProvider.Exists();
 
             point = hasValue ? _mainCamera.ScreenToWorldPoint(_inputProvider.MousePosition) : default;
 

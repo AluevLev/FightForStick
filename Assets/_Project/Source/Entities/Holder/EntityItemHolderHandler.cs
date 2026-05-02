@@ -25,7 +25,6 @@ public sealed class EntityItemHolderHandler : IItemHolderHandler
         _overlapArea = overlapArea;
         _sqrMaxPickUpDistance = maxPickUpDistance * maxPickUpDistance;
     }
-
     public void PickUp()
     {
         if (!_cursor.TryGetPointSafe(out Vector2 cursorPosition))
