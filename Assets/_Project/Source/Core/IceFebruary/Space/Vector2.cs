@@ -2,6 +2,12 @@ namespace IceFebruary.Space
 {
     public readonly struct Vector2
     {
+        public static readonly Vector2 Zero = new(0f, 0f);
+        public static readonly Vector2 One = new(1f, 1f);
+        public static readonly Vector2 Up = new(0f, 1f);
+        public static readonly Vector2 Down = new(0f, -1f);
+        public static readonly Vector2 Right = new(1f, 0f);
+        public static readonly Vector2 Left = new(-1f, 0f);
         public float X { get; private init; }
         public float Y { get; private init; }
         public Vector2(float x, float y)
@@ -9,24 +15,19 @@ namespace IceFebruary.Space
             X = x;
             Y = y;
         }
-        public static Vector2 Zero => new(0f, 0f);
-        public static Vector2 One => new(1f, 1f);
-        public static Vector2 Up => new(0f, 1f);
-        public static Vector2 Down => new(0f, -1f);
-        public static Vector2 Right => new(1f, 0f);
-        public static Vector2 Left => new(-1f, 0f);
         public float SqrLength => X * X + Y * Y;
         public float Length => Math.Sqrt(SqrLength);
         public Vector2 Normalized => Normalize(this);
         public static Vector2 operator +(Vector2 a, Vector2 b) => new(a.X + b.X, a.Y + b.Y);
         public static Vector2 operator -(Vector2 a, Vector2 b) => new(a.X - b.X, a.Y - b.Y);
-        public static Vector2 operator *(Vector2 a, Vector2 b) => new(a.X * b.X, a.Y * b.Y);
-        public static Vector2 operator /(Vector2 a, Vector2 b) => new(a.X / b.X, a.Y / b.Y);
+        public static float operator *(Vector2 a, Vector2 b) => a.X * b.X + a.Y * b.Y;
         public static Vector2 operator -(Vector2 a) => new(-a.X, -a.Y);
         public static Vector2 operator *(Vector2 a, float f) => new(a.X * f, a.Y * f);
         public static Vector2 operator *(float f, Vector2 a) => a * f;
         public static Vector2 operator /(Vector2 a, float f) => new(a.X / f, a.Y / f);
-        public static bool operator ==(Vector2 a, Vector2 b) => Math.Abs(a.X - b.X) < Math.Epsilon && Math.Abs(a.Y - b.Y) < Math.Epsilon;
+        public static bool operator ==(Vector2 a, Vector2 b) =>
+            Math.Abs(a.X - b.X) < Math.Epsilon &&
+            Math.Abs(a.Y - b.Y) < Math.Epsilon;
         public static bool operator !=(Vector2 a, Vector2 b) => !(a == b);
         public override bool Equals(object obj) => (obj is Vector2 other) && this == other;
         public override int GetHashCode() => System.HashCode.Combine(X, Y);

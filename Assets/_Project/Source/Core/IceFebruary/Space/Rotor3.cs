@@ -4,6 +4,7 @@ namespace IceFebruary.Space
 
     public readonly struct Rotor3
     {
+        public static readonly Rotor3 Default = new(1f, 0f, 0f, 0f);
         public float Scalar { get; private init; }
         public float XY { get; private init; }
         public float YZ { get; private init; }
@@ -15,12 +16,12 @@ namespace IceFebruary.Space
             YZ = yz;
             ZX = zx;
         }
-        public Rotor3(float vx, float vy, float vz, bool radian)
+        public Rotor3(float xAngle, float yAngle, float zAngle, bool radian)
         {
             float convert = radian ? 1f : Math.Deg2Rad;
-            float rx = vx * convert;
-            float ry = vy * convert;
-            float rz = vz * convert;
+            float rx = xAngle * convert;
+            float ry = yAngle * convert;
+            float rz = zAngle * convert;
 
             float angle = Math.Sqrt(rx * rx + ry * ry + rz * rz);
 
@@ -43,6 +44,7 @@ namespace IceFebruary.Space
                 ZX = ry * s;
             }
         }
+        public readonly Rotor3 Inverse => new(Scalar, -XY, -YZ, -ZX);
         public static Rotor3 operator *(Rotor3 a, Rotor3 b)
         {
             return new(
@@ -69,6 +71,14 @@ namespace IceFebruary.Space
                 v.Z + qw * tz + (qx * ty - qy * tx)
             );
         }
+        public static bool operator ==(Rotor3 a, Rotor3 b) =>
+            Math.Abs(a.Scalar - b.Scalar) < Math.Epsilon &&
+            Math.Abs(a.XY - b.XY) < Math.Epsilon &&
+            Math.Abs(a.YZ - b.YZ) < Math.Epsilon &&
+            Math.Abs(a.ZX - b.ZX) < Math.Epsilon;
+        public static bool operator !=(Rotor3 a, Rotor3 b) => !(a == b);
+        public override bool Equals(object obj) => (obj is Rotor3 other) && this == other;
+        public override int GetHashCode() => System.HashCode.Combine(Scalar, XY);
         public static implicit operator Rotor2(Rotor3 r) => new(r.Scalar, r.XY);
     }
 }

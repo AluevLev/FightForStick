@@ -12,13 +12,14 @@ namespace IceFebruary.Physics
         private readonly IPointProvider _position;
         private readonly IAngleProvider _angleDirection;
         private readonly ContactFilter2D _contactFilter2D;
-        public AreaScanner(IPhysics2D physics2D, IShape shape, IPointProvider position = null, IAngleProvider angleDirection = null, ContactFilter2D contactFilter = default)
+        public AreaScanner(IPhysics2D physics2D, IShape shape, IPointProvider position = null, IAngleProvider angleDirection = null, ContactFilter2D? contactFilter = null)
         {
             _physics2D = physics2D;
             _shape = shape;
             _position = position;
             _angleDirection = angleDirection;
-            _contactFilter2D = contactFilter;
+            _contactFilter2D = contactFilter.HasValue ? contactFilter.Value : ContactFilter2D.Default;
+            _contactFilter2D = contactFilter ?? ContactFilter2D.Default;
         }
         public bool Overlap(Component<ICollider2D>[] colliders2D)
         {

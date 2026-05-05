@@ -2,7 +2,7 @@ namespace IceFebruary.Space
 {
     public readonly struct Rotor2
     {
-        public readonly Rotor2 Inverse => new(Scalar, -XY);
+        public static readonly Rotor2 Default = new(1f, 0f);
         public float Scalar { get; private init; }
         public float XY { get; private init; }
         public Rotor2(float scalar, float xy)
@@ -17,6 +17,7 @@ namespace IceFebruary.Space
             Scalar = Math.Cos(halfAngle);
             XY = Math.Sin(halfAngle);
         }
+        public readonly Rotor2 Inverse => new(Scalar, -XY);
         public static Rotor2 operator *(Rotor2 a, Rotor2 b) => new(a.Scalar * b.Scalar - a.XY * b.XY, a.Scalar * b.XY + a.XY * b.Scalar);
         public static Vector2 operator *(Rotor2 r, Vector2 v)
         {
@@ -28,6 +29,12 @@ namespace IceFebruary.Space
                 v.X * sin2A + v.Y * cos2A
             );
         }
+        public static bool operator ==(Rotor2 a, Rotor2 b) =>
+            Math.Abs(a.Scalar - b.Scalar) < Math.Epsilon &&
+            Math.Abs(a.XY - b.XY) < Math.Epsilon;
+        public static bool operator !=(Rotor2 a, Rotor2 b) => !(a == b);
+        public override bool Equals(object obj) => (obj is Rotor2 other) && this == other;
+        public override int GetHashCode() => System.HashCode.Combine(Scalar, XY);
         public static Rotor2 Lerp(Rotor2 a, Rotor2 b, float interpolation)
         {
             interpolation = Math.Clamp01(interpolation);
@@ -53,6 +60,7 @@ namespace IceFebruary.Space
 
             return new(resultScalar * invMagnitude, resultXY * invMagnitude);
         }
+        public float ToAngle(bool radian) => this == Default ? 0f : (Math.Atan2(XY, Scalar) * 2f * (radian ? 1f : Math.Rad2Deg));
         public static implicit operator Rotor3(Rotor2 r) => new(r.Scalar, r.XY, 0, 0);
     }
 }

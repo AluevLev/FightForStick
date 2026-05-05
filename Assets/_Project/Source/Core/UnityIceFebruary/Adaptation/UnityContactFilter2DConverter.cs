@@ -9,10 +9,10 @@ namespace UnityIceFebruary.Adaptation
         public static UnityContactFilter2D ToUnity(this IceContactFilter2D filter)
         {
             UnityContactFilter2D contactFilter2D = new();
+
             bool useLayerMask = filter.LayerMask.HasValue;
 
             contactFilter2D.NoFilter();
-
             contactFilter2D.useTriggers = filter.UseTriggers;
             contactFilter2D.useLayerMask = useLayerMask;
 

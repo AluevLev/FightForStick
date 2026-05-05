@@ -9,5 +9,6 @@ namespace IceFebruary.Physics
             UseTriggers = useTriggers;
             LayerMask = layerMask;
         }
+        public static readonly ContactFilter2D Default = new(true, null);
     }
 }

@@ -14,6 +14,22 @@ namespace IceFebruary
         public static float Sin(float x) => SysMathF.Sin(x);
         public static float Cos(float x) => SysMathF.Cos(x);
         public static float Atan2(float y, float x) => SysMathF.Atan2(y, x);
+        public static int GetPower2WithReserve(int x)
+        {
+            if (x < 2)
+                return 0;
+
+            int power = 0;
+            int temp = x - 1;
+
+            while (temp > 0)
+            {
+                temp >>= 1;
+                power++;
+            }
+
+            return power;
+        }
         public static int Clamp(this int x, int min, int max)
         {
             if (x < min)
@@ -22,6 +38,8 @@ namespace IceFebruary
                 return max;
             return x;
         }
+        public static int ClampMin(this int x, int min) => x < min ? min : x;
+        public static int ClampMax(this int x, int max) => x > max ? max : x;
         public static float Clamp(this float x, float min, float max)
         {
             if (x < min)
@@ -30,6 +48,8 @@ namespace IceFebruary
                 return max;
             return x;
         }
+        public static float ClampMin(this float x, float min) => x < min ? min : x;
+        public static float ClampMax(this float x, float max) => x > max ? max : x;
         public static bool InBounds(this int x, int min, int max) => x >= min && x <= max;
         public static bool InBounds(this float x, float min, float max) => x >= min && x <= max;
         public static float Lerp(float x, float y, float interpolation) => x + (y - x) * Clamp01(interpolation);

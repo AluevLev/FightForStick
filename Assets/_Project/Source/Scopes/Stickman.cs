@@ -8,19 +8,21 @@ using IceFebruary.Time;
 
 public sealed class Stickman //TODO: fixx this bruh, asap
 {
-    public Stickman(IMotorHandler motorHandler, IItemHolderHandler itemHolderHandler)
+    private readonly RagdollCore _ragdollCore;
+    private readonly IFrame _movementController;
+    private readonly IFrame _itemHolderController;
+    public Stickman(RagdollCore ragdollCore, IFrame movementController, IFrame itemHolderController)
     {
-
+        _ragdollCore = ragdollCore;
+        _movementController = movementController;
+        _itemHolderController = itemHolderController;
     }
     
     
     
     
     /*
-    private readonly ITime _time;
-    private readonly IPhysics2D _physics2D;
-    private readonly IPointProvider _cursorPointProvider;
-    private readonly IInputProvider _inputProvider;
+    
 
     private readonly RagdollScema _ragdollSchema;
     private readonly GroundCheckSettings _groundCheckSettings;
