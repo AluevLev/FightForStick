@@ -21,8 +21,6 @@ public sealed class EntityMotorHandler : BaseEntity, IMotorHandler, IFixedFrame
     public void Jump() => _jumpTrigger.Charge();
     public void OnFixedFrame()
     {
-        //_jumpTrigger.OnFixedFrame();
-
         _movementFloat.Value = MovementDirection;
 
         if (_pushBody.Exists())

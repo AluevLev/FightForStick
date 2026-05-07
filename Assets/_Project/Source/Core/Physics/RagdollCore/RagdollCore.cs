@@ -7,7 +7,7 @@ public sealed class RagdollCore : BaseEntity, IFixedFrame
     private readonly IPhysicsBalancer[] _balancers;
     public RagdollCore(PhysicsLimbSettings[] settings) : base()
     {
-        _balancers = new IPhysicsBalancer[settings.Length];
+        _balancers = new IPhysicsBalancer[_balancers.Length];
 
         for (int limb = 0; limb < settings.Length; limb++)
         {
@@ -23,7 +23,7 @@ public sealed class RagdollCore : BaseEntity, IFixedFrame
     }
     public void OnFixedFrame()
     {
-        foreach (IPhysicsBalancer physicsBalancer in _balancers)
-            physicsBalancer.LookAtTarget();
+        for (int index = 0; index < _balancers.Length; index++)
+            _balancers[index].LookAtTarget();
     }
 }

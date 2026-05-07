@@ -34,7 +34,7 @@ namespace IceFebruary.Collections
             if (_freeIndexes.Count == 0)
             {
                 int length = Length;
-                int doubledLength = length * 2;
+                int doubledLength = length << 1;
 
                 System.Array.Resize(ref _entities, doubledLength);
 

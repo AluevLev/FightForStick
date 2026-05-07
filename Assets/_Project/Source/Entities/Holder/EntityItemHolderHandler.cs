@@ -31,14 +31,14 @@ public sealed class EntityItemHolderHandler : IItemHolderHandler
             return;
         if (!_humanPosition.TryGetPointSafe(out Vector2 entityPosition))
             return;
-        if (_physics2D.Overlap(_overlapArea, cursorPosition) == 0)
+        if (_physics2D.Overlap(_overlapArea, cursorPosition, null, null, _itemBuffer) == 0)
             return;
 
         IPickable item = null;
 
-        foreach (Component<ICollider2D> result in _itemBuffer)
+        for (int index = 0; index < _itemBuffer.Length; index++)
         {
-            IGameObject gameObject = result.GameObject;
+            IGameObject gameObject = _itemBuffer[index].GameObject;
 
             if (Vector2.SqrDistance(gameObject.Transform.Position, entityPosition) >= _sqrMaxPickUpDistance)
                 continue;
@@ -46,7 +46,7 @@ public sealed class EntityItemHolderHandler : IItemHolderHandler
                 break;
         }
 
-        if (item != null)
+        if (item == null)
             return;
 
         if (_itemInHand != null)

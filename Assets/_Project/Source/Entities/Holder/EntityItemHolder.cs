@@ -19,7 +19,7 @@ public sealed class EntityItemHolder : IItemHolder
     }
     public void DropItemInHand()
     {
-        foreach (IHand hand in _entityHands)
-            hand.Disconnect();
+        for (int index = 0; index < _entityHands.Length; index++)
+            _entityHands[index].Disconnect();
     }
 }

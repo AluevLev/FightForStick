@@ -31,7 +31,7 @@ namespace UnityIceFebruary
         }
         public void OnFixedFrame()
         {
-            for (int index = 0; index < _frameArray.Length; index++)
+            for (int index = 0; index < _fixedFrameArray.Length; index++)
             {
                 IFixedFrame fixedFrame = _fixedFrameArray.Entities[index];
 
