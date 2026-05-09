@@ -3,10 +3,9 @@ namespace UnityIceFebruary.Components
     using IceFebruary.Physics;
     using IceFebruary.Space;
     using UnityIceFebruary.Adaptation;
-    using UnityIceFebruary.AutoGeneration;
+
     using Rigidbody2D = UnityEngine.Rigidbody2D;
 
-    [UnityAnalog(typeof(Rigidbody2D))]
     public sealed class UnityRigidbody2D : UnityBaseEntity<Rigidbody2D>, IRigidbody2D
     {
         public UnityRigidbody2D(Rigidbody2D rigidbody2D) : base(rigidbody2D) { }

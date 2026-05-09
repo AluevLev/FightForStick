@@ -5,7 +5,7 @@ namespace IceFebruary.Space.PointProvider
     public sealed class Vector2PointProvider : IPointProvider
     {
         private readonly Vector2 _vector2;
-        [Proxy(typeof(IPointProvider))]
+        [FieldProxy(typeof(IPointProvider))]
         public Vector2PointProvider(Vector2 vector2)
         {
             _vector2 = vector2;

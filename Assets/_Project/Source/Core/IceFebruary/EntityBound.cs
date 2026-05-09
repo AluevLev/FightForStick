@@ -3,7 +3,7 @@ namespace IceFebruary
     public class EntityBound : BaseEntity
     {
         private readonly IBaseEntity[] _entities;
-        public EntityBound(IBaseEntity[] entities)
+        public EntityBound(IBaseEntity[] entities) : base()
         {
             _entities = entities;
         }

@@ -1,5 +1,5 @@
 using IceFebruary;
-//using IceFebruary.Animation;
+using IceFebruary.Animation;
 using IceFebruary.Physics;
 using IceFebruary.Time;
 
@@ -9,8 +9,9 @@ public class StickmanFactory //TODO: this
     private readonly IPhysics2D _physics2D;
     private readonly IObjectManager _objectManager;
 
-    private IGameObject _stickman;
-    private IMotorHandler _motorHandler;
+    private RagdollCore _ragdollCore;
+    private IFrame _movementController;
+    private IFrame _itemHolderController;
     public StickmanFactory(ITime time, IPhysics2D physics2D, IObjectManager objectManager)
     {
         _time = time;
@@ -19,11 +20,16 @@ public class StickmanFactory //TODO: this
     }
     public StickmanFactory Create(IGameObject stickman)
     {
-        _stickman = _objectManager.Create(stickman);
+        _objectManager.Create(stickman);
         return this;
-    }/*
-    public StickmanFactory SetMovement(IRigidbody2D pushBody, IOverlapper groundCheck, MovementSettings movementCalculator, AnimatorVariable<float> movementFloat)
+    }
+    public StickmanFactory ReviveLimbs(PhysicsLimbSettings[] settings)
+    {
+        return this;
+    }
+    public StickmanFactory SetMovement(IRigidbody2D pushBody, MovementSettings movementCalculator, AnimatorVariable<float> movementFloat)
     {
 
-    }*/
+        return this;
+    }
 }

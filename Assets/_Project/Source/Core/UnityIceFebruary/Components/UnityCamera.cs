@@ -3,12 +3,9 @@ namespace UnityIceFebruary.Components
     using IceFebruary.Space;
     using IceFebruary.Render;
     using UnityIceFebruary.Adaptation;
-    using UnityIceFebruary.Components;
-    using UnityIceFebruary.AutoGeneration;
 
     using Camera = UnityEngine.Camera;
 
-    [UnityAnalog(typeof(Camera))]
     public sealed class UnityCamera : UnityBaseEntity<Camera>, ICamera
     {
         public UnityCamera(Camera camera) : base(camera) { }

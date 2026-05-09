@@ -6,7 +6,7 @@ namespace IceFebruary.Space.PointProvider
     {
         private readonly IPointProvider _from;
         private readonly IPointProvider _to;
-        [Proxy(typeof(IPointProvider))]
+        [FieldProxy(typeof(IPointProvider))]
         public DirectionPointProvider(IPointProvider from, IPointProvider to)
         {
             _from = from;

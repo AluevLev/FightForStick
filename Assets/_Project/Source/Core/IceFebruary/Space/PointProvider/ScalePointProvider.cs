@@ -6,7 +6,7 @@ namespace IceFebruary.Space.PointProvider
     {
         private readonly IPointProvider _pointProvider;
         private readonly float _scale;
-        [Proxy(typeof(IPointProvider))]
+        [FieldProxy(typeof(IPointProvider))]
         public ScalePointProvider(IPointProvider pointProvider, float scale)
         {
             _pointProvider = pointProvider;

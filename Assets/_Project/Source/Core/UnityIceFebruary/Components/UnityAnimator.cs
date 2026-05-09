@@ -2,11 +2,9 @@ namespace UnityIceFebruary.Components
 {
     using UnityIceFebruary;
     using IceFebruary.Animation;
-    using UnityIceFebruary.AutoGeneration;
 
     using Animator = UnityEngine.Animator;
 
-    [UnityAnalog(typeof(Animator))]
     public sealed class UnityAnimator : UnityBaseEntity<Animator>, IAnimator
     {
         public UnityAnimator(Animator animator) : base(animator) { }

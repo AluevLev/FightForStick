@@ -21,7 +21,7 @@ public readonly struct RagdollScema
     private readonly PhysicsLimbSettings _shin2;
     private readonly PhysicsLimbSettings _foot2;
 
-    [Proxy]
+    [FieldProxy]
     public RagdollScema(PhysicsLimbSettings head, PhysicsLimbSettings body,
         PhysicsLimbSettings shoulder1, PhysicsLimbSettings forearm1, PhysicsLimbSettings hand1,
         PhysicsLimbSettings shoulder2, PhysicsLimbSettings forearm2, PhysicsLimbSettings hand2,

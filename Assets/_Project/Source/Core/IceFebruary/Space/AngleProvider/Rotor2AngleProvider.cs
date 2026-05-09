@@ -5,7 +5,7 @@ namespace IceFebruary.Space.AngleProvider
     public class Rotor2AngleProvider : IAngleProvider
     {
         private readonly Rotor2 _rotor2;
-        [Proxy(typeof(IAngleProvider))]
+        [FieldProxy(typeof(IAngleProvider))]
         public Rotor2AngleProvider(Rotor2 rotor2)
         {
             _rotor2 = rotor2;
