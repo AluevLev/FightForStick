@@ -98,8 +98,10 @@ InitTestScene*.unity*
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 
-# Мусор от UI Toolkit
+# Trash from UI Toolkit
 /[Uu]IElementsSchema/
-# Настройки Visual Studio
+# Visual Studio config
 .vsconfig
 *.slnx
+# Microsoft Analysis
+**/Packages/Editor/Microsoft CodeAnalysis/
