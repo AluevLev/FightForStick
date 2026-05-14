@@ -3,7 +3,7 @@ namespace IceFebruary.Proxy
     using System;
 
     [AttributeUsage(AttributeTargets.Constructor)]
-    public sealed class FieldProxy : Attribute, IProxyConstructor
+    public sealed class FieldProxy : Attribute
     {
         public Type InterfaceType { get; private init; }
         public FieldProxy(Type interfaceType = null)

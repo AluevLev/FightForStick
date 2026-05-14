@@ -10,10 +10,10 @@ namespace UnityIceFebruary
             Transform = UnityMethods.Upsert(gameObject.transform) as ITransform2D;
         }
         public ITransform2D Transform { get; private init; }
-        public bool TryGetComponent<T>(out T component) where T : class
+        public bool TryGetComponent<T>(out T component) where T : class, IBaseEntity
         {
             System.Type type = UnityMethods.GetUnityType<T>();
-
+            
             if (type == null)
             {
                 component = null;

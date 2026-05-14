@@ -3,7 +3,7 @@ using IceFebruary.Animation;
 using IceFebruary.Physics;
 using IceFebruary.Time;
 
-public class StickmanFactory //TODO: this
+public sealed class StickmanFactory //TODO: this
 {
     private readonly ITime _time;
     private readonly IPhysics2D _physics2D;

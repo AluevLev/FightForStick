@@ -2,7 +2,7 @@ namespace IceFebruary.Space.AngleProvider
 {
     using IceFebruary.Proxy;
 
-    public class TransformAngleProvider : IAngleProvider
+    public sealed class TransformAngleProvider : IAngleProvider
     {
         private readonly ITransform2D _transform;
         [FieldProxy(typeof(IAngleProvider))]

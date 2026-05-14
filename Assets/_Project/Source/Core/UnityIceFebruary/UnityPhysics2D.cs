@@ -11,7 +11,7 @@ namespace UnityIceFebruary
     using UnityContactFilter2D = UnityEngine.ContactFilter2D;
     using UnityVector2 = UnityEngine.Vector2;
 
-    public class UnityPhysics2D : BaseEntity, IPhysics2D
+    public sealed class UnityPhysics2D : BaseEntity, IPhysics2D
     {
         private UnityCollider2D[] _collidersBuffer;
 

@@ -3,7 +3,7 @@ namespace IceFebruary.Space.AngleProvider
     using IceFebruary.Proxy;
     using IceFebruary.Space.PointProvider;
 
-    public class DirectionAngleProvider : IAngleProvider
+    public sealed class DirectionAngleProvider : IAngleProvider
     {
         private readonly IPointProvider _from;
         private readonly IPointProvider _to;

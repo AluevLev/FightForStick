@@ -4,23 +4,25 @@ namespace UnityIceFebruary
     using UnityIceFebruary.Components;
     using System;
 
+    using UnityObject = UnityEngine.Object;
+
     public static class UnityMethods
     {
-        public static Type GetUnityType<T>() where T : class
+        public static Type GetUnityType<T>() where T : class, IBaseEntity
         {
             if (!UnityMatchComponent.UnityAnalogs.TryGetValue(typeof(T), out Type type))
                 return null;
 
             return type;
         }
-        public static IBaseEntity Upsert<T>(T unityObject) where T : UnityEngine.Object
+        public static IBaseEntity Upsert<T>(T unityObject) where T : UnityObject
         {
-            if (unityObject == null || !UnityMatchComponent.FabricAliases.TryGetValue(unityObject.GetType(), out Func<UnityEngine.Object, IBaseEntity> factory))
+            if (unityObject == null || !UnityMatchComponent.FabricAliases.TryGetValue(unityObject.GetType(), out Func<UnityObject, IBaseEntity> factory))
                 return null;
 
             return UnityHierarchyCache.Upsert(unityObject, factory);
         }
-        public static void Remove<T>(IUnityAnalog<T> analog) where T : UnityEngine.Object
+        public static void Remove<T>(IUnityAnalog<T> analog) where T : UnityObject
         {
             if (analog == null)
                 return;

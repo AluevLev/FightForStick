@@ -1,6 +1,6 @@
 namespace IceFebruary
 {
-    public class EntityBound : BaseEntity
+    public sealed class EntityBound : BaseEntity
     {
         private readonly IBaseEntity[] _entities;
         public EntityBound(IBaseEntity[] entities) : base()
