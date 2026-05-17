@@ -1,13 +1,12 @@
 namespace UnityIceFebruary.AutoGenerator
 {
-    using UnityEngine;
     using UnityEditor;
+    using UnityEngine;
     using System.IO;
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
-    using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis;
-    using System.Collections.Generic;
     using System.Linq;
+    using System;
+    using System.Reflection;
     using IceFebruary.Proxy;
 
     public static class ScriptGenerator
@@ -17,35 +16,36 @@ namespace UnityIceFebruary.AutoGenerator
         {
             ProxyDirectory.RecoveryDirectories();
 
-            string[] files = Directory.GetFiles(ProxyDirectory.ProjectPath, "*.cs", SearchOption.AllDirectories);
-            List<string> proxyCode = new();
+            Assembly assembly = Assembly.Load("Assembly-CSharp");
 
-            foreach (string file in files)
-                if (file.TryFindGenerableProxies(out string code))
-                    proxyCode.Add(file);
-        }
-        private static bool TryFindGenerableProxies(this string file, out string code)
-        {
-            code = null;
-            string text = File.ReadAllText(file);
+            Type[] types = assembly.GetTypes();
+            string[] fileNames = Directory.GetFiles(Application.dataPath, "*.cs", SearchOption.AllDirectories)
+                .Select(path => Path.GetFileNameWithoutExtension(path))
+                .ToArray();
 
-            SyntaxTree tree = CSharpSyntaxTree.ParseText(text);
-            IEnumerable<SyntaxNode> syntax = tree.GetRoot().DescendantNodes();
+            Type[] gameTypes = fileNames
+                .Select(name => types.FirstOrDefault(type => type.Name == name))
+                .Where(type => type != null)
+                .ToArray();
 
-            IEnumerable<AttributeSyntax> attributes = syntax.OfType<AttributeSyntax>();
-
-            foreach (AttributeSyntax attribute in attributes)
+            foreach (Type type in gameTypes)
             {
-                switch (attribute.Name.ToString())
+                if (type.HasAttribute<InterfaceProxy>())
                 {
-                    case nameof(InterfaceProxy):
-                        code = ProxyBuilder.GenerateInterfaceProxyCode(syntax);
-                        break;
+
                 }
             }
-
-            return !string.IsNullOrWhiteSpace(code);
         }
-        
+        public static bool TryGetAttribute<T>(this Type type, out T attribute) where T : Attribute
+        {
+            attribute = type.GetCustomAttribute<T>();
+            return attribute != null;
+        }
+        public static bool HasAttribute<T>(this Type type) where T : Attribute => type.IsDefined(typeof(T), true);
+        public static bool IsProxyable(this Type type) =>
+            type.HasAttribute<FieldProxy>() ||
+            type.HasAttribute<InterfaceProxy>() ||
+            type.HasAttribute<Proxy>() ||
+            type.HasAttribute<ScriptableObjectProxy>();
     }
 }
