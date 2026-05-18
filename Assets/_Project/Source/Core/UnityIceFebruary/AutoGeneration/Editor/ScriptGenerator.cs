@@ -2,9 +2,9 @@ namespace UnityIceFebruary.AutoGenerator
 {
     using UnityEditor;
     using UnityEngine;
-    using System.IO;
     using Microsoft.CodeAnalysis;
     using System.Linq;
+    using System.IO;
     using System;
     using System.Reflection;
     using IceFebruary.Proxy;
@@ -30,22 +30,25 @@ namespace UnityIceFebruary.AutoGenerator
 
             foreach (Type type in gameTypes)
             {
-                if (type.HasAttribute<InterfaceProxy>())
-                {
+                string fileName = type.GetProxyName();
 
-                }
+                if (type.HasAttribute<Proxy>())
+                    Generate(typeof(Proxy), fileName, ScriptBuilder.GetProxyCode(type));
+                else if (type.HasAttribute<FieldProxy>())
+                    Generate(typeof(FieldProxy), fileName, ScriptBuilder.GetFieldProxyCode(type, type.GetAttribute<FieldProxy>()));
+                else if (type.IsUnityAnalog())
+                    Generate(typeof(UnityBaseEntity<>), fileName, ScriptBuilder.GetUnityProxyCode(type));
+                else if (type.HasAttribute<InterfaceProxy>())
+                    Generate(typeof(InterfaceProxy), fileName, ScriptBuilder.GetInterfaceProxyCode(type));
+                else if (type.HasAttribute<ScriptableObjectProxy>())
+                    Generate(typeof(ScriptableObjectProxy), fileName, ScriptBuilder.GetScriptableObjectProxyCode(type));
             }
         }
-        public static bool TryGetAttribute<T>(this Type type, out T attribute) where T : Attribute
+        private static void Generate(Type type, string fileName, string code)
         {
-            attribute = type.GetCustomAttribute<T>();
-            return attribute != null;
+            string savePath = ProxyDirectory.GetPath(type);
+
+            File.WriteAllText(Path.Combine(savePath, $"{fileName}.cs"), code);
         }
-        public static bool HasAttribute<T>(this Type type) where T : Attribute => type.IsDefined(typeof(T), true);
-        public static bool IsProxyable(this Type type) =>
-            type.HasAttribute<FieldProxy>() ||
-            type.HasAttribute<InterfaceProxy>() ||
-            type.HasAttribute<Proxy>() ||
-            type.HasAttribute<ScriptableObjectProxy>();
     }
 }
