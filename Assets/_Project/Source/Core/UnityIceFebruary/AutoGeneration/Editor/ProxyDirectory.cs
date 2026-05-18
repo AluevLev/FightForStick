@@ -7,7 +7,6 @@ namespace UnityIceFebruary.AutoGenerator
 
     public static class ProxyDirectory
     {
-        private static string _projectPath;
         private static readonly string _autoGenerationDirectoryPath = "Auto Generated";
         private static readonly string _proxyPath = Path.Combine(_autoGenerationDirectoryPath, "Proxy");
         private static readonly string _fieldProxyPath = Path.Combine(_autoGenerationDirectoryPath, "Field Proxy");
@@ -34,8 +33,6 @@ namespace UnityIceFebruary.AutoGenerator
         }
         public static void RecoveryDirectories()
         {
-            _projectPath = Application.dataPath;
-
             RecoveryDirectory(_autoGenerationDirectoryPath);
             RecoveryDirectory(_proxyPath);
             RecoveryDirectory(_fieldProxyPath);
@@ -51,6 +48,6 @@ namespace UnityIceFebruary.AutoGenerator
             if (!Directory.Exists(directoryPath))
                 Directory.CreateDirectory(directoryPath);
         }
-        private static string GetFullDirectory(this string directory) => Path.Combine(_projectPath, directory);
+        private static string GetFullDirectory(this string directory) => Path.Combine(Application.dataPath, directory);
     }
 }

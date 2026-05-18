@@ -79,7 +79,7 @@ namespace UnityIceFebruary.AutoGenerator
 
             return stringBuilder.ToString();
         }
-        private static void SetAverageBody(this StringBuilder stringBuilder, Type type)
+        private static void SetAverageBody(this StringBuilder stringBuilder, Type type, string returnType = null)
         {
             stringBuilder.AppendLine("{");
 
@@ -109,7 +109,7 @@ namespace UnityIceFebruary.AutoGenerator
                 stringBuilder.AppendLine($" {parameterFieldName};");
 
                 if (parameterType.IsArray && parameterType.GetElementType().IsProxyable())
-                    parametersNames.Add($"System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Select({parameterFieldName} ?? new {parameterName}[0], element => element?.ToPoco()))");
+                    parametersNames.Add($"System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Select({parameterFieldName} ?? new {parameterName.Replace("[]", string.Empty)}[0], element => element?.ToPoco()))");
                 else if (parameterType.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>) && type.GetGenericArguments()[0].IsProxyable())
                     parametersNames.Add($"System.Linq.Enumerable.ToList(System.Linq.Enumerable.Select({parameterFieldName} ?? new(), element => element?.ToPoco()))");
                 else if (parameterType.IsProxyable())
