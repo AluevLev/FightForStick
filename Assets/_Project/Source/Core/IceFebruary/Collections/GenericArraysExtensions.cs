@@ -33,5 +33,30 @@ namespace IceFebruary.Collections
 
             return elementInListExists || index == EnumeratorsSpecial.Empty || index == EnumeratorsSpecial.Random;
         }
+        public static T[] ToStructArray<T>(this T?[] array) where T : struct
+        {
+            T[] result = new T[array.Length];
+
+            for (int index = 0; index < array.Length; index++)
+            {
+                T? element = array[index];
+                result[index] = element.HasValue ? element.Value : default;
+            }
+                
+
+            return result;
+        }
+        public static List<T> ToStructList<T>(this List<T?> list) where T : struct
+        {
+            List<T> result = new(list.Count);
+
+            for (int index = 0; index < list.Count; index++)
+            {
+                T? element = list[index];
+                result.Insert(index, element.HasValue ? element.Value : default);
+            }
+
+            return result;
+        }
     }
 }

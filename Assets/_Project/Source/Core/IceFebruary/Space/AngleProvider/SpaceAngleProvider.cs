@@ -1,8 +1,8 @@
 namespace IceFebruary.Space.AngleProvider
 {
     using IceFebruary.Proxy;
-    using IceFebruary.Space.PointProvider;
-    public sealed class SpaceAngleProvider
+
+    public sealed class SpaceAngleProvider : IAngleProvider
     {
         private readonly IAngleProvider _angleProvider;
         private readonly ITransform2D _space;

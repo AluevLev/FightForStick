@@ -7,7 +7,7 @@ namespace UnityIceFebruary.AutoGenerator
     using System.Text;
     using System.Collections.Generic;
 
-    public static class ScriptBuilder
+    public static class ProxyCodeBuilder
     {
         public static string GetInterfaceProxyCode(Type type)
         {
@@ -25,7 +25,6 @@ namespace UnityIceFebruary.AutoGenerator
             StringBuilder stringBuilder = new();
 
             stringBuilder.AppendLine("[System.Serializable]");
-
             stringBuilder.Append($"public class {type.GetProxyName()}");
 
             Type fieldProxyInterface = fieldProxy.InterfaceType;
@@ -67,19 +66,19 @@ namespace UnityIceFebruary.AutoGenerator
         {
             StringBuilder stringBuilder = new();
 
-            Type original = type.Name.Split('`')[^1].GetType();
+            Type original = type.BaseType.GetGenericArguments()[0];
             string originalName = original.FullName;
 
             stringBuilder.AppendLine("[System.Serializable]");
             stringBuilder.AppendLine($"public class {type.GetProxyName()}");
             stringBuilder.AppendLine("{");
             stringBuilder.AppendLine($"\t[UnityEngine.SerializeField] private {originalName} _component;");
-            stringBuilder.AppendLine($"\tpublic {originalName} ToPoco() => _component");
+            stringBuilder.AppendLine($"\tpublic {originalName} ToPoco() => _component;");
             stringBuilder.AppendLine("}");
 
             return stringBuilder.ToString();
         }
-        private static void SetAverageBody(this StringBuilder stringBuilder, Type type, string returnType = null)
+        private static void SetAverageBody(this StringBuilder stringBuilder, Type type)
         {
             stringBuilder.AppendLine("{");
 
@@ -93,14 +92,31 @@ namespace UnityIceFebruary.AutoGenerator
                 string parameterName = parameterType.FullName;
 
                 if (parameterType.IsInterface)
-                    stringBuilder.Append("[UnityEngine.SerializeReference, UnityIceFebruary.InterfaceImplementation.InterfaceImplementation]");
+                    stringBuilder.Append("\t[UnityEngine.SerializeReference, UnityIceFebruary.InterfaceImplementation.InterfaceImplementation]");
                 else
-                    stringBuilder.Append("[UnityEngine.SerializeField]");
+                    stringBuilder.Append("\t[UnityEngine.SerializeField]");
 
                 stringBuilder.Append(" private ");
 
-                if (parameterType.IsProxyable())
+                bool isProxyable = parameterType.IsProxyable();
+                bool isProxyableArray = parameterType.IsProxyableArray();
+                bool isProxyableList = parameterType.IsProxyableList();
+
+                if (isProxyable)
                     stringBuilder.Append(parameterType.GetProxyName());
+
+                else if (isProxyableArray)
+                {
+                    Type elementType = parameterType.GetElementType();
+                    stringBuilder.Append($"{elementType.GetProxyName()}[]");
+                }
+
+                else if (isProxyableList)
+                {
+                    Type elementType = parameterType.GetGenericArguments()[0];
+                    stringBuilder.Append($"System.Collections.Generic.List<{elementType.GetProxyName()}>");
+                }
+
                 else
                     stringBuilder.Append(parameterName);
 
@@ -108,20 +124,40 @@ namespace UnityIceFebruary.AutoGenerator
 
                 stringBuilder.AppendLine($" {parameterFieldName};");
 
-                if (parameterType.IsArray && parameterType.GetElementType().IsProxyable())
-                    parametersNames.Add($"System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Select({parameterFieldName} ?? new {parameterName.Replace("[]", string.Empty)}[0], element => element?.ToPoco()))");
-                else if (parameterType.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>) && type.GetGenericArguments()[0].IsProxyable())
+                if (isProxyable)
+                    parametersNames.Add($"{parameterFieldName}.ToPoco()");
+                else if (isProxyableArray)
+                    parametersNames.Add($"IceFebruary.Collections.GenericArraysExtensions.ToStructArray(System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Select({parameterFieldName} ?? new {parameterType.GetElementType().GetProxyName()}[0], element => element?.ToPoco())))");
+                else if (isProxyableList)
                     parametersNames.Add($"System.Linq.Enumerable.ToList(System.Linq.Enumerable.Select({parameterFieldName} ?? new(), element => element?.ToPoco()))");
-                else if (parameterType.IsProxyable())
-                    parametersNames.Add($"{parameterFieldName}?.ToPoco()");
                 else
                     parametersNames.Add(parameterFieldName);
             }
 
-            stringBuilder.Append($"public {type.FullName} ToPoco() => new(");
+            stringBuilder.Append($"\tpublic ");
+
+            string typeName = type.FullName;
+
+            if (type.HasAttribute<FieldProxy>())
+            {
+                FieldProxy attribute = type.GetAttribute<FieldProxy>();
+                Type interfaceProxy = attribute.InterfaceType;
+
+                if (interfaceProxy == null)
+                    stringBuilder.Append(typeName);
+                else
+                    stringBuilder.Append(interfaceProxy.FullName);
+            }
+
+            else
+                stringBuilder.Append(typeName);
+
+            stringBuilder.Append($" ToPoco() => new {typeName}(");
             stringBuilder.Append(string.Join(", ", parametersNames));
             stringBuilder.AppendLine(");");
             stringBuilder.AppendLine("}");
         }
+        private static bool IsProxyableList(this Type type) => type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>) && type.GetGenericArguments()[0].IsProxyable();
+        private static bool IsProxyableArray(this Type type) => type.IsArray && type.GetElementType().IsProxyable();
     }
 }
