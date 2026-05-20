@@ -2,12 +2,14 @@ namespace UnityIceFebruary.Components
 {
     using IceFebruary.Physics;
     using IceFebruary.Space;
+    using IceFebruary.Proxy;
     using UnityIceFebruary.Adaptation;
 
     using Rigidbody2D = UnityEngine.Rigidbody2D;
 
     public sealed class UnityRigidbody2D : UnityBaseEntity<Rigidbody2D>, IRigidbody2D
     {
+        [FieldProxy(typeof(IRigidbody2D))]
         public UnityRigidbody2D(Rigidbody2D rigidbody2D) : base(rigidbody2D) { }
         public Vector2 Position
         {

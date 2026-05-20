@@ -1,7 +1,9 @@
 namespace IceFebruary.Physics
 {
     using IceFebruary.Space;
+    using IceFebruary.Proxy;
 
+    [InterfaceProxy]
     public interface IRigidbody2D : IBaseEntity
     {
         Vector2 LinearVelocity { get; set; }

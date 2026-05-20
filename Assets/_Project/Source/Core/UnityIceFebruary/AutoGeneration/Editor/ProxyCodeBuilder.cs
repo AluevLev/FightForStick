@@ -98,40 +98,35 @@ namespace UnityIceFebruary.AutoGenerator
 
                 stringBuilder.Append(" private ");
 
-                bool isProxyable = parameterType.IsProxyable();
-                bool isProxyableArray = parameterType.IsProxyableArray();
-                bool isProxyableList = parameterType.IsProxyableList();
-
-                if (isProxyable)
-                    stringBuilder.Append(parameterType.GetProxyName());
-
-                else if (isProxyableArray)
-                {
-                    Type elementType = parameterType.GetElementType();
-                    stringBuilder.Append($"{elementType.GetProxyName()}[]");
-                }
-
-                else if (isProxyableList)
-                {
-                    Type elementType = parameterType.GetGenericArguments()[0];
-                    stringBuilder.Append($"System.Collections.Generic.List<{elementType.GetProxyName()}>");
-                }
-
-                else
-                    stringBuilder.Append(parameterName);
-
                 string parameterFieldName = $"_{parameterInfo.Name}";
 
-                stringBuilder.AppendLine($" {parameterFieldName};");
-
-                if (isProxyable)
+                if (parameterType.HasAttribute<GeneratorAttribute>())
+                {
+                    stringBuilder.Append(parameterType.GetProxyName());
                     parametersNames.Add($"{parameterFieldName}.ToPoco()");
-                else if (isProxyableArray)
-                    parametersNames.Add($"IceFebruary.Collections.GenericArraysExtensions.ToStructArray(System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Select({parameterFieldName} ?? new {parameterType.GetElementType().GetProxyName()}[0], element => element?.ToPoco())))");
-                else if (isProxyableList)
-                    parametersNames.Add($"System.Linq.Enumerable.ToList(System.Linq.Enumerable.Select({parameterFieldName} ?? new(), element => element?.ToPoco()))");
+                }
+                    
+                else if (parameterType.IsProxyableArray(out Type arrayElementType))
+                {
+                    string elementTypeName = arrayElementType.GetProxyName();
+
+                    stringBuilder.Append($"{elementTypeName}[]");
+                    parametersNames.Add($"System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Select({parameterFieldName} ?? new {elementTypeName}[0], element => element.ToPoco()))");
+                }
+                    
+                else if (parameterType.IsProxyableList(out Type listElementType))
+                {
+                    stringBuilder.Append($"System.Collections.Generic.List<{listElementType.GetProxyName()}>");
+                    parametersNames.Add($"System.Linq.Enumerable.ToList(System.Linq.Enumerable.Select({parameterFieldName} ?? new(), element => element.ToPoco()))");
+                }
+
                 else
+                {
+                    stringBuilder.Append(parameterName);
                     parametersNames.Add(parameterFieldName);
+                }
+
+                stringBuilder.AppendLine($" {parameterFieldName};");
             }
 
             stringBuilder.Append($"\tpublic ");
@@ -157,7 +152,6 @@ namespace UnityIceFebruary.AutoGenerator
             stringBuilder.AppendLine(");");
             stringBuilder.AppendLine("}");
         }
-        private static bool IsProxyableList(this Type type) => type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>) && type.GetGenericArguments()[0].IsProxyable();
-        private static bool IsProxyableArray(this Type type) => type.IsArray && type.GetElementType().IsProxyable();
+        
     }
 }
