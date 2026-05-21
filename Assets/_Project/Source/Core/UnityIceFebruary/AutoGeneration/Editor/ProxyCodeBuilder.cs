@@ -25,7 +25,7 @@ namespace UnityIceFebruary.AutoGenerator
             StringBuilder stringBuilder = new();
 
             stringBuilder.AppendLine("[System.Serializable]");
-            stringBuilder.Append($"public class {type.GetProxyName()}");
+            stringBuilder.Append($"public sealed class {type.GetProxyName()}");
 
             Type fieldProxyInterface = fieldProxy.InterfaceType;
 
@@ -48,7 +48,7 @@ namespace UnityIceFebruary.AutoGenerator
             StringBuilder stringBuilder = new();
 
             stringBuilder.AppendLine($"[UnityEngine.CreateAssetMenu(fileName = \"{type.Name}Proxy\", menuName = \"Proxy/{type.Name}\")]");
-            stringBuilder.AppendLine($"public class {type.GetProxyName()} : UnityEngine.ScriptableObject");
+            stringBuilder.AppendLine($"public sealed class {type.GetProxyName()} : UnityEngine.ScriptableObject");
             stringBuilder.SetAverageBody(type);
 
             return stringBuilder.ToString();
@@ -57,24 +57,8 @@ namespace UnityIceFebruary.AutoGenerator
         {
             StringBuilder stringBuilder = new();
 
-            stringBuilder.AppendLine($"public class {type.GetProxyName()} : UnityEngine.MonoBehaviour");
+            stringBuilder.AppendLine($"public sealed class {type.GetProxyName()} : UnityEngine.MonoBehaviour");
             stringBuilder.SetAverageBody(type);
-
-            return stringBuilder.ToString();
-        }
-        public static string GetUnityProxyCode(Type type)
-        {
-            StringBuilder stringBuilder = new();
-
-            Type original = type.BaseType.GetGenericArguments()[0];
-            string originalName = original.FullName;
-
-            stringBuilder.AppendLine("[System.Serializable]");
-            stringBuilder.AppendLine($"public class {type.GetProxyName()}");
-            stringBuilder.AppendLine("{");
-            stringBuilder.AppendLine($"\t[UnityEngine.SerializeField] private {originalName} _component;");
-            stringBuilder.AppendLine($"\tpublic {originalName} ToPoco() => _component;");
-            stringBuilder.AppendLine("}");
 
             return stringBuilder.ToString();
         }
@@ -100,7 +84,7 @@ namespace UnityIceFebruary.AutoGenerator
 
                 string parameterFieldName = $"_{parameterInfo.Name}";
 
-                if (parameterType.HasAttribute<GeneratorAttribute>())
+                if (parameterType.IsProxyable())
                 {
                     stringBuilder.Append(parameterType.GetProxyName());
                     parametersNames.Add($"{parameterFieldName}.ToPoco()");
@@ -135,8 +119,7 @@ namespace UnityIceFebruary.AutoGenerator
 
             if (type.HasAttribute<FieldProxy>())
             {
-                FieldProxy attribute = type.GetAttribute<FieldProxy>();
-                Type interfaceProxy = attribute.InterfaceType;
+                Type interfaceProxy = type.GetAttribute<FieldProxy>().InterfaceType;
 
                 if (interfaceProxy == null)
                     stringBuilder.Append(typeName);
@@ -152,6 +135,5 @@ namespace UnityIceFebruary.AutoGenerator
             stringBuilder.AppendLine(");");
             stringBuilder.AppendLine("}");
         }
-        
     }
 }

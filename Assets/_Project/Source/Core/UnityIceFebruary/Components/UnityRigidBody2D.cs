@@ -6,7 +6,7 @@ namespace UnityIceFebruary.Components
     using UnityIceFebruary.Adaptation;
 
     using Rigidbody2D = UnityEngine.Rigidbody2D;
-
+    
     public sealed class UnityRigidbody2D : UnityBaseEntity<Rigidbody2D>, IRigidbody2D
     {
         [FieldProxy(typeof(IRigidbody2D))]

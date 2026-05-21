@@ -1,0 +1,41 @@
+namespace UnityIceFebruary.AutoGenerator
+{
+    using System.Linq;
+    using System.Text;
+
+    public static class StaticProxyCodeBuilder
+    {
+        public static string GetStaticUnityMatchComponentCode(UnityMatchPair[] pairs)
+        {
+            StringBuilder stringBuilder = new();
+
+            stringBuilder.AppendLine($"public static class {StaticProxy.UnityMatchObjectsName}");
+            stringBuilder.AppendLine("{");
+            stringBuilder.AppendLine("\tpublic static readonly System.Collections.Generic.Dictionary<System.Type, System.Func<UnityEngine.Object, IceFebruary.IBaseEntity>> FabricAliases = new()");
+            stringBuilder.AppendLine("\t{");
+
+            stringBuilder.AppendLine(string.Join(",\n", pairs.Select(pair => GetFabricAliasesPair(pair))));
+
+            stringBuilder.AppendLine("\t};");
+            stringBuilder.AppendLine("\tpublic static readonly System.Collections.Generic.Dictionary<System.Type, System.Type> UnityAnalogs = new()");
+            stringBuilder.AppendLine("\t{");
+
+            stringBuilder.AppendLine(string.Join(",\n", pairs.Select(pair => GetUnityAnalogPair(pair))));
+
+            stringBuilder.AppendLine("\t};");
+            stringBuilder.AppendLine("}");
+
+            return stringBuilder.ToString();
+        }
+        public static string GetFabricAliasesPair(UnityMatchPair pair)
+        {
+            string unityTypeName = pair.UnityType.FullName;
+            string unityAnalogTypeName = pair.UnityAnalogType.FullName;
+
+            return GetPair(GetTypeOf(unityTypeName), $"obj => new {unityAnalogTypeName}(({unityTypeName})obj)");
+        }
+        private static string GetUnityAnalogPair(UnityMatchPair pair) => GetPair(GetTypeOf(pair.UnityType.FullName), GetTypeOf(pair.UnityAnalogType.FullName));
+        private static string GetTypeOf(string typeName) => $"typeof({typeName})";
+        private static string GetPair(string key, string value) => $"\t\t{{ {key}, {value} }}";
+    }
+}

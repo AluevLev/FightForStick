@@ -10,14 +10,14 @@ namespace UnityIceFebruary
     {
         public static Type GetUnityType<T>() where T : class, IBaseEntity
         {
-            if (!UnityMatchComponent.UnityAnalogs.TryGetValue(typeof(T), out Type type))
+            if (!UnityMatchObject.UnityAnalogs.TryGetValue(typeof(T), out Type type))
                 return null;
 
             return type;
         }
         public static IBaseEntity Upsert<T>(T unityObject) where T : UnityObject
         {
-            if (unityObject == null || !UnityMatchComponent.FabricAliases.TryGetValue(unityObject.GetType(), out Func<UnityObject, IBaseEntity> factory))
+            if (unityObject == null || !UnityMatchObject.FabricAliases.TryGetValue(unityObject.GetType(), out Func<UnityObject, IBaseEntity> factory))
                 return null;
 
             return UnityHierarchyCache.Upsert(unityObject, factory);

@@ -20,6 +20,7 @@ namespace UnityIceFebruary.AutoGenerator
             { typeof(FieldProxy), _fieldProxyPath },
             { typeof(InterfaceProxy), _interfaceProxyPath },
             { typeof(ScriptableObjectProxy), _scriptableObjectProxyPath },
+            { typeof(StaticProxy), _staticDictionariesPath }
         };
         public static string GetPath(Type type) => _pathsOfTypes.TryGetValue(type, out string path) ? path.GetFullDirectory() : null;
         public static void RecoveryDirectories()
