@@ -1,5 +1,8 @@
 namespace IceFebruary
 {
+    using IceFebruary.Proxy;
+
+    [InterfaceProxy]
     public interface IGameObject : IBaseEntity
     {
         ITransform2D Transform { get; }

@@ -19,19 +19,17 @@ namespace UnityIceFebruary.AutoGenerator
 
             return type
                 .GetMembers(_flags)
-                .Concat(type.GetConstructors(_flags))
                 .Select(member => member.GetCustomAttributes<T>(true).FirstOrDefault())
                 .FirstOrDefault(attribute => attribute != null);
         }
         public static bool HasAttribute<T>(this Type type) where T : GeneratorAttribute
         {
-            if (type.GetCustomAttributes<T>(true).Any())
+            if (type.IsDefined(typeof(T), true))
                 return true;
 
             return type
                 .GetMembers(_flags)
-                .Concat(type.GetConstructors(_flags))
-                .Any(member => member.GetCustomAttributes<T>(true).Any());
+                .Any(member => member.IsDefined(typeof(T), true));
         }
         public static bool IsProxyable(this Type type) => type.HasAttribute<GeneratorAttribute>();
         public static bool IsProxyableArray(this Type type, out Type elementType)

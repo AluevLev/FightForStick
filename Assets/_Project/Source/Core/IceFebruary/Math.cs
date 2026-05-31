@@ -1,19 +1,59 @@
 namespace IceFebruary
 {
+    using System.Runtime.CompilerServices;
     using SysMathF = System.MathF;
 
     public static class Math
     {
         public const float Pi = SysMathF.PI;
-        public const float Epsilon = 1e-5f;
+        public const float Epsilon = 1e-4f;
         public const float Rad2Deg = 180f / Pi;
         public const float Deg2Rad = 1f / Rad2Deg;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Abs(float x) => SysMathF.Abs(x);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Sign(float x) => SysMathF.Sign(x);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Sqrt(float x) => SysMathF.Sqrt(x);
-        public static float Sin(float x) => SysMathF.Sin(x);
-        public static float Cos(float x) => SysMathF.Cos(x);
-        public static float Atan2(float y, float x) => SysMathF.Atan2(y, x);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float Sin(float x)
+        {
+            float rem = x % (2f * Pi);
+
+            if (rem > Pi)
+                rem -= 2f * Pi;
+            if (rem < -Pi)
+                rem += 2f * Pi;
+
+            float absX = Abs(x);
+            float y = 1.2732395f * rem - 0.4052847f * rem * absX;
+            float absY = Abs(y);
+
+            return 0.225f * (y * absY - y) + y;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float Cos(float x) => Sin(x + Pi * 0.5f);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float Atan2(float y, float x)
+        {
+            if (x == 0f && y == 0f)
+                return 0f;
+
+            float absX = Abs(x);
+            float absY = Abs(y);
+            float ratio = absX > absY ? absY / absX : absX / absY;
+            float angle = (0.9724f - 0.1919f * ratio * ratio) * ratio;
+
+            if (absY > absX)
+                angle = (Pi * 0.5f) - angle;
+            if (x < 0f)
+                angle = Pi - angle;
+            if (y < 0f)
+                angle = -angle;
+
+            return angle;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int GetPower2WithReserve(int x)
         {
             if (x < 2)
@@ -30,6 +70,7 @@ namespace IceFebruary
 
             return power;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Clamp(this int x, int min, int max)
         {
             if (x < min)
@@ -38,8 +79,11 @@ namespace IceFebruary
                 return max;
             return x;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int ClampMin(this int x, int min) => x < min ? min : x;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int ClampMax(this int x, int max) => x > max ? max : x;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Clamp(this float x, float min, float max)
         {
             if (x < min)
@@ -48,28 +92,25 @@ namespace IceFebruary
                 return max;
             return x;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float ClampMin(this float x, float min) => x < min ? min : x;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float ClampMax(this float x, float max) => x > max ? max : x;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool InBounds(this int x, int min, int max) => x >= min && x <= max;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool InBounds(this float x, float min, float max) => x >= min && x <= max;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Lerp(float x, float y, float interpolation) => x + (y - x) * Clamp01(interpolation);
-        /*  Rudiment. Tbh idk would i use this. I hope no, but just in case I'll leave this here under the comments
-            Pis
-        public static float LerpAngle(float x, float y, float interpolation)
-        {
-            float delta = GetOnPeriod(y - x, 360f);
-
-            if (delta > 180)
-                delta -= 360;
-
-            return x + delta * Clamp01(interpolation);
-        }
-        public static float GetOnPeriod(float x, float period) => ((x % period) + period) % period;
-        */
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Clamp01(float x) => Clamp(x, 0f, 1f);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Min(int x, int y) => x < y ? x : y;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Max(int x, int y) => x > y ? x : y;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Min(float x, float y) => x < y ? x : y;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Max(float x, float y) => x > y ? x : y;
     }
 }

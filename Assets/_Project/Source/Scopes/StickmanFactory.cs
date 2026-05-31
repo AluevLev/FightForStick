@@ -23,8 +23,9 @@ public sealed class StickmanFactory //TODO: this
         _objectManager.Create(stickman);
         return this;
     }
-    public StickmanFactory ReviveLimbs(PhysicsLimbSettings[] settings)
+    public StickmanFactory ReviveLimbs(RagdollScema settings)
     {
+
         return this;
     }
     public StickmanFactory SetMovement(IRigidbody2D pushBody, MovementSettings movementCalculator, AnimatorVariable<float> movementFloat)

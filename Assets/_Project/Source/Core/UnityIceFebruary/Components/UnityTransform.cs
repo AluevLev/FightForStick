@@ -1,13 +1,14 @@
 namespace UnityIceFebruary.Components
 {
     using IceFebruary;
+    using IceFebruary.Proxy;
     using IceFebruary.Space;
     using UnityIceFebruary.Adaptation;
-
     using Transform = UnityEngine.Transform;
 
     public sealed class UnityTransform : UnityBaseEntity<Transform>, ITransform2D
     {
+        [FieldProxy(typeof(ITransform2D))]
         public UnityTransform(Transform transform) : base(transform) { }
         public Vector2 Position
         {

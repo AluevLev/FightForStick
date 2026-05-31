@@ -39,7 +39,7 @@ namespace UnityIceFebruary.AutoGenerator
                     stringBuilder.AppendLine(fieldProxyInterface.FullName);
             }
 
-            stringBuilder.SetAverageBody(type);
+            stringBuilder.SetAverageBody(type, fieldProxy.InterfaceType);
 
             return stringBuilder.ToString();
         }
@@ -57,17 +57,16 @@ namespace UnityIceFebruary.AutoGenerator
         {
             StringBuilder stringBuilder = new();
 
-            stringBuilder.AppendLine($"public sealed class {type.GetProxyName()} : UnityEngine.MonoBehaviour");
-            stringBuilder.SetAverageBody(type);
+            stringBuilder.AppendLine($"public sealed class {type.GetProxyName()} : UnityIceFebruary.UnityInstantiateInfo<{type.FullName}>");
+            stringBuilder.SetAverageBody(type, toPocoAdditionalKeys: "override");
 
             return stringBuilder.ToString();
         }
-        private static void SetAverageBody(this StringBuilder stringBuilder, Type type)
+        private static void SetAverageBody(this StringBuilder stringBuilder, Type type, Type toPocoType = null, string toPocoAdditionalKeys = null)
         {
             stringBuilder.AppendLine("{");
 
-            ConstructorInfo constructor = type.GetConstructors().First();
-            ParameterInfo[] parameters = constructor.GetParameters();
+            ParameterInfo[] parameters = type.GetConstructors().First().GetParameters();
             List<string> parametersNames = new();
 
             foreach (ParameterInfo parameterInfo in parameters)
@@ -117,18 +116,13 @@ namespace UnityIceFebruary.AutoGenerator
 
             string typeName = type.FullName;
 
-            if (type.HasAttribute<FieldProxy>())
-            {
-                Type interfaceProxy = type.GetAttribute<FieldProxy>().InterfaceType;
+            if (!string.IsNullOrWhiteSpace(toPocoAdditionalKeys))
+                stringBuilder.Append($"{toPocoAdditionalKeys} ");
 
-                if (interfaceProxy == null)
-                    stringBuilder.Append(typeName);
-                else
-                    stringBuilder.Append(interfaceProxy.FullName);
-            }
-
-            else
+            if (toPocoType == null)
                 stringBuilder.Append(typeName);
+            else
+                stringBuilder.Append(toPocoType.FullName);
 
             stringBuilder.Append($" ToPoco() => new {typeName}(");
             stringBuilder.Append(string.Join(", ", parametersNames));

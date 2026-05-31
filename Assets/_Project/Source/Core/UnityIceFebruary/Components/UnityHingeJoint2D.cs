@@ -1,6 +1,7 @@
 namespace UnityIceFebruary.Components
 {
     using IceFebruary.Physics;
+    using IceFebruary.Proxy;
     using IceFebruary.Space;
     using UnityIceFebruary.Adaptation;
 
@@ -8,6 +9,7 @@ namespace UnityIceFebruary.Components
 
     public sealed class UnityHingeJoint2D : UnityBaseEntity<HingeJoint2D>, IHingeJoint2D
     {
+        [FieldProxy(typeof(IHingeJoint2D))]
         public UnityHingeJoint2D(HingeJoint2D hingeJoint2D) : base(hingeJoint2D) { }
         public Vector2 Anchor
         {
@@ -16,7 +18,7 @@ namespace UnityIceFebruary.Components
         }
         public IRigidbody2D ConnectedBody
         {
-            get => UnityMethods.Upsert(Original.connectedBody) as IRigidbody2D;
+            get => (IRigidbody2D)UnityMethods.Upsert(Original.connectedBody);
             set => Original.connectedBody = (value as UnityRigidbody2D)?.Original;
         }
     }

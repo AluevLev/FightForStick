@@ -4,14 +4,6 @@ namespace UnityIceFebruary
 
     public sealed class UnityObjectManager : BaseEntity, IObjectManager
     {
-        public IGameObject Create(IGameObject gameObject)
-        {
-            if (gameObject is not UnityGameObject unityGameObject)
-                return null;
-            
-            UnityEngine.GameObject newGameObject = UnityEngine.Object.Instantiate(unityGameObject.Original);
-
-            return (UnityGameObject)UnityMethods.Upsert(newGameObject);
-        }
+        public IGameObject Create(IGameObject gameObject) => gameObject is UnityGameObject2D unityGameObject ? (IGameObject)UnityMethods.Upsert(UnityEngine.Object.Instantiate(unityGameObject.Original)) : null;
     }
 }

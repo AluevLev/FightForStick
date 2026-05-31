@@ -20,6 +20,7 @@ namespace UnityIceFebruary
             base.Destroy();
 
             UnityMethods.Remove(this);
+
             UnityEngine.Object.Destroy(Original);
         }
         protected UnityBaseEntity(T original, bool? enabled = null)

@@ -1,7 +1,9 @@
 namespace IceFebruary
 {
     using IceFebruary.Space;
+    using IceFebruary.Proxy;
 
+    [InterfaceProxy]
     public interface ITransform2D : IBaseEntity
     {
         Vector2 Position { get; set; }

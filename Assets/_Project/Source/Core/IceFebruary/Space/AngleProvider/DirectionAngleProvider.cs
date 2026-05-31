@@ -7,6 +7,7 @@ namespace IceFebruary.Space.AngleProvider
     {
         private readonly IPointProvider _from;
         private readonly IPointProvider _to;
+
         [FieldProxy(typeof(IAngleProvider))]
         public DirectionAngleProvider(IPointProvider from, IPointProvider to)
         {

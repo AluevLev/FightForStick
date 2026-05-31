@@ -1,5 +1,8 @@
 namespace IceFebruary.Animation
 {
+    using IceFebruary.Proxy;
+
+    [InterfaceProxy]
     public interface IAnimator : IBaseEntity
     {
         T GetVariable<T>(int hash) where T : struct;
