@@ -6,14 +6,10 @@ namespace IceFebruary
         {
             Value = component;
             GameObject = gameObject;
+            Transform = gameObject.Transform;
         }
         public T Value { get; private init; }
         public IGameObject GameObject { get; private init; }
-        public bool Unpack(out T component, out IGameObject gameObject)
-        {
-            component = Value;
-            gameObject = GameObject;
-            return component.Exists() && gameObject.Exists();
-        }
+        public ITransform Transform { get; private init; }
     }
 }

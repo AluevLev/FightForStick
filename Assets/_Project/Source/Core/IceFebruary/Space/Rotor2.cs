@@ -17,8 +17,8 @@ namespace IceFebruary.Space
         {
             float halfAngle = (radian ? angle : angle * Math.Deg2Rad) * 0.5f;
 
-            Scalar = Math.Cos(halfAngle);
-            XY = Math.Sin(halfAngle);
+            Scalar = Math.NimbleCos(halfAngle);
+            XY = Math.NimbleSin(halfAngle);
         }
         public readonly Rotor2 Inverse
         {
@@ -75,7 +75,7 @@ namespace IceFebruary.Space
             return new(resultScalar * invMagnitude, resultXY * invMagnitude);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public float ToAngle(bool radian) => Math.Atan2(XY, Scalar) * 2f * (radian ? 1f : Math.Rad2Deg);
+        public float ToAngle(bool radian) => Math.NimbleAtan2(XY, Scalar) * 2f * (radian ? 1f : Math.Rad2Deg);
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Rotor3(Rotor2 r) => new(r.Scalar, r.XY, 0, 0);
     }

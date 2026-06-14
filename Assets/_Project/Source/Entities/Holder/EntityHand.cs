@@ -1,33 +1,26 @@
 using IceFebruary;
 using IceFebruary.Physics;
 
-public sealed class EntityHand : IHand
+public sealed class EntityHand : BaseEntity, IHand
 {
     private readonly Component<IRigidbody2D> _hand;
-    private Component<IHingeJoint2D> _holder;
-    public EntityHand(Component<IRigidbody2D> hand)
+    private IHingeJoint2D _holderHingeJoint2D;
+    public EntityHand(Component<IRigidbody2D> hand) : base()
     {
         _hand = hand;
     }
     public void Connect(Component<IHingeJoint2D> holder)
     {
-        _holder = holder;
+        _holderHingeJoint2D = holder.Value;
 
-        if (!Unpack(out IRigidbody2D rigidbody2D, out IHingeJoint2D hingeJoint2D, out IGameObject handGameObject, out IGameObject holderGameObject))
-            return;
-        
-        handGameObject.Transform.Position = holderGameObject.Transform.TransformPoint(hingeJoint2D.Anchor);
-        hingeJoint2D.ConnectedBody = rigidbody2D;
-        hingeJoint2D.Enabled = true;
+        _hand.Transform.Position = holder.GameObject.Transform.TransformPoint(_holderHingeJoint2D.Anchor);
+        _holderHingeJoint2D.ConnectedBody = _hand.Value;
+        _holderHingeJoint2D.Enabled = true;
     }
     public void Disconnect()
     {
-        if (!Unpack(out IRigidbody2D rigidbody2D, out IHingeJoint2D hingeJoint2D, out IGameObject handGameObject, out IGameObject holderGameObject))
-            return;
-
-        hingeJoint2D.Enabled = false;
-        hingeJoint2D.ConnectedBody = null;
+        _holderHingeJoint2D.Enabled = false;
+        _holderHingeJoint2D.ConnectedBody = null;
+        _holderHingeJoint2D = null;
     }
-    private bool Unpack(out IRigidbody2D rigidbody2D, out IHingeJoint2D hingeJoint2D, out IGameObject handGameObject, out IGameObject holderGameObject) =>
-        !_hand.Unpack(out rigidbody2D, out handGameObject) & !_holder.Unpack(out hingeJoint2D, out holderGameObject);
 }

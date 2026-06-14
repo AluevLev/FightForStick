@@ -16,14 +16,14 @@ public sealed class EntityItemHolderHandler : IItemHolderHandler
     private readonly float _sqrMaxPickUpDistance;
 
     private IPickable _itemInHand;
-    public EntityItemHolderHandler(IPhysics2D physics2D, IItemHolder entityItemHolder, IPointProvider cursor, IPointProvider humanPosition, IShape overlapArea, float maxPickUpDistance)
+    public EntityItemHolderHandler(IPhysics2D physics2D, IItemHolder entityItemHolder, IPointProvider cursor, IPointProvider humanPosition, IShape overlapArea, float sqrMaxPickUpDistance)
     {
         _physics2D = physics2D;
         _entityItemHolder = entityItemHolder;
         _cursor = cursor;
         _humanPosition = humanPosition;
         _overlapArea = overlapArea;
-        _sqrMaxPickUpDistance = maxPickUpDistance * maxPickUpDistance;
+        _sqrMaxPickUpDistance = sqrMaxPickUpDistance;
     }
     public void PickUp()
     {

@@ -4,7 +4,7 @@ namespace IceFebruary
     using IceFebruary.Proxy;
 
     [InterfaceProxy]
-    public interface ITransform2D : IBaseEntity
+    public interface ITransform : IBaseEntity
     {
         Vector2 Position { get; set; }
         Rotor2 Rotation { get; set; }

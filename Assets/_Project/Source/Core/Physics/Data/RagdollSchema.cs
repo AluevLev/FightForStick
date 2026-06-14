@@ -1,6 +1,6 @@
 using IceFebruary.Proxy;
 
-public readonly struct RagdollScema
+public readonly struct RagdollSchema
 {
     private readonly PhysicsLimbSettings _head;
     private readonly PhysicsLimbSettings _body;
@@ -22,7 +22,7 @@ public readonly struct RagdollScema
     private readonly PhysicsLimbSettings _foot2;
 
     [FieldProxy]
-    public RagdollScema(PhysicsLimbSettings head, PhysicsLimbSettings body,
+    public RagdollSchema(PhysicsLimbSettings head, PhysicsLimbSettings body,
         PhysicsLimbSettings shoulder1, PhysicsLimbSettings forearm1, PhysicsLimbSettings hand1,
         PhysicsLimbSettings shoulder2, PhysicsLimbSettings forearm2, PhysicsLimbSettings hand2,
         PhysicsLimbSettings hip1, PhysicsLimbSettings shin1, PhysicsLimbSettings foot1,
@@ -34,7 +34,7 @@ public readonly struct RagdollScema
         _hip1 = hip1; _shin1 = shin1; _foot1 = foot1;
         _hip2 = hip2; _shin2 = shin2; _foot2 = foot2;
     }
-    public RagdollScema(PhysicsLimbSettings[] limbs)
+    public RagdollSchema(PhysicsLimbSettings[] limbs)
     {
         _head = limbs[0]; _body = limbs[1];
         _shoulder1 = limbs[2]; _forearm1 = limbs[3]; _hand1 = limbs[4];

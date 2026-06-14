@@ -5,9 +5,9 @@ namespace IceFebruary.Space.PointProvider
     public sealed class SpacePointProvider : IPointProvider
     {
         private readonly IPointProvider _pointProvider;
-        private readonly ITransform2D _space;
+        private readonly ITransform _space;
         [FieldProxy(typeof(IPointProvider))]
-        public SpacePointProvider(IPointProvider pointProvider, ITransform2D space)
+        public SpacePointProvider(IPointProvider pointProvider, ITransform space)
         {
             _space = space;
             _pointProvider = pointProvider;

@@ -16,7 +16,7 @@ namespace IceFebruary
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Sqrt(float x) => SysMathF.Sqrt(x);
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float Sin(float x)
+        public static float NimbleSin(float x)
         {
             float rem = x % (2f * Pi);
 
@@ -32,9 +32,9 @@ namespace IceFebruary
             return 0.225f * (y * absY - y) + y;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float Cos(float x) => Sin(x + Pi * 0.5f);
+        public static float NimbleCos(float x) => NimbleSin(x + Pi * 0.5f);
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float Atan2(float y, float x)
+        public static float NimbleAtan2(float y, float x)
         {
             if (x == 0f && y == 0f)
                 return 0f;
@@ -104,6 +104,8 @@ namespace IceFebruary
         public static float Lerp(float x, float y, float interpolation) => x + (y - x) * Clamp01(interpolation);
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Clamp01(float x) => Clamp(x, 0f, 1f);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float ClampNeg11(float x) => Clamp(x, -1f, 1f);
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Min(int x, int y) => x < y ? x : y;
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

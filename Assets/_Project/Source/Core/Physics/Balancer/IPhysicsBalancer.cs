@@ -1,9 +1,9 @@
+using IceFebruary;
 using IceFebruary.Space.AngleProvider;
 
-public interface IPhysicsBalancer
+public interface IPhysicsBalancer : IBaseEntity
 {
     void SetTarget(IAngleProvider targetProvider);
     void ResetTarget();
     void Relax();
-    void LookAtTarget();
 }

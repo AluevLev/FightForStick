@@ -6,9 +6,9 @@ namespace UnityIceFebruary.Components
     using UnityIceFebruary.Adaptation;
     using Transform = UnityEngine.Transform;
 
-    public sealed class UnityTransform : UnityBaseEntity<Transform>, ITransform2D
+    public sealed class UnityTransform : UnityBaseEntity<Transform>, ITransform
     {
-        [FieldProxy(typeof(ITransform2D))]
+        [FieldProxy(typeof(ITransform))]
         public UnityTransform(Transform transform) : base(transform) { }
         public Vector2 Position
         {

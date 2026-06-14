@@ -7,10 +7,10 @@ namespace IceFebruary.Space.Follow
     public sealed class TransformLocalPositionFollower : ITransformFollower
     {
         private readonly IPointProvider _target;
-        private readonly ITransform2D _transform;
+        private readonly ITransform _transform;
         private readonly float _distortion;
         public bool Enabled { get; set; } = true;
-        public TransformLocalPositionFollower(ITransform2D transform, IPointProvider target, float distortion)
+        public TransformLocalPositionFollower(ITransform transform, IPointProvider target, float distortion)
         {
             _target = target;
             _transform = transform;

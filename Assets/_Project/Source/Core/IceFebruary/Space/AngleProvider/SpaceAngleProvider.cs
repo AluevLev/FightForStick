@@ -5,9 +5,9 @@ namespace IceFebruary.Space.AngleProvider
     public sealed class SpaceAngleProvider : IAngleProvider
     {
         private readonly IAngleProvider _angleProvider;
-        private readonly ITransform2D _space;
+        private readonly ITransform _space;
         [FieldProxy(typeof(IAngleProvider))]
-        public SpaceAngleProvider(IAngleProvider angleProvider, ITransform2D space)
+        public SpaceAngleProvider(IAngleProvider angleProvider, ITransform space)
         {
             _space = space;
             _angleProvider = angleProvider;

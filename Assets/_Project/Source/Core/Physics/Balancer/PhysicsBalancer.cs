@@ -2,10 +2,10 @@ using IceFebruary;
 using IceFebruary.Physics;
 using IceFebruary.Space;
 using IceFebruary.Space.Follow;
-using IceFebruary.Space.PointProvider;
 using IceFebruary.Space.AngleProvider;
+using IceFebruary.Time;
 
-public sealed class PhysicsBalancer : ITargetPossessing<IAngleProvider>, IPhysicsBalancer
+public sealed class PhysicsBalancer : BaseEntity, ITargetPossessing<IAngleProvider>, IPhysicsBalancer, IFixedFrame
 {
     private readonly IRigidbody2D _physicsBody;
     private readonly IPhysicsBalancerCalculator _physicsBalancerCalculator;
@@ -14,7 +14,7 @@ public sealed class PhysicsBalancer : ITargetPossessing<IAngleProvider>, IPhysic
     private IAngleProvider _targetAngle;
 
     public Rotor2 AdditionalAngle { get; set; }
-    public PhysicsBalancer(IRigidbody2D physics, IPhysicsBalancerCalculator physicsBalancerCalculator, IAngleProvider defaultAngleProvider = null)
+    public PhysicsBalancer(IRigidbody2D physics, IPhysicsBalancerCalculator physicsBalancerCalculator, IAngleProvider defaultAngleProvider = null) : base()
     {
         _physicsBody = physics;
         _defaultAngleProvider = defaultAngleProvider;
@@ -22,11 +22,10 @@ public sealed class PhysicsBalancer : ITargetPossessing<IAngleProvider>, IPhysic
 
         SetTarget(_defaultAngleProvider);
     }
-
     public void SetTarget(IAngleProvider targetProvider) => _targetAngle = targetProvider;
     public void ResetTarget() => _targetAngle = _defaultAngleProvider;
     public void Relax() => _targetAngle = null;
-    public void LookAtTarget()
+    public void OnFixedFrame()
     {
         if (!_physicsBody.Exists() || !_targetAngle.TryGetAngleSafe(out Rotor2 angle))
             return;

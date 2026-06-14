@@ -1,12 +1,15 @@
 using IceFebruary.Proxy;
+using IceFebruary.Shapes;
 
 public readonly struct PickUpSettings
 {
-    public float MaxPickUpDistance { get; private init; }
+    public float MaxSqrPickUpDistance { get; private init; }
+    public IShape PickUpShape { get; private init; }
 
     [ScriptableObjectProxy]
-    public PickUpSettings(float maxPickUpDistance)
+    public PickUpSettings(float maxSqrPickUpDistance, IShape pickUpShape)
     {
-        MaxPickUpDistance = maxPickUpDistance;
+        MaxSqrPickUpDistance = maxSqrPickUpDistance;
+        PickUpShape = pickUpShape;
     }
 }

@@ -36,8 +36,8 @@ namespace IceFebruary.Space
             else
             {
                 float halfAngle = angle * 0.5f;
-                Scalar = Math.Cos(halfAngle);
-                float s = Math.Sin(halfAngle) / angle;
+                Scalar = Math.NimbleCos(halfAngle);
+                float s = Math.NimbleSin(halfAngle) / angle;
 
                 XY = rz * s;
                 YZ = rx * s;
