@@ -10,25 +10,21 @@ public sealed class EntityItemHolderHandler : IItemHolderHandler
 
     private readonly IPhysics2D _physics2D;
     private readonly IItemHolder _entityItemHolder;
-    private readonly IPointProvider _cursor;
     private readonly IPointProvider _humanPosition;
     private readonly IShape _overlapArea;
     private readonly float _sqrMaxPickUpDistance;
 
     private IPickable _itemInHand;
-    public EntityItemHolderHandler(IPhysics2D physics2D, IItemHolder entityItemHolder, IPointProvider cursor, IPointProvider humanPosition, IShape overlapArea, float sqrMaxPickUpDistance)
+    public EntityItemHolderHandler(IPhysics2D physics2D, IItemHolder entityItemHolder, IPointProvider humanPosition, IShape overlapArea, float sqrMaxPickUpDistance)
     {
         _physics2D = physics2D;
         _entityItemHolder = entityItemHolder;
-        _cursor = cursor;
         _humanPosition = humanPosition;
         _overlapArea = overlapArea;
         _sqrMaxPickUpDistance = sqrMaxPickUpDistance;
     }
-    public void PickUp()
+    public void PickUp(Vector2 cursorPosition)
     {
-        if (!_cursor.TryGetPointSafe(out Vector2 cursorPosition))
-            return;
         if (!_humanPosition.TryGetPointSafe(out Vector2 entityPosition))
             return;
         if (_physics2D.Overlap(_overlapArea, cursorPosition, null, null, _itemBuffer) == 0)
@@ -40,7 +36,7 @@ public sealed class EntityItemHolderHandler : IItemHolderHandler
         {
             IGameObject gameObject = _itemBuffer[index].GameObject;
 
-            if (Vector2.SqrDistance(gameObject.Transform.Position, entityPosition) >= _sqrMaxPickUpDistance)
+            if (Vector2.SqrDistance(gameObject.Transform.Position, entityPosition) > _sqrMaxPickUpDistance)
                 continue;
             if (gameObject.TryGetComponent(out item))
                 break;

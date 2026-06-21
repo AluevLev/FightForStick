@@ -6,7 +6,7 @@ public sealed class PhysicsBalancerCalculator : IPhysicsBalancerCalculator
     private readonly float _force;
     public PhysicsBalancerCalculator(float force)
     {
-        _force = Math.Clamp01(force);
+        _force = force.Clamp01();
     }
     public Rotor2 CalculateAngle(Rotor2 currentRotation, Rotor2 targetAngle)
     {

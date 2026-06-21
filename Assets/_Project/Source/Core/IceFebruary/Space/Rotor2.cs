@@ -51,7 +51,7 @@ namespace IceFebruary.Space
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Rotor2 Lerp(Rotor2 a, Rotor2 b, float interpolation)
         {
-            interpolation = Math.Clamp01(interpolation);
+            interpolation = interpolation.Clamp01();
 
             float dot = a.Scalar * b.Scalar + a.XY * b.XY;
 

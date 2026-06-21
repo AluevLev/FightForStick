@@ -10,8 +10,12 @@ namespace UnityIceFebruary.Components
     {
         [FieldProxy(typeof(IAnimator))]
         public UnityAnimator(Animator animator) : base(animator) { }
-        public T GetVariable<T>(int hash) where T : struct => UnityStaticAnimator<T>.Get(Original, hash);
-        public void SetVariable<T>(int hash, T value) where T : struct => UnityStaticAnimator<T>.Set(Original, hash, value);
+        public int GetInt(int hash) => Original.GetInteger(hash);
+        public void SetInt(int hash, int value) => Original.SetInteger(hash, value);
+        public float GetFloat(int hash) => Original.GetFloat(hash);
+        public void SetFloat(int hash, float value) => Original.SetFloat(hash, value);
+        public bool GetBool(int hash) => Original.GetBool(hash);
+        public void SetBool(int hash, bool value) => Original.SetBool(hash, value);
         public void SetTrigger(int hash) => Original.SetTrigger(hash);
     }
 }

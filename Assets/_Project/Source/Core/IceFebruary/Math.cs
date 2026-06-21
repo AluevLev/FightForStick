@@ -101,11 +101,11 @@ namespace IceFebruary
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool InBounds(this float x, float min, float max) => x >= min && x <= max;
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float Lerp(float x, float y, float interpolation) => x + (y - x) * Clamp01(interpolation);
+        public static float Lerp(float x, float y, float interpolation) => x + (y - x) * interpolation.Clamp01();
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float Clamp01(float x) => Clamp(x, 0f, 1f);
+        public static float Clamp01(this float x) => x.Clamp(0f, 1f);
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float ClampNeg11(float x) => Clamp(x, -1f, 1f);
+        public static float ClampNeg11(this float x) => x.Clamp(-1f, 1f);
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Min(int x, int y) => x < y ? x : y;
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

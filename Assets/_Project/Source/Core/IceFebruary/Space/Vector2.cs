@@ -33,10 +33,10 @@ namespace IceFebruary.Space
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Normalize(this);
         }
-        public Vector2 InBoxNormalized
+        public Vector2 BoxClamped
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => InBoxNormalize(this);
+            get => BoxClamp(this);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 operator +(Vector2 a, Vector2 b) => new(a.X + b.X, a.Y + b.Y);
@@ -73,11 +73,11 @@ namespace IceFebruary.Space
             return length < Math.Epsilon ? Right : v / length;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector2 InBoxNormalize(Vector2 v) => new(
-            Math.ClampNeg11(v.X),
-            Math.ClampNeg11(v.Y));
+        public static Vector2 BoxClamp(Vector2 v) => new(
+            v.X.ClampNeg11(),
+            v.Y.ClampNeg11());
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector2 Lerp(Vector2 a, Vector2 b, float t) => a + (b - a) * Math.Clamp01(t);
+        public static Vector2 Lerp(Vector2 a, Vector2 b, float t) => a + (b - a) * t.Clamp01();
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 DirectionTo(Vector2 from, Vector2 to) => (to - from).Normalized;
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

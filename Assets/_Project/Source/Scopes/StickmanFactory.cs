@@ -5,7 +5,7 @@ using IceFebruary.Space.AngleProvider;
 using IceFebruary.Space.PointProvider;
 using IceFebruary.Time;
 
-public sealed class StickmanFactory //TODO: this
+public sealed class StickmanFactory
 {
     private readonly ITime _time;
     private readonly IPhysics2D _physics2D;
@@ -28,8 +28,6 @@ public sealed class StickmanFactory //TODO: this
     }
     public StickmanFactory Create(IGameObject stickman)
     {
-        End();
-
         _objectManager.Create(stickman);
 
         return this;
@@ -51,23 +49,23 @@ public sealed class StickmanFactory //TODO: this
         }
 
         return this;
-    } 
+    }
     public StickmanFactory SetGroundDetector(IPointProvider overlapperPosition, IAngleProvider overlapperRotation, GroundCheckSettings groundCheckSettings)
     {
         _groundChecker = new AreaScanner(_physics2D, groundCheckSettings.GroundCheckShape, overlapperPosition, overlapperRotation, groundCheckSettings.ContactFilter2D);
 
         return this;
     }
-    public StickmanFactory SetMovement(IRigidbody2D pushBody, MovementSettings movementSettings, AnimatorVariable<float> movementFloat)
+    public StickmanFactory SetMovement(IRigidbody2D pushBody, MovementSettings movementSettings, AnimatorFloatField movementFloat)
     {
-        IMovementCalculator entityMoveemntCalculator = new EntityMovementCalculator(movementSettings);
-        _motorHandler = new EntityMotorHandler(pushBody, _groundChecker, entityMoveemntCalculator, movementFloat);
+        IMovementCalculator entityMovementCalculator = new EntityMovementCalculator(movementSettings);
+        _motorHandler = new EntityMotorHandler(pushBody, _groundChecker, entityMovementCalculator, movementFloat);
 
         _time.LaunchIFixedFrame(_motorHandler);
 
         return this;
     }
-    public StickmanFactory SetHolder(Component<IRigidbody2D>[] components, IPointProvider cursor, IPointProvider position, PickUpSettings pickUpSettings)
+    public StickmanFactory SetHolder(Component<IRigidbody2D>[] components, IPointProvider position, PickUpSettings pickUpSettings)
     {
         IHand[] hands = new IHand[components.Length];
 
@@ -75,7 +73,7 @@ public sealed class StickmanFactory //TODO: this
             hands[index] = new EntityHand(components[index]);
 
         IItemHolder itemHolderController = new EntityItemHolder(hands);
-        _itemHolderHandler = new EntityItemHolderHandler(_physics2D, itemHolderController, cursor, position, pickUpSettings.PickUpShape, pickUpSettings.MaxSqrPickUpDistance);
+        _itemHolderHandler = new EntityItemHolderHandler(_physics2D, itemHolderController, position, pickUpSettings.PickUpShape, pickUpSettings.MaxSqrPickUpDistance);
 
         return this;
     }
@@ -87,9 +85,9 @@ public sealed class StickmanFactory //TODO: this
 
         return this;
     }
-    public StickmanFactory SetItemHolderControl(IInputProvider inputProvider)
+    public StickmanFactory SetItemHolderControl(IInputProvider inputProvider, IPointProvider cursor)
     {
-        IFrame itemHolderController = new PlayerItemHolderController(inputProvider, _itemHolderHandler);
+        IFrame itemHolderController = new PlayerItemHolderController(inputProvider, cursor, _itemHolderHandler);
 
         _time.LaunchIFrame(itemHolderController);
 

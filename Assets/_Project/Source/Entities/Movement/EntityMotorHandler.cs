@@ -8,10 +8,10 @@ public sealed class EntityMotorHandler : BaseEntity, IMotorHandler, IFixedFrame
     private readonly IRigidbody2D _pushBody;
     private readonly IMovementCalculator _movementCalculator;
     private readonly IOverlapper _areaCaster;
-    private readonly AnimatorVariable<float> _movementFloat;
+    private readonly AnimatorFloatField _movementFloat;
     private readonly Trigger _jumpTrigger = new();
     public float MovementDirection { get; set; }
-    public EntityMotorHandler(IRigidbody2D pushBody, IOverlapper groundCheck, IMovementCalculator movementCalculator, AnimatorVariable<float> movementFloat)
+    public EntityMotorHandler(IRigidbody2D pushBody, IOverlapper groundCheck, IMovementCalculator movementCalculator, AnimatorFloatField movementFloat)
     {
         _pushBody = pushBody;
         _areaCaster = groundCheck;
