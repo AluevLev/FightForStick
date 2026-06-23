@@ -1,8 +1,7 @@
 using IceFebruary;
 using IceFebruary.Animation;
 using IceFebruary.Physics;
-using IceFebruary.Space.AngleProvider;
-using IceFebruary.Space.PointProvider;
+using IceFebruary.Space;
 using IceFebruary.Time;
 
 public sealed class StickmanFactory
@@ -50,7 +49,7 @@ public sealed class StickmanFactory
 
         return this;
     }
-    public StickmanFactory SetGroundDetector(IPointProvider overlapperPosition, IAngleProvider overlapperRotation, GroundCheckSettings groundCheckSettings)
+    public StickmanFactory SetGroundDetector(IProvider<Vector2> overlapperPosition, IProvider<Rotor2> overlapperRotation, GroundCheckSettings groundCheckSettings)
     {
         _groundChecker = new AreaScanner(_physics2D, groundCheckSettings.GroundCheckShape, overlapperPosition, overlapperRotation, groundCheckSettings.ContactFilter2D);
 
@@ -65,7 +64,7 @@ public sealed class StickmanFactory
 
         return this;
     }
-    public StickmanFactory SetHolder(Component<IRigidbody2D>[] components, IPointProvider position, PickUpSettings pickUpSettings)
+    public StickmanFactory SetHolder(Component<IRigidbody2D>[] components, IProvider<Vector2> position, PickUpSettings pickUpSettings)
     {
         IHand[] hands = new IHand[components.Length];
 
@@ -85,7 +84,7 @@ public sealed class StickmanFactory
 
         return this;
     }
-    public StickmanFactory SetItemHolderControl(IInputProvider inputProvider, IPointProvider cursor)
+    public StickmanFactory SetItemHolderControl(IInputProvider inputProvider, IProvider<Vector2> cursor)
     {
         IFrame itemHolderController = new PlayerItemHolderController(inputProvider, cursor, _itemHolderHandler);
 

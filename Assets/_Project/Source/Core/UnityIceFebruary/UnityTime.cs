@@ -5,11 +5,11 @@ namespace UnityIceFebruary
     using IceFebruary.Time;
     using UnityEngine;
 
-    public sealed class UnityTime : BaseEntity, ITime, IFrame, IFixedFrame
+    public sealed class UnityTime : BaseEntity, ITime
     {
         private readonly EntityFastArray<IFrame> _frameArray;
         private readonly EntityFastArray<IFixedFrame> _fixedFrameArray;
-        public UnityTime(int startArraySize = 128)
+        public UnityTime(int startArraySize)
         {
             _frameArray = new(startArraySize);
             _fixedFrameArray = new(startArraySize);
@@ -19,7 +19,7 @@ namespace UnityIceFebruary
             get => Time.fixedDeltaTime;
             set => Time.fixedDeltaTime = value;
         }
-        public void OnFrame(float frameLength)
+        public void DoFrame(float frameLength)
         {
             for (int index = 0; index < _frameArray.Length; index++)
             {
@@ -29,7 +29,7 @@ namespace UnityIceFebruary
                     frame.OnFrame(frameLength);
             }
         }
-        public void OnFixedFrame()
+        public void DoFixedFrame()
         {
             for (int index = 0; index < _fixedFrameArray.Length; index++)
             {

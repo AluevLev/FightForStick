@@ -2,7 +2,7 @@ namespace IceFebruary.Space
 {
     using System.Runtime.CompilerServices;
 
-    public readonly struct Vector2
+    public readonly struct Vector2 : System.IEquatable<Vector2>
     {
         public static readonly Vector2 Zero = new(0f, 0f);
         public static readonly Vector2 One = new(1f, 1f);
@@ -10,6 +10,7 @@ namespace IceFebruary.Space
         public static readonly Vector2 Down = new(0f, -1f);
         public static readonly Vector2 Right = new(1f, 0f);
         public static readonly Vector2 Left = new(-1f, 0f);
+        public static readonly Vector2 Far = new(Math.Big, Math.Big);
         public float X { get; private init; }
         public float Y { get; private init; }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -39,6 +40,10 @@ namespace IceFebruary.Space
             get => BoxClamp(this);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Vector3 To3D() => new(X, Y, 0f);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Vector2 DirectionTo(Vector2 to) => DirectionTo(this, to);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 operator +(Vector2 a, Vector2 b) => new(a.X + b.X, a.Y + b.Y);
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 operator -(Vector2 a, Vector2 b) => new(a.X - b.X, a.Y - b.Y);
@@ -59,7 +64,9 @@ namespace IceFebruary.Space
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Vector2 a, Vector2 b) => !(a == b);
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public override bool Equals(object obj) => (obj is Vector2 other) && this == other;
+        public bool Equals(Vector2 other) => this == other;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public override bool Equals(object obj) => obj is Vector2 other && Equals(other);
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override int GetHashCode() => System.HashCode.Combine(X, Y);
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -80,7 +87,5 @@ namespace IceFebruary.Space
         public static Vector2 Lerp(Vector2 a, Vector2 b, float t) => a + (b - a) * t.Clamp01();
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 DirectionTo(Vector2 from, Vector2 to) => (to - from).Normalized;
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Vector3(Vector2 v) => new(v.X, v.Y, 0f);
     }
 }

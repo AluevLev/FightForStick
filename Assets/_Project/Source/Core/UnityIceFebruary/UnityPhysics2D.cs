@@ -23,7 +23,7 @@ namespace UnityIceFebruary
         private UnityVector2 _rectangleSize;
 
         private float _circleRadius;
-        public UnityPhysics2D(int collidersBufferLength = 64)
+        public UnityPhysics2D(int collidersBufferLength)
         {
             _collidersBuffer = new UnityCollider2D[collidersBufferLength.ClampMin(4)];
         }

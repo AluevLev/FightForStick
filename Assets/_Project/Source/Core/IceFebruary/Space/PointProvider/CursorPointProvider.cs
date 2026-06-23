@@ -2,7 +2,7 @@ namespace IceFebruary.Space.PointProvider
 {
     using IceFebruary.Render;
 
-    public sealed class CursorPointProvider : IPointProvider
+    public sealed class CursorPointProvider : IProvider<Vector2>
     {
         private readonly IInputProvider _inputProvider;
         private readonly ICamera _mainCamera;
@@ -11,7 +11,7 @@ namespace IceFebruary.Space.PointProvider
             _inputProvider = inputProvider;
             _mainCamera = camera;
         }
-        public bool TryGetPoint(out Vector2 point)
+        public bool TryGet(out Vector2 point)
         {
             bool hasValue = _mainCamera.Exists() && _inputProvider.Exists();
 

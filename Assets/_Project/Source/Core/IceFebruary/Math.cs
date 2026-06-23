@@ -6,7 +6,8 @@ namespace IceFebruary
     public static class Math
     {
         public const float Pi = SysMathF.PI;
-        public const float Epsilon = 1e-4f;
+        public const float Epsilon = 0.0001f;
+        public const float Big = 10000000f;
         public const float Rad2Deg = 180f / Pi;
         public const float Deg2Rad = 1f / Rad2Deg;
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

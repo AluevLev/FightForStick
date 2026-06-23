@@ -2,7 +2,7 @@ namespace IceFebruary.Space
 {
     using System.Runtime.CompilerServices;
 
-    public readonly struct Rotor2
+    public readonly struct Rotor2 : System.IEquatable<Rotor2>
     {
         public static readonly Rotor2 Default = new(1f, 0f);
         public float Scalar { get; private init; }
@@ -26,6 +26,8 @@ namespace IceFebruary.Space
             get => new(Scalar, -XY);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Rotor3 To3D() => new(Scalar, XY, 0f, 0f);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Rotor2 operator *(Rotor2 a, Rotor2 b) => new(a.Scalar * b.Scalar - a.XY * b.XY, a.Scalar * b.XY + a.XY * b.Scalar);
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 operator *(Rotor2 r, Vector2 v)
@@ -45,10 +47,11 @@ namespace IceFebruary.Space
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Rotor2 a, Rotor2 b) => !(a == b);
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public override bool Equals(object obj) => (obj is Rotor2 other) && this == other;
+        public bool Equals(Rotor2 other) => this == other;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public override bool Equals(object obj) => obj is Rotor2 other && Equals(other);
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override int GetHashCode() => System.HashCode.Combine(Scalar, XY);
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Rotor2 Lerp(Rotor2 a, Rotor2 b, float interpolation)
         {
             interpolation = interpolation.Clamp01();
@@ -76,7 +79,5 @@ namespace IceFebruary.Space
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float ToAngle(bool radian) => Math.NimbleAtan2(XY, Scalar) * 2f * (radian ? 1f : Math.Rad2Deg);
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Rotor3(Rotor2 r) => new(r.Scalar, r.XY, 0, 0);
     }
 }

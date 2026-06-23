@@ -1,8 +1,9 @@
 namespace IceFebruary.Space
 {
     using IceFebruary;
+    using System.Runtime.CompilerServices;
 
-    public readonly struct Rotor3
+    public readonly struct Rotor3 : System.IEquatable<Rotor3>
     {
         public static readonly Rotor3 Default = new(1f, 0f, 0f, 0f);
         public float Scalar { get; private init; }
@@ -44,7 +45,13 @@ namespace IceFebruary.Space
                 ZX = ry * s;
             }
         }
-        public readonly Rotor3 Inverse => new(Scalar, -XY, -YZ, -ZX);
+        public readonly Rotor3 Inverse
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => new(Scalar, -XY, -YZ, -ZX);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Rotor2 To2D() => new(Scalar, XY);
         public static Rotor3 operator *(Rotor3 a, Rotor3 b)
         {
             return new(
@@ -71,14 +78,19 @@ namespace IceFebruary.Space
                 v.Z + qw * tz + (qx * ty - qy * tx)
             );
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(Rotor3 a, Rotor3 b) =>
             Math.Abs(a.Scalar - b.Scalar) < Math.Epsilon &&
             Math.Abs(a.XY - b.XY) < Math.Epsilon &&
             Math.Abs(a.YZ - b.YZ) < Math.Epsilon &&
             Math.Abs(a.ZX - b.ZX) < Math.Epsilon;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Rotor3 a, Rotor3 b) => !(a == b);
-        public override bool Equals(object obj) => (obj is Rotor3 other) && this == other;
-        public override int GetHashCode() => System.HashCode.Combine(Scalar, XY);
-        public static implicit operator Rotor2(Rotor3 r) => new(r.Scalar, r.XY);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Equals(Rotor3 other) => other == this;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public override bool Equals(object obj) => obj is Rotor3 other && Equals(other);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public override int GetHashCode() => System.HashCode.Combine(Scalar, XY, YZ, ZX);
     }
 }

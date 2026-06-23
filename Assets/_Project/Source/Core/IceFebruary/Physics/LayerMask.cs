@@ -7,6 +7,5 @@ namespace IceFebruary.Physics
         {
             Mask = mask;
         }
-        public static implicit operator LayerMask(int mask) => new(mask);
     }
 }

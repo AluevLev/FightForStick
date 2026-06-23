@@ -2,7 +2,6 @@ using IceFebruary;
 using IceFebruary.Physics;
 using IceFebruary.Shapes;
 using IceFebruary.Space;
-using IceFebruary.Space.PointProvider;
 
 public sealed class EntityItemHolderHandler : IItemHolderHandler
 {
@@ -10,12 +9,12 @@ public sealed class EntityItemHolderHandler : IItemHolderHandler
 
     private readonly IPhysics2D _physics2D;
     private readonly IItemHolder _entityItemHolder;
-    private readonly IPointProvider _humanPosition;
+    private readonly IProvider<Vector2> _humanPosition;
     private readonly IShape _overlapArea;
     private readonly float _sqrMaxPickUpDistance;
 
     private IPickable _itemInHand;
-    public EntityItemHolderHandler(IPhysics2D physics2D, IItemHolder entityItemHolder, IPointProvider humanPosition, IShape overlapArea, float sqrMaxPickUpDistance)
+    public EntityItemHolderHandler(IPhysics2D physics2D, IItemHolder entityItemHolder, IProvider<Vector2> humanPosition, IShape overlapArea, float sqrMaxPickUpDistance)
     {
         _physics2D = physics2D;
         _entityItemHolder = entityItemHolder;
@@ -25,7 +24,7 @@ public sealed class EntityItemHolderHandler : IItemHolderHandler
     }
     public void PickUp(Vector2 cursorPosition)
     {
-        if (!_humanPosition.TryGetPointSafe(out Vector2 entityPosition))
+        if (!_humanPosition.TryGetSafety(out Vector2 entityPosition))
             return;
         if (_physics2D.Overlap(_overlapArea, cursorPosition, null, null, _itemBuffer) == 0)
             return;
@@ -36,7 +35,7 @@ public sealed class EntityItemHolderHandler : IItemHolderHandler
         {
             IGameObject gameObject = _itemBuffer[index].GameObject;
 
-            if (Vector2.SqrDistance(gameObject.Transform.Position, entityPosition) > _sqrMaxPickUpDistance)
+            if (Vector2.SqrDistance(gameObject.Transform.Position.To2D(), entityPosition) > _sqrMaxPickUpDistance)
                 continue;
             if (gameObject.TryGetComponent(out item))
                 break;

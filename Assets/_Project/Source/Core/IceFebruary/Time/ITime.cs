@@ -5,5 +5,7 @@ namespace IceFebruary.Time
         float FixedFrameRate { get; set; }
         void LaunchIFrame(IFrame frame);
         void LaunchIFixedFrame(IFixedFrame fixedFrame);
+        void DoFrame(float frameLength);
+        void DoFixedFrame();
     }
 }
