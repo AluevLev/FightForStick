@@ -18,7 +18,7 @@ namespace UnityIceFebruary.Components
         }
         public Rotor2 Rotation
         {
-            get => Original.transform.rotation.ToIce().To2D();
+            get => Original.transform.rotation.ToIce();
             set => Original.SetRotation(Rotation.ToUnity());
         }
         public Vector2 LinearVelocity

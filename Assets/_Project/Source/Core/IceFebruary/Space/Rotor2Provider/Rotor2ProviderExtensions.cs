@@ -1,0 +1,13 @@
+namespace IceFebruary.Space.Rotor2Provider
+{
+    public static class Rotor2ProviderExtensions
+    {
+        public static bool TryGetSafety(this IRotor2Provider rotor2Provider, out Rotor2 value)
+        {
+            if (rotor2Provider != null)
+                return rotor2Provider.TryGet(out value);
+            value = default;
+            return false;
+        }
+    }
+}

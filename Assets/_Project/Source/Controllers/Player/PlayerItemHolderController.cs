@@ -1,14 +1,14 @@
 using IceFebruary;
 using IceFebruary.Space;
-using IceFebruary.Space.PointProvider;
+using IceFebruary.Space.Vector2Provider;
 using IceFebruary.Time;
 
 public sealed class PlayerItemHolderController : BaseEntity, IFrame
 {
     private readonly IInputProvider _inputProvider;
-    private readonly IProvider<Vector2> _cursor;
+    private readonly IVector2Provider _cursor;
     private readonly IItemHolderHandler _playerHolderHandler;
-    public PlayerItemHolderController(IInputProvider inputProvider, IProvider<Vector2> cursor, IItemHolderHandler playerHolderHandler) : base()
+    public PlayerItemHolderController(IInputProvider inputProvider, IVector2Provider cursor, IItemHolderHandler playerHolderHandler)
     {
         _inputProvider = inputProvider;
         _cursor = cursor;

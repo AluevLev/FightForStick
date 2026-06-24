@@ -1,13 +1,13 @@
-namespace IceFebruary.Space.AngleProvider
+namespace IceFebruary.Space.Rotor2Provider
 {
     using IceFebruary.Proxy;
 
-    public sealed class SpaceRotor2Provider : IProvider<Rotor2>
+    public sealed class SpaceRotor2Provider : IRotor2Provider
     {
-        private readonly IProvider<Rotor2> _angleProvider;
+        private readonly IRotor2Provider _angleProvider;
         private readonly ITransform _space;
-        [FieldProxy(typeof(IProvider<Rotor2>))]
-        public SpaceRotor2Provider(IProvider<Rotor2> angleProvider, ITransform space)
+        [FieldProxy(typeof(IRotor2Provider))]
+        public SpaceRotor2Provider(IRotor2Provider angleProvider, ITransform space)
         {
             _space = space;
             _angleProvider = angleProvider;
@@ -16,7 +16,7 @@ namespace IceFebruary.Space.AngleProvider
         {
             if (_space.Exists() && _angleProvider.TryGetSafety(out Rotor2 startAngle))
             {
-                angle = _space.Rotation.To2D().Inverse * startAngle;
+                angle = _space.Rotation.Inverse * startAngle;
                 return true;
             }
 

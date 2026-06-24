@@ -6,11 +6,11 @@ namespace IceFebruary
     [InterfaceProxy]
     public interface ITransform : IBaseEntity
     {
-        Vector3 Position { get; set; }
-        Rotor3 Rotation { get; set; }
-        Vector3 LocalPosition { get; set; }
-        Rotor3 LocalRotation { get; set; }
-        Vector3 TransformDirection(Vector3 direction);
-        Vector3 TransformPoint(Vector3 point);
+        Vector2 Position { get; set; }
+        Rotor2 Rotation { get; set; }
+        Vector2 LocalPosition { get; set; }
+        Rotor2 LocalRotation { get; set; }
+        Vector2 TransformDirection(Vector2 direction);
+        Vector2 TransformPoint(Vector2 point);
     }
 }

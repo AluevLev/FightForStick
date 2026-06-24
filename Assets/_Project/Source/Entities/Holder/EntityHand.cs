@@ -5,7 +5,7 @@ public sealed class EntityHand : BaseEntity, IHand
 {
     private readonly Component<IRigidbody2D> _hand;
     private IHingeJoint2D _holderHingeJoint2D;
-    public EntityHand(Component<IRigidbody2D> hand) : base()
+    public EntityHand(Component<IRigidbody2D> hand)
     {
         _hand = hand;
     }
@@ -13,7 +13,7 @@ public sealed class EntityHand : BaseEntity, IHand
     {
         _holderHingeJoint2D = holder.Value;
 
-        _hand.Transform.Position = holder.GameObject.Transform.TransformPoint(_holderHingeJoint2D.Anchor.To3D());
+        _hand.Transform.Position = holder.GameObject.Transform.TransformPoint(_holderHingeJoint2D.Anchor);
         _holderHingeJoint2D.ConnectedBody = _hand.Value;
         _holderHingeJoint2D.Enabled = true;
     }

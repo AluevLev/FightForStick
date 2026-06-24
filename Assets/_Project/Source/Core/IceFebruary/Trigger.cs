@@ -12,5 +12,6 @@ namespace IceFebruary
             Active = _charged;
             _charged = false;
         }
+        public Trigger() { }
     }
 }

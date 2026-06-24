@@ -26,8 +26,6 @@ namespace IceFebruary.Space
             get => new(Scalar, -XY);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Rotor3 To3D() => new(Scalar, XY, 0f, 0f);
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Rotor2 operator *(Rotor2 a, Rotor2 b) => new(a.Scalar * b.Scalar - a.XY * b.XY, a.Scalar * b.XY + a.XY * b.Scalar);
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 operator *(Rotor2 r, Vector2 v)

@@ -10,7 +10,7 @@ namespace UnityIceFebruary.Components
     {
         [FieldProxy(typeof(ICamera))]
         public UnityCamera(Camera camera) : base(camera) { }
-        public Vector2 ScreenToWorldPoint(Vector2 onScreenPosition) => Original.ScreenToWorldPoint(onScreenPosition.ToUnity()).ToIce().To2D();
-        public Vector2 WorldToScreenPoint(Vector2 inWorldPosition) => Original.WorldToScreenPoint(inWorldPosition.ToUnity()).ToIce().To2D();
+        public Vector2 ScreenToWorldPoint(Vector2 onScreenPosition) => Original.ScreenToWorldPoint(onScreenPosition.ToUnity()).ToIce();
+        public Vector2 WorldToScreenPoint(Vector2 inWorldPosition) => Original.WorldToScreenPoint(inWorldPosition.ToUnity()).ToIce();
     }
 }

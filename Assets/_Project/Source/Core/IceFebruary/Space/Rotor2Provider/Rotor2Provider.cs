@@ -1,11 +1,11 @@
-namespace IceFebruary.Space.AngleProvider
+namespace IceFebruary.Space.Rotor2Provider
 {
     using IceFebruary.Proxy;
 
-    public sealed class Rotor2Provider : IProvider<Rotor2>
+    public sealed class Rotor2Provider : IRotor2Provider
     {
         private readonly Rotor2 _rotor2;
-        [FieldProxy(typeof(IProvider<Rotor2>))]
+        [FieldProxy(typeof(IRotor2Provider))]
         public Rotor2Provider(Rotor2 rotor2)
         {
             _rotor2 = rotor2;

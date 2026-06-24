@@ -13,9 +13,5 @@ namespace IceFebruary
         {
             Destroyed = true;
         }
-        protected BaseEntity(bool enabled = true)
-        {
-            Enabled = enabled;
-        }
     }
 }

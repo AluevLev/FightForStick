@@ -4,7 +4,7 @@ namespace UnityIceFebruary
     using IceFebruary.Time;
     using IceFebruary.Physics;
     using IceFebruary;
-    using IceFebruary.Space.PointProvider;
+    using IceFebruary.Space.Vector2Provider;
     using IceFebruary.Render;
 
     public class GameAssembler : MonoBehaviour
@@ -21,7 +21,7 @@ namespace UnityIceFebruary
         private ICamera _camera;
 
         private IInputProvider _input;
-        private IProvider<IceFebruary.Space.Vector2> _cursor;
+        private IVector2Provider _cursor;
 
         private StickmanFactory _stickmanFactory;
 

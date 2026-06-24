@@ -5,7 +5,7 @@ public sealed class PlayerMovementController : BaseEntity, IFrame
 {
     private readonly IInputProvider _inputProvider;
     private readonly IMotorHandler _playerMotorHandler;
-    public PlayerMovementController(IInputProvider inputProvider, IMotorHandler entityMotorHandler) : base()
+    public PlayerMovementController(IInputProvider inputProvider, IMotorHandler entityMotorHandler)
     {
         _inputProvider = inputProvider;
         _playerMotorHandler = entityMotorHandler;

@@ -40,8 +40,6 @@ namespace IceFebruary.Space
             get => BoxClamp(this);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Vector3 To3D() => new(X, Y, 0f);
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector2 DirectionTo(Vector2 to) => DirectionTo(this, to);
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 operator +(Vector2 a, Vector2 b) => new(a.X + b.X, a.Y + b.Y);

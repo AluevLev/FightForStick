@@ -1,11 +1,11 @@
-namespace IceFebruary.Space.PointProvider
+namespace IceFebruary.Space.Vector2Provider
 {
     using IceFebruary.Proxy;
 
-    public sealed class TransformVector2Provider : IProvider<Vector2>
+    public sealed class TransformVector2Provider : IVector2Provider
     {
         private readonly ITransform _transform;
-        [FieldProxy(typeof(IProvider<Vector2>))]
+        [FieldProxy(typeof(IVector2Provider))]
         public TransformVector2Provider(ITransform transform)
         {
             _transform = transform;
@@ -14,7 +14,7 @@ namespace IceFebruary.Space.PointProvider
         {
             bool success = _transform.Exists();
 
-            point = success ? _transform.Position.To2D() : default;
+            point = success ? _transform.Position : default;
 
             return success;
         }

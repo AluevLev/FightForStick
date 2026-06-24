@@ -1,14 +1,13 @@
 using IceFebruary.Proxy;
-using IceFebruary;
-using IceFebruary.Space;
+using IceFebruary.Space.Rotor2Provider;
 
 public readonly struct PhysicsBalancerSettings
 {
-    public IProvider<Rotor2> Target { get; private init; }
+    public IRotor2Provider Target { get; private init; }
     public float Force { get; private init; }
 
     [ScriptableObjectProxy]
-    public PhysicsBalancerSettings(IProvider<Rotor2> target, float force)
+    public PhysicsBalancerSettings(IRotor2Provider target, float force)
     {
         Target = target;
         Force = force;

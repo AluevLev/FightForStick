@@ -11,27 +11,27 @@ namespace UnityIceFebruary.Components
     {
         [FieldProxy(typeof(ITransform))]
         public UnityTransform(Transform transform) : base(transform) { }
-        public Vector3 Position
+        public Vector2 Position
         {
             get => Original.position.ToIce();
             set => Original.position = value.ToUnity();
         }
-        public Rotor3 Rotation
+        public Rotor2 Rotation
         {
             get => Original.rotation.ToIce();
             set => Original.rotation = value.ToUnity();
         }
-        public Vector3 LocalPosition
+        public Vector2 LocalPosition
         {
             get => Original.localPosition.ToIce();
             set => Original.localPosition = value.ToUnity();
         }
-        public Rotor3 LocalRotation
+        public Rotor2 LocalRotation
         {
             get => Original.localRotation.ToIce();
             set => Original.localRotation = value.ToUnity();
         }
-        public Vector3 TransformDirection(Vector3 v) => Original.TransformDirection(v.ToUnity()).ToIce();
-        public Vector3 TransformPoint(Vector3 v) => Original.TransformPoint(v.ToUnity()).ToIce();
+        public Vector2 TransformDirection(Vector2 v) => Original.TransformDirection(v.ToUnity()).ToIce();
+        public Vector2 TransformPoint(Vector2 v) => Original.TransformPoint(v.ToUnity()).ToIce();
     }
 }

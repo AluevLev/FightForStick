@@ -60,7 +60,7 @@ public sealed class ObjectPool
         _lastObjectIndex = (_lastObjectIndex + 1) % _poolSize;
 
         target.Enabled = false;
-        target.Transform.Position = position.To3D();
+        target.Transform.Position = position;
         target.Enabled = true;
     }
 }

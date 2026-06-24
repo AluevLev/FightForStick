@@ -1,8 +1,8 @@
-namespace IceFebruary.Space.PointProvider
+namespace IceFebruary.Space.Vector2Provider
 {
     using IceFebruary.Render;
 
-    public sealed class CursorPointProvider : IProvider<Vector2>
+    public sealed class CursorPointProvider : IVector2Provider
     {
         private readonly IInputProvider _inputProvider;
         private readonly ICamera _mainCamera;
@@ -13,7 +13,7 @@ namespace IceFebruary.Space.PointProvider
         }
         public bool TryGet(out Vector2 point)
         {
-            bool hasValue = _mainCamera.Exists() && _inputProvider.Exists();
+            bool hasValue = _mainCamera.Active() && _inputProvider.Active();
 
             point = hasValue ? _mainCamera.ScreenToWorldPoint(_inputProvider.MousePosition) : default;
 

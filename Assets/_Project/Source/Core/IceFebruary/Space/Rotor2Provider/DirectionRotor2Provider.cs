@@ -1,14 +1,15 @@
-namespace IceFebruary.Space.AngleProvider
+namespace IceFebruary.Space.Rotor2Provider
 {
     using IceFebruary.Proxy;
+    using IceFebruary.Space.Vector2Provider;
 
-    public sealed class DirectionRotor2Provider : IProvider<Rotor2>
+    public sealed class DirectionRotor2Provider : IRotor2Provider
     {
-        private readonly IProvider<Vector2> _from;
-        private readonly IProvider<Vector2> _to;
+        private readonly IVector2Provider _from;
+        private readonly IVector2Provider _to;
 
-        [FieldProxy(typeof(IProvider<Rotor2>))]
-        public DirectionRotor2Provider(IProvider<Vector2> from, IProvider<Vector2> to)
+        [FieldProxy(typeof(IRotor2Provider))]
+        public DirectionRotor2Provider(IVector2Provider from, IVector2Provider to)
         {
             _from = from;
             _to = to;

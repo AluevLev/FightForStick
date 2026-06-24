@@ -1,10 +1,13 @@
 namespace UnityIceFebruary.Adaptation
 {
+    using System.Runtime.CompilerServices;
+
     using IceContactFilter2D = IceFebruary.Physics.ContactFilter2D;
     using UnityContactFilter2D = UnityEngine.ContactFilter2D;
 
     public static class UnityContactFilter2DConverter
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IceContactFilter2D ToIce(this UnityContactFilter2D filter) => new(filter.useTriggers, filter.useLayerMask ? filter.layerMask.ToIce() : null);
         public static UnityContactFilter2D ToUnity(this IceContactFilter2D filter)
         {

@@ -1,11 +1,11 @@
-namespace IceFebruary.Space.PointProvider
+namespace IceFebruary.Space.Vector2Provider
 {
     using IceFebruary.Proxy;
 
-    public sealed class Vector2Provider : IProvider<Vector2>
+    public sealed class Vector2Provider : IVector2Provider
     {
         private readonly Vector2 _vector2;
-        [FieldProxy(typeof(IProvider<Vector2>))]
+        [FieldProxy(typeof(IVector2Provider))]
         public Vector2Provider(Vector2 vector2)
         {
             _vector2 = vector2;

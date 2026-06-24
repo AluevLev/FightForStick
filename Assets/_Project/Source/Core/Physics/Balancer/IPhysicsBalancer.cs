@@ -1,9 +1,9 @@
 using IceFebruary;
-using IceFebruary.Space;
+using IceFebruary.Space.Rotor2Provider;
 
 public interface IPhysicsBalancer : IBaseEntity
 {
-    void SetTarget(IProvider<Rotor2> targetProvider);
+    void SetTarget(IRotor2Provider targetProvider);
     void ResetTarget();
     void Relax();
 }

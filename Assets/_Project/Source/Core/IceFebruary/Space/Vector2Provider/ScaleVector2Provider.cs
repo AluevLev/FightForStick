@@ -1,13 +1,13 @@
-namespace IceFebruary.Space.PointProvider
+namespace IceFebruary.Space.Vector2Provider
 {
     using IceFebruary.Proxy;
 
-    public sealed class ScaleVector2Provider : IProvider<Vector2>
+    public sealed class ScaleVector2Provider : IVector2Provider
     {
-        private readonly IProvider<Vector2> _pointProvider;
+        private readonly IVector2Provider _pointProvider;
         private readonly float _scale;
-        [FieldProxy(typeof(IProvider<Vector2>))]
-        public ScaleVector2Provider(IProvider<Vector2> pointProvider, float scale)
+        [FieldProxy(typeof(IVector2Provider))]
+        public ScaleVector2Provider(IVector2Provider pointProvider, float scale)
         {
             _pointProvider = pointProvider;
             _scale = scale;
