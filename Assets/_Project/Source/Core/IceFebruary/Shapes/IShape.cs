@@ -1,7 +1,7 @@
 namespace IceFebruary.Shapes
 {
-    public interface IShape
-    {
+    using IceFebruary.Proxy;
 
-    }
+    [InterfaceProxy]
+    public interface IShape { }
 }

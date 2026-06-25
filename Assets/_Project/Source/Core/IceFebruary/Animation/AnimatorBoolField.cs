@@ -1,8 +1,11 @@
 namespace IceFebruary.Animation
 {
+    using IceFebruary.Proxy;
+
     public readonly struct AnimatorBoolField
     {
         public readonly AnimatorFieldData _animatorFieldData;
+        [FieldProxy]
         public AnimatorBoolField(AnimatorFieldData animatorFieldData)
         {
             _animatorFieldData = animatorFieldData;

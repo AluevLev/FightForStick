@@ -4,7 +4,7 @@ using UnityEngine;
 
 public sealed class GameLifetimeScope : LifetimeScope
 {
-    [SerializeField] private MovementSettings _movementSettings;
+    [SerializeField] private MovementStatistick _movementSettings;
     [SerializeField] private GroundCheckSettings _groundCheckSettings;
     [SerializeField] private Camera _mainCamera;
     protected override void Configure(IContainerBuilder builder)

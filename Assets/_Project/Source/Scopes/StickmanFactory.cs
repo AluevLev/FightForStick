@@ -1,8 +1,6 @@
 using IceFebruary;
-using IceFebruary.Animation;
 using IceFebruary.Physics;
 using IceFebruary.Space.Vector2Provider;
-using IceFebruary.Space.Rotor2Provider;
 using IceFebruary.Time;
 
 public sealed class StickmanFactory
@@ -32,9 +30,9 @@ public sealed class StickmanFactory
 
         return this;
     }
-    public StickmanFactory ReviveLimbs(RagdollSchema settings)
+    public StickmanFactory ReviveLimbs(RagdollSchema ragdollScema)
     {
-        PhysicsLimbSettings[] limbsSettings = settings.ToArray();
+        PhysicsLimbSettings[] limbsSettings = ragdollScema.PhysicsLimbSettings;
 
         for (int limb = 0; limb < limbsSettings.Length; limb++)
         {
@@ -50,30 +48,38 @@ public sealed class StickmanFactory
 
         return this;
     }
-    public StickmanFactory SetGroundDetector(IVector2Provider overlapperPosition, IRotor2Provider overlapperRotation, GroundCheckSettings groundCheckSettings)
+    public StickmanFactory SetGroundDetector(GroundDetectionSettings groundDetectionSettings)
     {
-        _groundChecker = new AreaScanner(_physics2D, groundCheckSettings.GroundCheckShape, overlapperPosition, overlapperRotation, groundCheckSettings.ContactFilter2D);
+        _groundChecker = new AreaScanner(_physics2D,
+            groundDetectionSettings.GroundCheckSettings.GroundCheckShape,
+            groundDetectionSettings.GroundDetectorPosition,
+            groundDetectionSettings.GroundDetectorRotation,
+            groundDetectionSettings.GroundCheckSettings.ContactFilter2D);
 
         return this;
     }
-    public StickmanFactory SetMovement(IRigidbody2D pushBody, MovementSettings movementSettings, AnimatorFloatField movementFloat)
+    public StickmanFactory SetMovement(MovementSettings movementSettings)
     {
-        IMovementCalculator entityMovementCalculator = new EntityMovementCalculator(movementSettings);
-        _motorHandler = new EntityMotorHandler(pushBody, _groundChecker, entityMovementCalculator, movementFloat);
+        IMovementCalculator entityMovementCalculator = new EntityMovementCalculator(movementSettings.MovementStatisticks);
+        _motorHandler = new EntityMotorHandler(movementSettings.PushBody, _groundChecker, entityMovementCalculator, movementSettings.MovementFloat);
 
         _time.LaunchIFixedFrame(_motorHandler);
 
         return this;
     }
-    public StickmanFactory SetHolder(Component<IRigidbody2D>[] components, IVector2Provider position, PickUpSettings pickUpSettings)
+    public StickmanFactory SetHolder(PickUpSettings pickUpSettings)
     {
-        IHand[] hands = new IHand[components.Length];
+        IHand[] hands = new IHand[pickUpSettings.Components.Length];
 
-        for (int index = 0; index < components.Length; index++)
-            hands[index] = new EntityHand(components[index]);
+        for (int index = 0; index < hands.Length; index++)
+            hands[index] = new EntityHand(pickUpSettings.Components[index]);
 
         IItemHolder itemHolderController = new EntityItemHolder(hands);
-        _itemHolderHandler = new EntityItemHolderHandler(_physics2D, itemHolderController, position, pickUpSettings.PickUpShape, pickUpSettings.MaxSqrPickUpDistance);
+        _itemHolderHandler = new EntityItemHolderHandler(_physics2D,
+            itemHolderController,
+            pickUpSettings.PlayerPosition,
+            pickUpSettings.PickUpStatisticks.PickUpShape,
+            pickUpSettings.PickUpStatisticks.MaxSqrPickUpDistance);
 
         return this;
     }

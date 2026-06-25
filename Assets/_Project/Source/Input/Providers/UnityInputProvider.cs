@@ -7,7 +7,6 @@ public sealed class UnityInputProvider : BaseEntity, IInputProvider
     private readonly GameInputAction.PlayerActions _playerActions;
     public float HorizontalMovement { get; private set; }
     public float VerticalMovement { get; private set; }
-    public bool IsDialogueInteract { get; private set; }
     public bool IsDroppingItem { get; private set; }
 
     public IceFebruary.Space.Vector2 MousePosition { get; private set; }
@@ -28,6 +27,5 @@ public sealed class UnityInputProvider : BaseEntity, IInputProvider
 
         IsPickingUp = _playerActions.PickUp.WasPressedThisFrame();
         IsDroppingItem = _playerActions.Drop.WasPressedThisFrame();
-        IsDialogueInteract = _playerActions.DialogueInteract.WasPressedThisFrame();
     }
 }

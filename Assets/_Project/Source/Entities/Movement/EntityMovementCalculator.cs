@@ -2,8 +2,8 @@ using IceFebruary.Space;
 
 public sealed class EntityMovementCalculator : IMovementCalculator
 {
-    private readonly MovementSettings _movementSettings;
-    public EntityMovementCalculator(MovementSettings movementSettings)
+    private readonly MovementStatistick _movementSettings;
+    public EntityMovementCalculator(MovementStatistick movementSettings)
     {
         _movementSettings = movementSettings;
     }
