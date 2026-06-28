@@ -7,6 +7,7 @@ namespace UnityIceFebruary
     public sealed class UnityGameObject : UnityBaseEntity<GameObject>, IGameObject
     {
         private IBaseEntity _mainComponent;
+        public ITransform Transform { get; private init; }
         public IBaseEntity MainComponent
         {
             get => _mainComponent;
@@ -26,7 +27,6 @@ namespace UnityIceFebruary
         {
             Transform = (ITransform)UnityMethods.Upsert(gameObject.transform);
         }
-        public ITransform Transform { get; private init; }
         public bool TryGetComponent<T>(out T component) where T : class, IBaseEntity
         {
             System.Type type = UnityMethods.GetUnityType<T>();

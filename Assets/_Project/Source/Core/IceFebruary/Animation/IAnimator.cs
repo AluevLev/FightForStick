@@ -3,7 +3,7 @@ namespace IceFebruary.Animation
     using IceFebruary.Proxy;
 
     [InterfaceProxy]
-    public interface IAnimator : IBaseEntity //I'm sorry
+    public interface IAnimator : IBaseEntity
     {
         int GetInt(int hash);
         void SetInt(int hash, int value);
