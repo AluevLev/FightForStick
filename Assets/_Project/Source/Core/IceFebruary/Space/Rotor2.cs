@@ -1,13 +1,14 @@
 namespace IceFebruary.Space
 {
     using System.Runtime.CompilerServices;
+    using IceFebruary.Proxy;
 
     public readonly struct Rotor2 : System.IEquatable<Rotor2>
     {
         public static readonly Rotor2 Default = new(1f, 0f);
         public float Scalar { get; private init; }
         public float XY { get; private init; }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [FieldProxy, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Rotor2(float scalar, float xy)
         {
             Scalar = scalar;

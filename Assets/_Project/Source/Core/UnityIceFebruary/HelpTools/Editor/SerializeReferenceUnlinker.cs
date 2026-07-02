@@ -1,4 +1,4 @@
-namespace UnityIceFebruary.InterfaceImplementation
+namespace UnityIceFebruary.HelpTools
 {
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
@@ -51,7 +51,6 @@ namespace UnityIceFebruary.InterfaceImplementation
                 EditorUtility.SetDirty(component);
             }
         }
-
         private class ReferenceEqualityComparer : IEqualityComparer<object>
         {
             public new bool Equals(object x, object y) => ReferenceEquals(x, y);

@@ -1,5 +1,6 @@
 namespace IceFebruary.Space
 {
+    using IceFebruary.Proxy;
     using System.Runtime.CompilerServices;
 
     public readonly struct Vector2 : System.IEquatable<Vector2>
@@ -13,7 +14,7 @@ namespace IceFebruary.Space
         public static readonly Vector2 Far = new(Math.Big, Math.Big);
         public float X { get; private init; }
         public float Y { get; private init; }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [FieldProxy, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector2(float x, float y)
         {
             X = x;
