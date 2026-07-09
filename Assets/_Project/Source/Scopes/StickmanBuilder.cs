@@ -58,7 +58,7 @@ public class StickmanBuilder
 
         return this;
     }
-    public void SetItemHolderControl(IInputProvider inputProvider, IVector2Provider cursor)
+    public void SetControl(IInputProvider inputProvider, IVector2Provider cursor)
     {
         IFrame movementController = new PlayerMovementController(inputProvider, _motorHandler);
         IFrame itemHolderController = new PlayerItemHolderController(inputProvider, cursor, _itemHolderHandler);

@@ -26,8 +26,8 @@ namespace IceFebruary
             if (rem < -Pi)
                 rem += 2f * Pi;
 
-            float absX = Abs(x);
-            float y = 1.2732395f * rem - 0.4052847f * rem * absX;
+            float absRem = Abs(rem);
+            float y = 1.2732395f * rem - 0.4052847f * rem * absRem;
             float absY = Abs(y);
 
             return 0.225f * (y * absY - y) + y;
@@ -97,6 +97,24 @@ namespace IceFebruary
         public static float ClampMin(this float x, float min) => x < min ? min : x;
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float ClampMax(this float x, float max) => x > max ? max : x;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int Normalize(this int x)
+        {
+            if (x > 0)
+                return 1;
+            if (x < 0)
+                return -1;
+            return 0;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float Normalize(this float x)
+        {
+            if (x > 0f)
+                return 1f;
+            if (x < 0f)
+                return -1f;
+            return 0f;
+        }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool InBounds(this int x, int min, int max) => x >= min && x <= max;
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

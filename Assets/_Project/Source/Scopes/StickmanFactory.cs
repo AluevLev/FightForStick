@@ -7,15 +7,17 @@ public sealed class StickmanFactory
     private readonly ITime _time;
     private readonly IPhysics2D _physics2D;
     private readonly IObjectManager _objectManager;
-    public StickmanFactory(ITime time, IPhysics2D physics2D, IObjectManager objectManager)
+    private readonly IGameObject _stickmanPrefab;
+    public StickmanFactory(ITime time, IPhysics2D physics2D, IObjectManager objectManager, IGameObject stickmanPrefab)
     {
         _time = time;
         _physics2D = physics2D;
         _objectManager = objectManager;
+        _stickmanPrefab = stickmanPrefab;
     }
-    public StickmanBuilder Create(IGameObject stickman)
+    public StickmanBuilder Create()
     {
-        _objectManager.Create(stickman).TryGetInstantiateInfo(out StickmanConfig stickmanConfig);
+        _objectManager.Create(_stickmanPrefab).TryGetInstantiateInfo(out StickmanConfig stickmanConfig);
 
         return new(_time, _physics2D, stickmanConfig);
     }
