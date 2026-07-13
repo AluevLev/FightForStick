@@ -2,6 +2,9 @@ namespace IceFebruary.Physics
 {
     public interface IOverlapper : IBaseEntity
     {
-        bool Overlap(Component<ICollider2D>[] colliders2D = null);
+        Component<ICollider2D>[] Colliders2D { get; }
+        int Colliders2DActualLength { get; }
+        bool Succes { get; }
+        void Overlap();
     }
 }

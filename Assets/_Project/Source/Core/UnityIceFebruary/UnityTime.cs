@@ -14,6 +14,7 @@ namespace UnityIceFebruary
             _frameArray = new(startArraySize);
             _fixedFrameArray = new(startArraySize);
         }
+        public float CurrentTime => Time.time;
         public float FixedFrameRate
         {
             get => Time.fixedDeltaTime;

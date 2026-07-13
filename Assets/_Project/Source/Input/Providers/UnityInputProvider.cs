@@ -1,7 +1,8 @@
 using IceFebruary;
+using IceFebruary.Time;
 using UnityIceFebruary.Adaptation;
 
-public sealed class UnityInputProvider : BaseEntity, IInputProvider
+public sealed class UnityInputProvider : BaseEntity, IInputProvider, IFrame
 {
     private readonly GameInputAction _controls;
     private readonly GameInputAction.PlayerActions _playerActions;
@@ -17,7 +18,7 @@ public sealed class UnityInputProvider : BaseEntity, IInputProvider
         _controls = controls;
         _playerActions = _controls.Player;
     }
-    public void UpdateValue()
+    public void OnFrame(float frameLength)
     {
         HorizontalMovement = _playerActions.HorizontalMovement.ReadValue<float>();
         VerticalMovement = _playerActions.VerticalMovement.ReadValue<float>();

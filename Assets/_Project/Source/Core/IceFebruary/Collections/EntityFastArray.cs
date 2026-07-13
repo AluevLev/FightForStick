@@ -14,7 +14,7 @@ namespace IceFebruary.Collections
         public int Length { get; private set; }
         public EntityFastArray(int startLength)
         {
-            Length = startLength.ClampMin(4);
+            Length = startLength.ClampForArray();
 
             Entities = new T[Length];
 

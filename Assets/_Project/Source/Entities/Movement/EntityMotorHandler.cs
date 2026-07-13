@@ -26,8 +26,9 @@ public sealed class EntityMotorHandler : BaseEntity, IMotorHandler, IFixedFrame
         if (_pushBody.Exists())
         {
             _pushBody.AddForce(_movementCalculator.CalculateMovementVector(MovementDirection), ForceMode2D.Force);
+            _areaCaster.Overlap();
 
-            if (_jumpTrigger.Active && _areaCaster.Overlap())
+            if (_jumpTrigger.Active && _areaCaster.Succes)
                 _pushBody.AddForce(_movementCalculator.CalculateJumpVector(MovementDirection), ForceMode2D.Force);
         }
     }

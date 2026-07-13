@@ -2,7 +2,7 @@ using IceFebruary.Proxy;
 
 namespace IceFebruary.Space.Vector2Provider
 {
-    public sealed class NormalizedVector2Provider
+    public sealed class NormalizedVector2Provider : IVector2Provider
     {
         private readonly IVector2Provider _notNormalized;
         [FieldProxy(typeof(IVector2Provider))]

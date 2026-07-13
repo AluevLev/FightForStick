@@ -85,6 +85,8 @@ namespace IceFebruary
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int ClampMax(this int x, int max) => x > max ? max : x;
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int ClampForArray(this int x) => x.ClampMin(1);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Clamp(this float x, float min, float max)
         {
             if (x < min)

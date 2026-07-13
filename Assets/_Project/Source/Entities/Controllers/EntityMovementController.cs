@@ -1,11 +1,11 @@
 using IceFebruary;
 using IceFebruary.Time;
 
-public sealed class PlayerMovementController : BaseEntity, IFrame
+public sealed class EntityMovementController : BaseEntity, IFrame
 {
     private readonly IInputProvider _inputProvider;
     private readonly IMotorHandler _playerMotorHandler;
-    public PlayerMovementController(IInputProvider inputProvider, IMotorHandler entityMotorHandler)
+    public EntityMovementController(IInputProvider inputProvider, IMotorHandler entityMotorHandler)
     {
         _inputProvider = inputProvider;
         _playerMotorHandler = entityMotorHandler;

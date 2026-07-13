@@ -50,18 +50,17 @@ public class StickmanBuilder
             hands[index] = new EntityHand(_stickmanConfig.PickUpSettings.Components[index]);
 
         IItemHolder itemHolderController = new EntityItemHolder(hands);
-        _itemHolderHandler = new EntityItemHolderHandler(_physics2D,
+        _itemHolderHandler = new EntityItemHolderHandler(
             itemHolderController,
             _stickmanConfig.PickUpSettings.PlayerPosition,
-            _stickmanConfig.PickUpSettings.PickUpStatisticks.PickUpShape,
             _stickmanConfig.PickUpSettings.PickUpStatisticks.MaxSqrPickUpDistance);
 
         return this;
     }
-    public void SetControl(IInputProvider inputProvider, IVector2Provider cursor)
+    public void SetControl(IInputProvider inputProvider)
     {
-        IFrame movementController = new PlayerMovementController(inputProvider, _motorHandler);
-        IFrame itemHolderController = new PlayerItemHolderController(inputProvider, cursor, _itemHolderHandler);
+        IFrame movementController = new EntityMovementController(inputProvider, _motorHandler);
+        IFrame itemHolderController = new EntityItemHolderController(inputProvider, _itemHolderHandler);
 
         _time.LaunchIFrame(movementController);
         _time.LaunchIFrame(itemHolderController);

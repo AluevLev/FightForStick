@@ -45,7 +45,7 @@ namespace UnityIceFebruary
 
             for (int index = 0; index < stickmanSpawnList.SpawnsSettings.Length; index++)
             {
-                _stickmanFactory.Create().SetUp().SetControl(_input, _cursor);
+                _stickmanFactory.Create().SetUp().SetControl(_input);
             }
         }
         private void Update() => _time.DoFrame(Time.deltaTime);

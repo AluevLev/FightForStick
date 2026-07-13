@@ -1,7 +1,6 @@
-using IceFebruary.Space;
-
 public interface IItemHolderHandler
 {
-    void PickUp(Vector2 cursorPosition);
+    IPickable ItemInHand { get; }
+    void PickUp();
     void Drop();
 }

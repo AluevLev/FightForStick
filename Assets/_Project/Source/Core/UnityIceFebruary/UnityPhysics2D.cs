@@ -1,6 +1,7 @@
 namespace UnityIceFebruary
 {
     using IceFebruary;
+    using IceFebruary.Collections;
     using IceFebruary.Physics;
     using IceFebruary.Shapes;
     using IceFebruary.Space;
@@ -25,7 +26,7 @@ namespace UnityIceFebruary
         private float _circleRadius;
         public UnityPhysics2D(int collidersBufferLength)
         {
-            _collidersBuffer = new UnityCollider2D[collidersBufferLength.ClampMin(4)];
+            _collidersBuffer = new UnityCollider2D[collidersBufferLength.ClampForArray()];
         }
         public int Overlap(IShape shape, Vector2 position, Rotor2? rotor = null, ContactFilter2D? contactFilter2D = null, Component<ICollider2D>[] result = null)
             => Overlap(shape, position, (rotor ?? Rotor2.Default).ToAngle(false), contactFilter2D, result);
@@ -36,16 +37,16 @@ namespace UnityIceFebruary
 
             FillData(shape, position, angle, contactFilter2D, result);
 
-            int count = Overlap();
+            int count = Math.Min(result.Length, Overlap());
 
-            if (result != null)
+            if (result.Exists())
                 FillArray(result, count);
 
             return count;
         }
         private void FillArray(Component<ICollider2D>[] result, int count)
         {
-            for (int index = 0; index < Math.Min(result.Length, count); index++)
+            for (int index = 0; index < count; index++)
             {
                 UnityCollider2D unityCollider2D = _collidersBuffer[index];
 
@@ -76,7 +77,7 @@ namespace UnityIceFebruary
         {
             int count = UnityOverlap();
 
-            if (count > _collidersBuffer.Length)
+            if (count == _collidersBuffer.Length)
             {
                 int power = Math.GetPower2WithReserve(count);
                 _collidersBuffer = new UnityCollider2D[1 << power];
