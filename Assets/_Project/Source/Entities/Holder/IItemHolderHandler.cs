@@ -1,4 +1,6 @@
-public interface IItemHolderHandler
+using IceFebruary;
+
+public interface IItemHolderHandler : IBaseEntity
 {
     IPickable ItemInHand { get; }
     void PickUp();

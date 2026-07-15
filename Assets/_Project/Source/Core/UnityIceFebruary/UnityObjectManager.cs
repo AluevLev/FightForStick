@@ -11,7 +11,7 @@ namespace UnityIceFebruary
             gameObject is UnityGameObject unityGameObject ?
             (IGameObject)UnityMethods.Upsert(UnityEngine.Object.Instantiate(
                 unityGameObject.Original, 
-                (position.HasValue ? position.Value : Vector2.Far).ToUnity(), 
+                (position.HasValue ? position.Value : gameObject.Transform.Position).ToUnity(), 
                 (rotation.HasValue ? rotation.Value : Rotor2.Default).ToUnity())) : null;
     }
 }

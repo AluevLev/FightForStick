@@ -12,6 +12,9 @@ public sealed class EntityMovementController : BaseEntity, IFrame
     }
     public void OnFrame(float frameLength)
     {
+        if (!_inputProvider.Active())
+            return;
+
         float horizontal = _inputProvider.HorizontalMovement;
         float vertical = _inputProvider.VerticalMovement;
 

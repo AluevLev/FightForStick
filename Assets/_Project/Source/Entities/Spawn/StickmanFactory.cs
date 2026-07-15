@@ -1,5 +1,6 @@
 using IceFebruary;
 using IceFebruary.Physics;
+using IceFebruary.Space;
 using IceFebruary.Time;
 
 public sealed class StickmanFactory
@@ -15,9 +16,9 @@ public sealed class StickmanFactory
         _objectManager = objectManager;
         _stickmanPrefab = stickmanPrefab;
     }
-    public StickmanBuilder Create()
+    public StickmanBuilder Create(Vector2 position, out StickmanConfig stickmanConfig)
     {
-        _objectManager.Create(_stickmanPrefab).TryGetInstantiateInfo(out StickmanConfig stickmanConfig);
+        _objectManager.Create(_stickmanPrefab, position).TryGetInstantiateInfo(out stickmanConfig);
 
         return new(_time, _physics2D, stickmanConfig);
     }

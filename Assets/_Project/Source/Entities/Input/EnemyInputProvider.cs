@@ -5,19 +5,13 @@ using IceFebruary.Time;
 
 public class EnemyInputProvider : BaseEntity, IInputProvider, IFrame
 {
-    private readonly ITime _time;
     private readonly IVector2Provider _targetPosition;
     private readonly IVector2Provider _enemyPosition;
-    private readonly IItemHolderHandler _enemyHolderHandler;
-    private readonly float _pickableCheckerPeriod;
-    private float _cooldownEnd;
-    public EnemyInputProvider(ITime time, IVector2Provider targetPosition, IVector2Provider enemyPosition, IItemHolderHandler enemyItemHolderHandler, float pickableCheckerPeriod)
+    public SetOne<IItemHolderHandler> EnemyHolderHandler { get; private init; } = new();
+    public EnemyInputProvider(IVector2Provider targetPosition, IVector2Provider enemyPosition)
     {
-        _time = time;
         _targetPosition = targetPosition;
         _enemyPosition = enemyPosition;
-        _enemyHolderHandler = enemyItemHolderHandler;
-        _pickableCheckerPeriod = pickableCheckerPeriod;
     }
     public float HorizontalMovement { get; private set; }
     public float VerticalMovement { get; private set; }
@@ -28,7 +22,7 @@ public class EnemyInputProvider : BaseEntity, IInputProvider, IFrame
     public bool IsPickingUp { get; private set; }
     public void OnFrame(float frameLength)
     {
-        bool itemInHandExists = _enemyHolderHandler.ItemInHand.Exists();
+        bool itemInHandExists = EnemyHolderHandler.TryGetValue(out IItemHolderHandler itemHolderHandler) && itemHolderHandler.ItemInHand.Exists();
 
         Vector2 enemyPosition = default;
         Vector2 targetPosition = default;

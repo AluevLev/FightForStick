@@ -3,7 +3,7 @@ using IceFebruary.Physics;
 using IceFebruary.Space;
 using IceFebruary.Space.Vector2Provider;
 
-public sealed class EntityItemHolderHandler : IItemHolderHandler
+public sealed class EntityItemHolderHandler : BaseEntity, IItemHolderHandler
 {
     private readonly IOverlapper _overlapper;
     private readonly IItemHolder _entityItemHolder;
