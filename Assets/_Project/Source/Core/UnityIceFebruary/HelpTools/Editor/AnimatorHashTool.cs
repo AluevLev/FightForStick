@@ -8,7 +8,7 @@ namespace UnityIceFebruary.HelpTools
         private string _inputText;
         private int _calculatedHash;
 
-        [MenuItem("Tools/Animator Hash Tool")]
+        [MenuItem("Tools/Animator hash tool")]
         public static void ShowWindow()
         {
             AnimatorHashTool window = GetWindow<AnimatorHashTool>("Hash Tool");
