@@ -1,4 +1,4 @@
-namespace UnityIceFebruary.AutoGenerator
+namespace UnityIceFebruary.HelpTools.AutoGenerator
 {
     using UnityEditor;
     using UnityEngine;
