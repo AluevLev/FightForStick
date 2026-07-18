@@ -6,6 +6,7 @@ namespace UnityIceFebruary.Components
     using UnityIceFebruary.Adaptation;
 
     using Rigidbody2D = UnityEngine.Rigidbody2D;
+    using UnityForceMode2D = UnityEngine.ForceMode2D;
     
     public sealed class UnityRigidbody2D : UnityBaseEntity<Rigidbody2D>, IRigidbody2D
     {
@@ -31,8 +32,8 @@ namespace UnityIceFebruary.Components
             get => Original.angularVelocity;
             set => Original.angularVelocity = value;
         }
-        public void AddForce(Vector2 force, ForceMode2D forceMode) => Original.AddForce(force.ToUnity(), (UnityEngine.ForceMode2D)forceMode);
-        public void AddTorque(float torque, ForceMode2D forceMode) => Original.AddTorque(torque, (UnityEngine.ForceMode2D)forceMode);
+        public void AddForce(Vector2 force, ForceMode2D forceMode) => Original.AddForce(force.ToUnity(), (UnityForceMode2D)forceMode);
+        public void AddTorque(float torque, ForceMode2D forceMode) => Original.AddTorque(torque, (UnityForceMode2D)forceMode);
         public void MovePosition(Vector2 position) => Original.MovePosition(position.ToUnity());
         public void MoveRotation(Rotor2 rotation) => Original.MoveRotation(rotation.ToUnity());
     }

@@ -1,5 +1,4 @@
 using IceFebruary.Physics;
-using IceFebruary.Space.Vector2Provider;
 using IceFebruary.Time;
 
 public class StickmanBuilder
@@ -28,19 +27,37 @@ public class StickmanBuilder
 
             IRigidbody2D physicsBody = physicsBalancer.Rigidbody2D;
             IPhysicsBalancerCalculator physicsBalancerCalculator = new PhysicsBalancerCalculator(physicsBalancerSettings.Force);
-            IFixedFrame balancer = new PhysicsBalancer(physicsBody, physicsBalancerCalculator, physicsBalancerSettings.Target);
+            IFixedFrame balancer = new PhysicsBalancer(
+                physicsBody,
+                physicsBalancerCalculator,
+                physicsBalancerSettings.Target);
 
             _time.LaunchIFixedFrame(balancer);
         }
 
-        IOverlapper _groundChecker = new AreaScanner(_physics2D,
+        IOverlapper groundChecker = new AreaScanner(
+            _physics2D,
             _stickmanConfig.GroundDetectionSettings.GroundCheckSettings.GroundCheckShape,
             _stickmanConfig.GroundDetectionSettings.GroundDetectorPosition,
             _stickmanConfig.GroundDetectionSettings.GroundDetectorRotation,
+            1,
             _stickmanConfig.GroundDetectionSettings.GroundCheckSettings.ContactFilter2D);
 
+        IEntityMotor entityMotor = new EntityMotor(
+            _stickmanConfig.MovementSettings.PushBody,
+            _stickmanConfig.MovementSettings.LeftHip,
+            _stickmanConfig.MovementSettings.RightHip,
+            _stickmanConfig.MovementSettings.Shins,
+            _stickmanConfig.MovementSettings.MovementStatisticks.LegRest,
+            _stickmanConfig.MovementSettings.MovementStatisticks.LegAmplitude);
+
         IMovementCalculator entityMovementCalculator = new EntityMovementCalculator(_stickmanConfig.MovementSettings.MovementStatisticks);
-        _motorHandler = new EntityMotorHandler(_stickmanConfig.MovementSettings.PushBody, _groundChecker, entityMovementCalculator, _stickmanConfig.MovementSettings.MovementFloat);
+
+        _motorHandler = new EntityMotorHandler(
+            entityMotor,
+            groundChecker,
+            entityMovementCalculator,
+            _stickmanConfig.MovementSettings.MovementStatisticks.LegsChangeRotationPeriod);
 
         _time.LaunchIFixedFrame(_motorHandler);
 
@@ -50,28 +67,27 @@ public class StickmanBuilder
             hands[index] = new EntityHand(_stickmanConfig.PickUpSettings.Components[index]);
 
         IItemHolder itemHolderController = new EntityItemHolder(hands);
+        IOverlapper pickUpChecker = new AreaScanner(
+            _physics2D,
+            _stickmanConfig.PickUpSettings.PickUpStatisticks.PickUpShape,
+            _stickmanConfig.PickUpSettings.StickmanPosition,
+            null,
+            _stickmanConfig.PickUpSettings.PickUpStatisticks.MaxBufferForCheck);
+
         _itemHolderHandler = new EntityItemHolderHandler(
+            pickUpChecker,
             itemHolderController,
             _stickmanConfig.PickUpSettings.StickmanPosition,
             _stickmanConfig.PickUpSettings.PickUpStatisticks.MaxSqrPickUpDistance);
 
         return this;
     }
-    private void SetInput(IInputProvider inputProvider)
+    public void SetInput(IInputProvider inputProvider)
     {
         IFrame movementController = new EntityMovementController(inputProvider, _motorHandler);
         IFrame itemHolderController = new EntityItemHolderController(inputProvider, _itemHolderHandler);
 
         _time.LaunchIFrame(movementController);
         _time.LaunchIFrame(itemHolderController);
-    }
-    public void SetPlayerControl(IInputProvider inputProvider) => SetInput(inputProvider);
-    public void SetEnemyControl(IVector2Provider targetPosition)
-    {
-        EnemyInputProvider enemyInputProvider = new(targetPosition, _stickmanConfig.PickUpSettings.StickmanPosition);
-
-        _time.LaunchIFrame(enemyInputProvider);
-
-        SetInput(enemyInputProvider);
     }
 }

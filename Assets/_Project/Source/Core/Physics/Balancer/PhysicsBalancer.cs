@@ -13,7 +13,6 @@ public sealed class PhysicsBalancer : BaseEntity, ITargetPossessing<IRotor2Provi
     private readonly IRotor2Provider _defaultAngleProvider;
     private IRotor2Provider _targetAngle;
 
-    public Rotor2 AdditionalAngle { get; set; }
     public PhysicsBalancer(IRigidbody2D physics, IPhysicsBalancerCalculator physicsBalancerCalculator, IRotor2Provider defaultAngleProvider = null)
     {
         _physicsBody = physics;
@@ -24,13 +23,12 @@ public sealed class PhysicsBalancer : BaseEntity, ITargetPossessing<IRotor2Provi
     }
     public void SetTarget(IRotor2Provider targetProvider) => _targetAngle = targetProvider;
     public void ResetTarget() => _targetAngle = _defaultAngleProvider;
-    public void Relax() => _targetAngle = null;
     public void OnFixedFrame()
     {
         if (!_physicsBody.Exists() || !_targetAngle.TryGetSafety(out Rotor2 angle))
             return;
 
-        Rotor2 rotation = _physicsBalancerCalculator.CalculateAngle(_physicsBody.Rotation, angle * AdditionalAngle);
+        Rotor2 rotation = _physicsBalancerCalculator.CalculateAngle(_physicsBody.Rotation, angle);
 
         _physicsBody.MoveRotation(rotation);
     }

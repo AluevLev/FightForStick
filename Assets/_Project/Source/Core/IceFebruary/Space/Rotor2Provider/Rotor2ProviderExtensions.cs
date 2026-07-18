@@ -6,7 +6,7 @@ namespace IceFebruary.Space.Rotor2Provider
         {
             if (rotor2Provider != null)
                 return rotor2Provider.TryGet(out value);
-            value = default;
+            value = Rotor2.Default;
             return false;
         }
     }

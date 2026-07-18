@@ -1,5 +1,6 @@
 using IceFebruary;
 using IceFebruary.Time;
+using IceFebruary.Space;
 using UnityIceFebruary.Adaptation;
 
 public sealed class UnityPlayerInputProvider : BaseEntity, IInputProvider, IFrame
@@ -10,13 +11,15 @@ public sealed class UnityPlayerInputProvider : BaseEntity, IInputProvider, IFram
     public float VerticalMovement { get; private set; }
     public bool IsDroppingItem { get; private set; }
 
-    public IceFebruary.Space.Vector2 MousePosition { get; private set; }
+    public Vector2 MousePosition { get; private set; }
     public bool IsAttacking { get; private set; }
     public bool IsPickingUp { get; private set; }
     public UnityPlayerInputProvider(GameInputAction controls)
     {
         _controls = controls;
         _playerActions = _controls.Player;
+
+        _controls.Enable();
     }
     public void OnFrame(float frameLength)
     {

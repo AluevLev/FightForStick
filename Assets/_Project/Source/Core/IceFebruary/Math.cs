@@ -9,7 +9,7 @@ namespace IceFebruary
         public const float Epsilon = 0.0001f;
         public const float Big = 10000000f;
         public const float Rad2Deg = 180f / Pi;
-        public const float Deg2Rad = 1f / Rad2Deg;
+        public const float Deg2Rad = Pi / 180f;
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Abs(float x) => SysMathF.Abs(x);
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

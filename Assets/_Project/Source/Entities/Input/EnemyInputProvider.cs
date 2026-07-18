@@ -5,13 +5,13 @@ using IceFebruary.Time;
 
 public class EnemyInputProvider : BaseEntity, IInputProvider, IFrame
 {
-    private readonly IVector2Provider _targetPosition;
     private readonly IVector2Provider _enemyPosition;
+    private readonly IVector2Provider _targetPosition;
     public SetOne<IItemHolderHandler> EnemyHolderHandler { get; private init; } = new();
-    public EnemyInputProvider(IVector2Provider targetPosition, IVector2Provider enemyPosition)
+    public EnemyInputProvider(IVector2Provider enemyPosition, IVector2Provider targetPosition)
     {
-        _targetPosition = targetPosition;
         _enemyPosition = enemyPosition;
+        _targetPosition = targetPosition;
     }
     public float HorizontalMovement { get; private set; }
     public float VerticalMovement { get; private set; }

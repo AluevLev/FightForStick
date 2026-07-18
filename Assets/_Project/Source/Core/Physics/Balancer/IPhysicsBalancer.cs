@@ -5,5 +5,4 @@ public interface IPhysicsBalancer : IBaseEntity
 {
     void SetTarget(IRotor2Provider targetProvider);
     void ResetTarget();
-    void Relax();
 }

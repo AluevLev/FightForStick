@@ -15,7 +15,7 @@ namespace IceFebruary.Physics
         private readonly IVector2Provider _position;
         private readonly IRotor2Provider _angleDirection;
         private readonly ContactFilter2D _contactFilter2D;
-        public AreaScanner(IPhysics2D physics2D, IShape shape, IVector2Provider position, IRotor2Provider angleDirection, ContactFilter2D? contactFilter = null, int collider2DBufferSize = 1)
+        public AreaScanner(IPhysics2D physics2D, IShape shape, IVector2Provider position, IRotor2Provider angleDirection, int collider2DBufferSize, ContactFilter2D? contactFilter = null)
         {
             _physics2D = physics2D;
             _shape = shape;
@@ -27,8 +27,8 @@ namespace IceFebruary.Physics
         }
         public void Overlap()
         {
-            if (!_position.TryGetSafety(out Vector2 position) || !_angleDirection.TryGetSafety(out Rotor2 angleDirection))
-                return;
+            _position.TryGetSafety(out Vector2 position);
+            _angleDirection.TryGetSafety(out Rotor2 angleDirection);
 
             Colliders2DActualLength = _physics2D.Overlap(_shape, position, angleDirection, _contactFilter2D, Colliders2D);
         }

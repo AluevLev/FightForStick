@@ -5,11 +5,11 @@ public sealed class LocalCollisionFilter : MonoBehaviour
     [SerializeField] private Collider2D[] _colliders2D;
     private void Awake()
     {
-        for (int i = 0; i < _colliders2D.Length; i++)
+        for (int index = 0; index < _colliders2D.Length; index++)
         {
-            for (int j = i + 1; j < _colliders2D.Length; j++)
+            for (int jndex = index + 1; jndex < _colliders2D.Length; jndex++)
             {
-                Physics2D.IgnoreCollision(_colliders2D[i], _colliders2D[j]);
+                Physics2D.IgnoreCollision(_colliders2D[index], _colliders2D[jndex]);
             }
         }
 

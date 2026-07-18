@@ -5,14 +5,15 @@ using IceFebruary.Space.Vector2Provider;
 
 public sealed class EntityItemHolderHandler : BaseEntity, IItemHolderHandler
 {
-    private readonly IOverlapper _overlapper;
+    private readonly IOverlapper _pickUpChecker;
     private readonly IItemHolder _entityItemHolder;
     private readonly IVector2Provider _humanPosition;
     private readonly float _sqrMaxPickUpDistance;
 
     public IPickable ItemInHand { get; private set; }
-    public EntityItemHolderHandler(IItemHolder entityItemHolder, IVector2Provider humanPosition, float sqrMaxPickUpDistance)
+    public EntityItemHolderHandler(IOverlapper pickUpChecker, IItemHolder entityItemHolder, IVector2Provider humanPosition, float sqrMaxPickUpDistance)
     {
+        _pickUpChecker = pickUpChecker;
         _entityItemHolder = entityItemHolder;
         _humanPosition = humanPosition;
         _sqrMaxPickUpDistance = sqrMaxPickUpDistance;
@@ -22,16 +23,16 @@ public sealed class EntityItemHolderHandler : BaseEntity, IItemHolderHandler
         if (!_humanPosition.TryGetSafety(out Vector2 entityPosition))
             return;
 
-        _overlapper.Overlap();
+        _pickUpChecker.Overlap();
 
-        if (!_overlapper.Succes)
+        if (!_pickUpChecker.Succes)
             return;
 
         IPickable item = null;
 
-        for (int index = 0; index < _overlapper.Colliders2DActualLength; index++)
+        for (int index = 0; index < _pickUpChecker.Colliders2DActualLength; index++)
         {
-            IGameObject gameObject = _overlapper.Colliders2D[index].GameObject;
+            IGameObject gameObject = _pickUpChecker.Colliders2D[index].GameObject;
 
             if (Vector2.SqrDistance(gameObject.Transform.Position, entityPosition) > _sqrMaxPickUpDistance)
                 continue;

@@ -26,7 +26,7 @@ namespace UnityIceFebruary
             {
                 IFrame frame = _frameArray.Entities[index];
 
-                if (frame.Exists() && frame.Enabled)
+                if (frame.Active())
                     frame.OnFrame(frameLength);
             }
         }
@@ -36,7 +36,7 @@ namespace UnityIceFebruary
             {
                 IFixedFrame fixedFrame = _fixedFrameArray.Entities[index];
 
-                if (fixedFrame.Exists() && fixedFrame.Enabled)
+                if (fixedFrame.Active())
                     fixedFrame.OnFixedFrame();
             }
         }

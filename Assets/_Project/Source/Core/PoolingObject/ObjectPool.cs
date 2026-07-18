@@ -35,9 +35,9 @@ public sealed class ObjectPool
     {
         IGameObject target = null;
 
-        for (int i = 0; i < _poolSize; i++)
+        for (int index = 0; index < _poolSize; index++)
         {
-            int currentIndex = (_lastObjectIndex + i) % _poolSize;
+            int currentIndex = (_lastObjectIndex + index) % _poolSize;
             IGameObject slot = _pool[currentIndex];
 
             bool alive = slot.Exists();
