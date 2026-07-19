@@ -4,19 +4,20 @@ namespace IceFebruary.Space.Vector2Provider
 
     public sealed class ScaleVector2Provider : IVector2Provider
     {
-        private readonly IVector2Provider _pointProvider;
+        private readonly IVector2Provider _vector2;
         private readonly float _scale;
+
         [FieldProxy(typeof(IVector2Provider))]
         public ScaleVector2Provider(IVector2Provider pointProvider, float scale)
         {
-            _pointProvider = pointProvider;
+            _vector2 = pointProvider;
             _scale = scale;
         }
         public bool TryGet(out Vector2 point)
         {
-            bool success = _pointProvider.TryGetSafety(out Vector2 startPoint);
+            bool success = _vector2.TryGetSafety(out Vector2 vector2);
 
-            point = success ? startPoint * _scale : default;
+            point = success ? vector2 * _scale : default;
 
             return success;
         }

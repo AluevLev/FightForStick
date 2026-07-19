@@ -6,6 +6,7 @@ namespace IceFebruary.Space.Rotor2Provider
     {
         private readonly IRotor2Provider _angleProvider;
         private readonly ITransform _space;
+
         [FieldProxy(typeof(IRotor2Provider))]
         public SpaceRotor2Provider(IRotor2Provider angleProvider, ITransform space)
         {
@@ -20,7 +21,7 @@ namespace IceFebruary.Space.Rotor2Provider
                 return true;
             }
 
-            angle = default;
+            angle = Rotor2.Default;
             return false;
         }
     }

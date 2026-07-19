@@ -5,6 +5,7 @@ namespace IceFebruary.Space.Rotor2Provider
     public sealed class TransformRotor2Provider : IRotor2Provider
     {
         private readonly ITransform _transform;
+
         [FieldProxy(typeof(IRotor2Provider))]
         public TransformRotor2Provider(ITransform transform)
         {
@@ -14,7 +15,7 @@ namespace IceFebruary.Space.Rotor2Provider
         {
             bool success = _transform.Exists();
 
-            angle = success ? _transform.Rotation : default;
+            angle = success ? _transform.Rotation : Rotor2.Default;
 
             return success;
         }

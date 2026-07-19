@@ -27,7 +27,7 @@ namespace IceFebruary.Space.Rotor2Provider
                 return true;
             }
 
-            angle = default;
+            angle = Rotor2.Default;
             return false;
         }
     }

@@ -16,9 +16,9 @@ public sealed class StickmanFactory
         _objectManager = objectManager;
         _stickmanPrefab = stickmanPrefab;
     }
-    public StickmanBuilder Create(Vector2 position, out StickmanConfig stickmanConfig)
+    public StickmanBuilder Create(Vector2 position)
     {
-        _objectManager.Create(_stickmanPrefab, position).TryGetInstantiateInfo(out stickmanConfig);
+        _objectManager.Create(_stickmanPrefab, position).TryGetInstantiateInfo(out StickmanConfig stickmanConfig);
 
         return new(_time, _physics2D, stickmanConfig);
     }

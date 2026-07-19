@@ -1,20 +1,23 @@
-using IceFebruary.Physics;
 using IceFebruary.Proxy;
+using IceFebruary.Space;
 
 public readonly struct MovementSettings
 {
-	public IRigidbody2D PushBody { get; private init; }
-    public IPhysicsBalancer LeftHip { get; private init; }
-    public IPhysicsBalancer RightHip { get; private init; }
-    public IPhysicsBalancer[] Shins { get; private init; }
-    public MovementStatistick MovementStatisticks { get; private init; }
-	[FieldProxy]
-	public MovementSettings(IRigidbody2D pushBody, IPhysicsBalancer leftHip, IPhysicsBalancer rightHip, IPhysicsBalancer[] shins, MovementStatistick movementStatisticks)
-	{
-		PushBody = pushBody;
-		LeftHip = leftHip;
-		RightHip = rightHip;
-		Shins = shins;
-		MovementStatisticks = movementStatisticks;
-	}
+    public float Speed { get; private init; }
+    public float JumpForce { get; private init; }
+    public float JumpBoost { get; private init; }
+    public float LegsChangeRotationPeriod { get; private init; }
+    public Rotor2 LegRest { get; private init; }
+    public Rotor2 LegAmplitude { get; private init; }
+
+    [ScriptableObjectProxy]
+    public MovementSettings(float speed, float jumpForce, float jumpBoost, float legsChangeRotationPeriod, Rotor2 legRest, Rotor2 legAmplitude)
+    {
+        Speed = speed;
+        JumpForce = jumpForce;
+        JumpBoost = jumpBoost;
+        LegsChangeRotationPeriod = legsChangeRotationPeriod;
+        LegRest = legRest;
+        LegAmplitude = legAmplitude;
+    }
 }

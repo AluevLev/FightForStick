@@ -6,6 +6,7 @@ namespace IceFebruary.Space.Vector2Provider
     {
         private readonly IVector2Provider _first;
         private readonly IVector2Provider _second;
+
         [FieldProxy(typeof(IVector2Provider))]
         public SumVector2Provider(IVector2Provider minuend, IVector2Provider subtrahend)
         {

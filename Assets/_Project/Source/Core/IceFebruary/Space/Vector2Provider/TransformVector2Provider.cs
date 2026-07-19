@@ -5,6 +5,7 @@ namespace IceFebruary.Space.Vector2Provider
     public sealed class TransformVector2Provider : IVector2Provider
     {
         private readonly ITransform _transform;
+
         [FieldProxy(typeof(IVector2Provider))]
         public TransformVector2Provider(ITransform transform)
         {

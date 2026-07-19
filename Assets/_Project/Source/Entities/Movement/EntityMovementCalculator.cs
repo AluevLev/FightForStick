@@ -2,11 +2,15 @@ using IceFebruary.Space;
 
 public sealed class EntityMovementCalculator : IMovementCalculator
 {
-    private readonly MovementStatistick _movementSettings;
-    public EntityMovementCalculator(MovementStatistick movementSettings)
+    private readonly float _speed;
+    private readonly float _jumpBoost;
+    private readonly float _jumpForce;
+    public EntityMovementCalculator(float speed, float jumpBoost, float jumpForce)
     {
-        _movementSettings = movementSettings;
+        _speed = speed;
+        _jumpBoost = jumpBoost;
+        _jumpForce = jumpForce;
     }
-    public Vector2 CalculateMovementVector(float movementDirection) => _movementSettings.Speed * movementDirection * Vector2.Right;
-    public Vector2 CalculateJumpVector(float movementDirection) => new(_movementSettings.JumpBoost * movementDirection, _movementSettings.JumpForce);
+    public Vector2 CalculateMovementVector(float movementDirection) => _speed * movementDirection * Vector2.Right;
+    public Vector2 CalculateJumpVector(float movementDirection) => new(_jumpBoost * movementDirection, _jumpForce);
 }

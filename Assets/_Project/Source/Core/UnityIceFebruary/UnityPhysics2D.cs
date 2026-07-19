@@ -35,7 +35,7 @@ namespace UnityIceFebruary
             if (shape == null)
                 return 0;
 
-            FillData(shape, position, angle, contactFilter2D, result);
+            FillData(shape, position, angle, contactFilter2D);
 
             int count = Math.Min(result.Length, Overlap());
 
@@ -55,7 +55,7 @@ namespace UnityIceFebruary
                 result[index] = new(collider2D, gameObject);
             }
         }
-        private void FillData(IShape shape, Vector2 position, float angle = 0f, ContactFilter2D? contactFilter2D = null, Component<ICollider2D>[] result = null)
+        private void FillData(IShape shape, Vector2 position, float angle = 0f, ContactFilter2D? contactFilter2D = null)
         {
             _shape = shape;
             _position = position.ToUnity();

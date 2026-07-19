@@ -14,8 +14,9 @@ public sealed class EntityMotorHandler : BaseEntity, IMotorHandler, IFixedFrame
     private float _startTime;
     private bool _hipsOpen;
     public float MovementDirection { get; set; }
-    public EntityMotorHandler(IEntityMotor entityMotor, IOverlapper groundChecker, IMovementCalculator movementCalculator, float legsChangeRotationPeriod)
+    public EntityMotorHandler(ITime time, IEntityMotor entityMotor, IOverlapper groundChecker, IMovementCalculator movementCalculator, float legsChangeRotationPeriod)
     {
+        _time = time;
         _entityMotor = entityMotor;
         _groundChecker = groundChecker;
         _movementCalculator = movementCalculator;

@@ -4,19 +4,20 @@ namespace IceFebruary.Space.Vector2Provider
 
     public sealed class SpaceVector2Provider : IVector2Provider
     {
-        private readonly IVector2Provider _pointProvider;
+        private readonly IVector2Provider _vector2;
         private readonly ITransform _space;
+
         [FieldProxy(typeof(IVector2Provider))]
-        public SpaceVector2Provider(IVector2Provider pointProvider, ITransform space)
+        public SpaceVector2Provider(IVector2Provider vector2, ITransform space)
         {
             _space = space;
-            _pointProvider = pointProvider;
+            _vector2 = vector2;
         }
         public bool TryGet(out Vector2 point)
         {
-            if (_space.Exists() && _pointProvider.TryGetSafety(out Vector2 startPoint))
+            if (_space.Exists() && _vector2.TryGetSafety(out Vector2 vector2))
             {
-                point = _space.TransformDirection(startPoint);
+                point = _space.TransformDirection(vector2);
                 return true;
             }
 
