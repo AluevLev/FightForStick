@@ -1,4 +1,5 @@
 using IceFebruary.Physics;
+using IceFebruary.Space.Rotor2Provider;
 using IceFebruary.Space.Vector2Provider;
 using IceFebruary.Time;
 
@@ -12,18 +13,14 @@ public class StickmanBuilder
     private EntityMotorHandler _motorHandler;
     private EntityItemHolderHandler _itemHolderHandler;
 
-    private IPhysicsBalancer _headBalancer;
-    private IPhysicsBalancer _bodyBalancer;
-
     private IPhysicsBalancer _hip1Balancer;
     private IPhysicsBalancer _shin1Balancer;
-    private IPhysicsBalancer _foot1Balancer;
 
     private IPhysicsBalancer _hip2Balancer;
     private IPhysicsBalancer _shin2Balancer;
-    private IPhysicsBalancer _foot2Balancer;
 
     public IVector2Provider StickmanPosition { get; private init; }
+
     public StickmanBuilder(ITime time, IPhysics2D physics2D, StickmanConfig stickmanConfig)
     {
         _time = time;
@@ -33,30 +30,19 @@ public class StickmanBuilder
 
         StickmanPosition = stickmanConfig.StickmanPosition;
     }
-    public StickmanBuilder SetUp()
-    {
-        SetLimbs();
-
-        SetMovement();
-
-        SetItemHolder(null); //TODO: FINISH HIM!!
-
-        return this;
-    }
-    private StickmanBuilder SetLimbs()
+    public StickmanBuilder SetLimbs()
     {
         RagdollConfig ragdollConfig = _stickmanConfig.RagdollConfig;
 
-        _headBalancer = SetLimb(ragdollConfig.Head);
-        _bodyBalancer = SetLimb(ragdollConfig.Body);
+        SetLimb(ragdollConfig.Head);
+        SetLimb(ragdollConfig.Body);
+        SetLimb(ragdollConfig.Foot1);
+        SetLimb(ragdollConfig.Foot2);
 
         _hip1Balancer = SetLimb(ragdollConfig.Hip1);
-        _shin1Balancer = SetLimb(ragdollConfig.Shin1);
-        _foot1Balancer = SetLimb(ragdollConfig.Foot1);
-
         _hip2Balancer = SetLimb(ragdollConfig.Hip2);
+        _shin1Balancer = SetLimb(ragdollConfig.Shin1);
         _shin2Balancer = SetLimb(ragdollConfig.Shin2);
-        _foot2Balancer = SetLimb(ragdollConfig.Foot2);
 
         return this;
     }
@@ -75,7 +61,7 @@ public class StickmanBuilder
 
         return physicsBalancer;
     }
-    private StickmanBuilder SetMovement()
+    public StickmanBuilder SetMovement()
     {
         MovementConfig movementConfig = _stickmanConfig.MovementConfig;
         MovementSettings movementSettings = movementConfig.Settings;
@@ -93,9 +79,9 @@ public class StickmanBuilder
 
         IEntityMotor entityMotor = new EntityMotor(
             movementConfig.PushBody,
-            movementConfig.Hip1,
-            movementConfig.Hip2,
-            movementConfig.Shins,
+            _hip1Balancer,
+            _hip2Balancer,
+            new IPhysicsBalancer[] { _shin1Balancer, _shin2Balancer },
             movementSettings.LegRest,
             movementSettings.LegAmplitude);
 
@@ -115,7 +101,7 @@ public class StickmanBuilder
 
         return this;
     }
-    public StickmanBuilder SetItemHolder(IVector2Provider cursor)
+    public StickmanBuilder SetItemHolder(IVector2Provider cursor, IRotor2Provider rotation = null)
     {
         PickUpConfig pickUpConfig = _stickmanConfig.PickUpConfig;
         PickUpSettings pickUpSettings = pickUpConfig.Settings;
@@ -133,7 +119,7 @@ public class StickmanBuilder
             _physics2D,
             itemAreaScannerSettings.Shape,
             cursor,
-            null,
+            rotation,
             itemAreaScannerSettings.CollidersMaxCount,
             itemAreaScannerSettings.ContactFilter2D);
 

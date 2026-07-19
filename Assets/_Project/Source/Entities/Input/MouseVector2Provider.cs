@@ -1,12 +1,11 @@
 using IceFebruary;
-using IceFebruary.Render;
 using IceFebruary.Space;
 using IceFebruary.Space.Vector2Provider;
 
 public sealed class MouseVector2Provider : IVector2Provider
 {
     private readonly IInputProvider _inputProvider;
-    public MouseVector2Provider(IInputProvider inputProvider, ICamera camera)
+    public MouseVector2Provider(IInputProvider inputProvider)
     {
         _inputProvider = inputProvider;
     }

@@ -3,14 +3,18 @@ using IceFebruary.Proxy;
 
 public readonly struct StickmanSpawnList
 {
-	public IGameObject StickmanPrefab { get; private init; }
+	public IGameObject PlayerStickmanPrefab { get; private init; }
 	public StickmanSpawnSettings PlayerSpawnsSetting { get; private init; }
+    public IGameObject EnemyStickmanPrefab { get; private init; }
     public StickmanSpawnSettings[] EnemiesSpawnSettings { get; private init; }
+
 	[ScriptableObjectProxy]
-	public StickmanSpawnList(IGameObject stickmanPrefab, StickmanSpawnSettings playerSpawnSettings, StickmanSpawnSettings[] enemiesSpawnSettings)
+	public StickmanSpawnList(IGameObject playerStickmanPrefab, StickmanSpawnSettings playerSpawnSettings,
+		IGameObject enemyStickmanPrefab, StickmanSpawnSettings[] enemiesSpawnSettings)
 	{
-		StickmanPrefab = stickmanPrefab;
+		PlayerStickmanPrefab = playerStickmanPrefab;
 		PlayerSpawnsSetting = playerSpawnSettings;
+		EnemyStickmanPrefab = enemyStickmanPrefab;
 		EnemiesSpawnSettings = enemiesSpawnSettings;
 	}
 }
