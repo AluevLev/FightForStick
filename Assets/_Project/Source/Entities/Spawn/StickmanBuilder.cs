@@ -131,12 +131,14 @@ public class StickmanBuilder
 
         return this;
     }
-    public void SetInput(IInputProvider inputProvider)
+    public StickmanBuilder SetInput(IInputProvider inputProvider)
     {
         IFrame movementController = new EntityMovementController(inputProvider, _motorHandler);
         IFrame itemHolderController = new EntityItemHolderController(inputProvider, _itemHolderHandler);
 
         _time.LaunchIFrame(movementController);
         _time.LaunchIFrame(itemHolderController);
+
+        return this;
     }
 }

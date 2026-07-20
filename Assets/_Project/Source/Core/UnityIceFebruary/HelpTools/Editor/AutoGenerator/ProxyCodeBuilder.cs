@@ -30,14 +30,9 @@ namespace UnityIceFebruary.HelpTools.AutoGenerator
             Type fieldProxyInterface = fieldProxy.InterfaceType;
 
             if (fieldProxyInterface != null)
-            {
-                stringBuilder.Append(" : ");
-
-                if (fieldProxyInterface.HasAttribute<InterfaceProxy>())
-                    stringBuilder.AppendLine(fieldProxyInterface.GetProxyName());
-                else
-                    stringBuilder.AppendLine(fieldProxyInterface.FullName);
-            }
+                stringBuilder.AppendLine($" : {fieldProxyInterface.GetProxyName()}");
+            else
+                stringBuilder.AppendLine();
 
             stringBuilder.SetAverageBody(type, fieldProxy.InterfaceType);
 
@@ -47,7 +42,7 @@ namespace UnityIceFebruary.HelpTools.AutoGenerator
         {
             StringBuilder stringBuilder = new();
 
-            stringBuilder.AppendLine($"[UnityEngine.CreateAssetMenu(fileName = \"{type.Name}Proxy\", menuName = \"Proxy/{type.Name}\")]");
+            stringBuilder.AppendLine($"[UnityEngine.CreateAssetMenu(fileName = \"{type.Name}\", menuName = \"Proxy/{type.Name}\")]");
             stringBuilder.AppendLine($"public sealed class {type.GetProxyName()} : UnityEngine.ScriptableObject");
             stringBuilder.SetAverageBody(type);
 
@@ -58,7 +53,7 @@ namespace UnityIceFebruary.HelpTools.AutoGenerator
             StringBuilder stringBuilder = new();
 
             stringBuilder.AppendLine($"public sealed class {type.GetProxyName()} : UnityIceFebruary.UnityInstantiateInfo<{type.FullName}>");
-            stringBuilder.SetAverageBody(type, toPocoAdditionalKeys: "override");
+            stringBuilder.SetAverageBody(type, null, "override");
 
             return stringBuilder.ToString();
         }
