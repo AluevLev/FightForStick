@@ -1,7 +1,8 @@
-namespace UnityIceFebruary.HelpTools.MousePositionFinder
+namespace UnityIceFebruary.HelpTools
 {
     using UnityEditor;
     using UnityEngine;
+    using UnityIceFebruary.HelpTools.Debuggers;
 
     [InitializeOnLoad]
     public static class MousePositionFinder

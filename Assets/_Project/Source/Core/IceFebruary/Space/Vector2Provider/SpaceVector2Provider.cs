@@ -17,7 +17,7 @@ namespace IceFebruary.Space.Vector2Provider
         {
             if (_space.Exists() && _vector2.TryGetSafety(out Vector2 vector2))
             {
-                point = _space.TransformDirection(vector2);
+                point = _space.TransformPoint(vector2);
                 return true;
             }
 

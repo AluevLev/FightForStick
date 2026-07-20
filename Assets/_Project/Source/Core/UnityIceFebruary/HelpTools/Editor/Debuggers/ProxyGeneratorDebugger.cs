@@ -1,4 +1,4 @@
-namespace UnityIceFebruary.HelpTools.AutoGenerator
+namespace UnityIceFebruary.HelpTools.Debuggers
 {
     using System;
     using System.Linq;

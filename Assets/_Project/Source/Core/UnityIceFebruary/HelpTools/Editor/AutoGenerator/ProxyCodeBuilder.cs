@@ -6,6 +6,7 @@ namespace UnityIceFebruary.HelpTools.AutoGenerator
     using System.Reflection;
     using System.Text;
     using System.Collections.Generic;
+    using UnityIceFebruary.HelpTools.Debuggers;
 
     public static class ProxyCodeBuilder
     {

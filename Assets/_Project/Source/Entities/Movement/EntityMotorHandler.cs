@@ -27,24 +27,30 @@ public sealed class EntityMotorHandler : BaseEntity, IMotorHandler, IFixedFrame
     {
         _entityMotor.ForcePush(_movementCalculator.CalculateMovementVector(MovementDirection));
 
-        if (MovementDirection == 0)
-            ResetLegs();
-        else
-            SetLegs();
+        SetLegs();
 
         _groundChecker.Overlap();
 
         if (_jumpTrigger.Active && _groundChecker.Succes)
             _entityMotor.ImpulsePush(_movementCalculator.CalculateJumpVector(MovementDirection));
     }
-    private void ResetLegs()
-    {
-        _hipsOpen = false;
-        _entityMotor.ResetLegs();
-    }
     private void SetLegs()
     {
         float currentTime = _time.CurrentTime;
+
+        if (MovementDirection == 0f)
+        {
+            _hipsOpen = false;
+            _startTime = currentTime + _legsChangeRotationPeriod;
+            _entityMotor.ResetLegs();
+
+            return;
+        }
+
+        if (MovementDirection > 0f)
+            _entityMotor.SetMinShins();
+        if (MovementDirection < 0f)
+            _entityMotor.SetMaxShins();
 
         if (currentTime - _startTime < _legsChangeRotationPeriod)
             return;
