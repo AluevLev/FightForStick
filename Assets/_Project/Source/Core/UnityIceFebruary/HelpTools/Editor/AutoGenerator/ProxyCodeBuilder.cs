@@ -15,7 +15,7 @@ namespace UnityIceFebruary.HelpTools.AutoGenerator
 
             stringBuilder.AppendLine($"public interface {type.GetProxyName()}");
             stringBuilder.AppendLine("{");
-            stringBuilder.AppendLine($"\tpublic {type.FullName} ToPoco();");
+            stringBuilder.AppendLine($"    public {type.FullName} ToPoco();");
             stringBuilder.AppendLine("}");
 
             return stringBuilder.ToString();
@@ -28,12 +28,18 @@ namespace UnityIceFebruary.HelpTools.AutoGenerator
             stringBuilder.Append($"public sealed class {type.GetProxyName()}");
 
             Type fieldProxyInterface = fieldProxy.InterfaceType;
+            bool fieldProxyInterfaceExists = fieldProxyInterface == null;
 
-            if (fieldProxyInterface != null)
-                stringBuilder.AppendLine($" : {fieldProxyInterface.GetProxyName()}");
-            else
-                stringBuilder.AppendLine();
+            if (fieldProxyInterfaceExists && !fieldProxyInterface.HasAttribute<InterfaceProxy>())
+            {
+                stringBuilder.AppendLine($" {{ }} //{ProxyGenerator.TroubleMark}");
 
+                ProxyGeneratorDebugger.WarnAboutUnproxyableObject();
+
+                return stringBuilder.ToString();
+            }
+
+            stringBuilder.AppendLine(fieldProxyInterfaceExists ? string.Empty : $" : {fieldProxyInterface.GetProxyName()}");
             stringBuilder.SetAverageBody(type, fieldProxy.InterfaceType);
 
             return stringBuilder.ToString();
@@ -69,12 +75,9 @@ namespace UnityIceFebruary.HelpTools.AutoGenerator
                 Type parameterType = parameterInfo.ParameterType;
                 string parameterName = parameterType.FullName;
 
-                if (parameterType.IsInterface)
-                    stringBuilder.Append("\t[UnityEngine.SerializeReference, UnityIceFebruary.InterfaceImplementation.InterfaceImplementation]");
-                else
-                    stringBuilder.Append("\t[UnityEngine.SerializeField]");
-
-                stringBuilder.Append(" private ");
+                stringBuilder.Append("    [UnityEngine.");
+                stringBuilder.Append(parameterType.IsInterface ? "SerializeReference, UnityIceFebruary.InterfaceImplementation.InterfaceImplementation" : "SerializeField");
+                stringBuilder.Append("] private ");
 
                 string parameterFieldName = $"_{parameterInfo.Name}";
 
@@ -107,20 +110,15 @@ namespace UnityIceFebruary.HelpTools.AutoGenerator
                 stringBuilder.AppendLine($" {parameterFieldName};");
             }
 
-            stringBuilder.Append($"\tpublic ");
+            stringBuilder.Append($"    public ");
 
             string typeName = type.FullName;
 
             if (!string.IsNullOrWhiteSpace(toPocoAdditionalKeys))
                 stringBuilder.Append($"{toPocoAdditionalKeys} ");
 
-            if (toPocoType == null)
-                stringBuilder.Append(typeName);
-            else
-                stringBuilder.Append(toPocoType.FullName);
-
-            stringBuilder.Append($" ToPoco() => new {typeName}(");
-            stringBuilder.Append(string.Join(", ", parametersNames));
+            stringBuilder.Append(toPocoType == null ? typeName : toPocoType.FullName);
+            stringBuilder.Append($" ToPoco() => new {typeName}({string.Join(", ", parametersNames)}");
             stringBuilder.AppendLine(");");
             stringBuilder.AppendLine("}");
         }
