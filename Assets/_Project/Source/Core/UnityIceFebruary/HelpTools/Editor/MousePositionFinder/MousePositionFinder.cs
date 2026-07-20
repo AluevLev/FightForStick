@@ -1,18 +1,18 @@
-namespace UnityIceFebruary.HelpTools
+namespace UnityIceFebruary.HelpTools.MousePositionFinder
 {
     using UnityEditor;
     using UnityEngine;
 
     [InitializeOnLoad]
-    public static class PositionFinder
+    public static class MousePositionFinder
     {
         private static Vector2 _lastMousePosition;
-        static PositionFinder()
+        static MousePositionFinder()
         {
             SceneView.duringSceneGui += UpdateMousePosition;
         }
 
-        [MenuItem("CONTEXT/GameObjectToolContext/Print coordinates")]
+        [MenuItem("CONTEXT/GameObjectToolContext/Debug mouse coordinates")]
         private static void PrintWorldMousePosition(MenuCommand command)
         {
             SceneView sceneView = SceneView.lastActiveSceneView;
@@ -22,7 +22,8 @@ namespace UnityIceFebruary.HelpTools
 
             if (sceneView == null)
             {
-                LogError();
+                MousePositionFinderDebugger.WarnAboutInsolvencyToDebugCoordinates();
+
                 return;
             }
 
@@ -31,13 +32,14 @@ namespace UnityIceFebruary.HelpTools
 
             if (!plane2D.Raycast(ray, out float enterDistance))
             {
-                LogError();
+                MousePositionFinderDebugger.WarnAboutInsolvencyToDebugCoordinates();
+
                 return;
             }
 
-            Vector3 worldPosition = ray.GetPoint(enterDistance);
+            Vector3 worldMousePosition = ray.GetPoint(enterDistance);
 
-            Debug.Log($"Mouse Position: ({worldPosition.x:F2}; {worldPosition.y:F2})");
+            MousePositionFinderDebugger.DebugMousePosition(worldMousePosition);
         }
         private static void UpdateMousePosition(SceneView sceneView)
         {
@@ -46,6 +48,6 @@ namespace UnityIceFebruary.HelpTools
             if (currentEvent != null && currentEvent.type == EventType.MouseDown)
                 _lastMousePosition = currentEvent.mousePosition;
         }
-        private static void LogError() => Debug.LogWarning("The Scene window is not active or could not be found");
+        
     }
 }
