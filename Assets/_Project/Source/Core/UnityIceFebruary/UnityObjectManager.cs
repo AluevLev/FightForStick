@@ -7,11 +7,8 @@ namespace UnityIceFebruary
     public sealed class UnityObjectManager : BaseEntity, IObjectManager
     {
         public UnityObjectManager() { }
-        public IGameObject Create(IGameObject gameObject, Vector2? position = null, Rotor2? rotation = null) =>
-            gameObject is UnityGameObject unityGameObject ?
-            (IGameObject)UnityMethods.Upsert(UnityEngine.Object.Instantiate(
-                unityGameObject.Original, 
-                (position.HasValue ? position.Value : gameObject.Transform.Position).ToUnity(), 
-                (rotation.HasValue ? rotation.Value : Rotor2.Default).ToUnity())) : null;
+        public IGameObject Create(IGameObject gameObject) => Create(gameObject, gameObject.Transform.Position, Rotor2.Default);
+        public IGameObject Create(IGameObject gameObject, Vector2 position) => Create(gameObject, position, Rotor2.Default);
+        public IGameObject Create(IGameObject gameObject, Vector2 position, Rotor2 rotation) => gameObject is UnityGameObject unityGameObject ? (IGameObject)UnityMethods.Upsert(UnityEngine.Object.Instantiate(unityGameObject.Original, position.ToUnity(), rotation.ToUnity())) : null;
     }
 }

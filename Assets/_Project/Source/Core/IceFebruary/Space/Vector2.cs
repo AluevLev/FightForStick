@@ -5,12 +5,16 @@ namespace IceFebruary.Space
 
     public readonly struct Vector2 : System.IEquatable<Vector2>
     {
-        public static readonly Vector2 Zero = new(0f, 0f);
-        public static readonly Vector2 One = new(1f, 1f);
-        public static readonly Vector2 Up = new(0f, 1f);
-        public static readonly Vector2 Down = new(0f, -1f);
+        public static readonly Vector2 Center = new(0f, 0f);
+        public static readonly Vector2 TopRight = new(1f, 1f);
+        public static readonly Vector2 TopLeft = new(-1f, 1f);
+        public static readonly Vector2 BottomLeft = new(-1f, -1f);
+        public static readonly Vector2 BottomRight = new(1f, -1f);
+        public static readonly Vector2 Top = new(0f, 1f);
+        public static readonly Vector2 Bottom = new(0f, -1f);
         public static readonly Vector2 Right = new(1f, 0f);
         public static readonly Vector2 Left = new(-1f, 0f);
+
         public static readonly Vector2 Far = new(Math.Big, Math.Big);
         public float X { get; private init; }
         public float Y { get; private init; }
@@ -47,7 +51,7 @@ namespace IceFebruary.Space
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 operator -(Vector2 a, Vector2 b) => new(a.X - b.X, a.Y - b.Y);
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float operator *(Vector2 a, Vector2 b) => a.X * b.X + a.Y * b.Y;
+        public static Vector2 operator *(Vector2 a, Vector2 b) => new(a.X * b.X, a.Y * b.Y);
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 operator -(Vector2 a) => new(-a.X, -a.Y);
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

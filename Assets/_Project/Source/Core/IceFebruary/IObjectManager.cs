@@ -4,6 +4,8 @@ namespace IceFebruary
 {
     public interface IObjectManager : IBaseEntity
     {
-        IGameObject Create(IGameObject gameObject, Vector2? position = null, Rotor2? rotation = null);
+        IGameObject Create(IGameObject gameObject);
+        IGameObject Create(IGameObject gameObject, Vector2 position);
+        IGameObject Create(IGameObject gameObject, Vector2 position, Rotor2 rotation);
     }
 }

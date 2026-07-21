@@ -28,14 +28,15 @@ namespace UnityIceFebruary
         {
             _collidersBuffer = new UnityCollider2D[collidersBufferLength.ClampForArray()];
         }
-        public int Overlap(IShape shape, Vector2 position, Rotor2? rotor = null, ContactFilter2D? contactFilter2D = null, Component<ICollider2D>[] result = null)
-            => Overlap(shape, position, (rotor ?? Rotor2.Default).ToAngle(false), contactFilter2D, result);
-        public int Overlap(IShape shape, Vector2 position, float angle = 0f, ContactFilter2D? contactFilter2D = null, Component<ICollider2D>[] result = null)
+        public int Overlap(IShape shape, Vector2 position, Rotor2 rotor, Component<ICollider2D>[] result = null) => Overlap(shape, position, ContactFilter2D.Default, rotor.ToAngle(false), result);
+        public int Overlap(IShape shape, Vector2 position, float angle = 0f, Component<ICollider2D>[] result = null) => Overlap(shape, position, ContactFilter2D.Default, angle, result);
+        public int Overlap(IShape shape, Vector2 position, ContactFilter2D contactFilter2D, Rotor2 rotor, Component<ICollider2D>[] result = null) => Overlap(shape, position, contactFilter2D, rotor.ToAngle(false), result);
+        public int Overlap(IShape shape, Vector2 position, ContactFilter2D contactFilter2D, float angle = 0f, Component<ICollider2D>[] result = null)
         {
             if (shape == null)
                 return 0;
 
-            FillData(shape, position, angle, contactFilter2D);
+            FillData(shape, position, contactFilter2D, angle);
 
             int count = Math.Min(result.Length, Overlap());
 
@@ -55,11 +56,11 @@ namespace UnityIceFebruary
                 result[index] = new(collider2D, gameObject);
             }
         }
-        private void FillData(IShape shape, Vector2 position, float angle = 0f, ContactFilter2D? contactFilter2D = null)
+        private void FillData(IShape shape, Vector2 position, ContactFilter2D contactFilter2D, float angle)
         {
             _shape = shape;
             _position = position.ToUnity();
-            _contactFilter2D = (contactFilter2D ?? ContactFilter2D.Default).ToUnity();
+            _contactFilter2D = contactFilter2D.ToUnity();
             _angle = angle;
 
             switch (shape)

@@ -15,13 +15,14 @@ namespace IceFebruary.Physics
         private readonly IVector2Provider _position;
         private readonly IRotor2Provider _rotation;
         private readonly ContactFilter2D _contactFilter2D;
-        public AreaScanner(IPhysics2D physics2D, IShape shape, IVector2Provider position, IRotor2Provider rotation, int collider2DBufferSize, ContactFilter2D? contactFilter = null)
+        public AreaScanner(IPhysics2D physics2D, IShape shape, IVector2Provider position, IRotor2Provider rotation, int collider2DBufferSize) : this(physics2D, shape, position, rotation, collider2DBufferSize, ContactFilter2D.Default) { }
+        public AreaScanner(IPhysics2D physics2D, IShape shape, IVector2Provider position, IRotor2Provider rotation, int collider2DBufferSize, ContactFilter2D contactFilter)
         {
             _physics2D = physics2D;
             _shape = shape;
             _position = position;
             _rotation = rotation;
-            _contactFilter2D = contactFilter ?? ContactFilter2D.Default;
+            _contactFilter2D = contactFilter;
 
             Colliders2D = new Component<ICollider2D>[collider2DBufferSize.ClampForArray()];
         }
@@ -30,7 +31,7 @@ namespace IceFebruary.Physics
             _position.TryGetSafety(out Vector2 position);
             _rotation.TryGetSafety(out Rotor2 rotation);
 
-            Colliders2DActualLength = _physics2D.Overlap(_shape, position, rotation, _contactFilter2D, Colliders2D);
+            Colliders2DActualLength = _physics2D.Overlap(_shape, position, _contactFilter2D, rotation, Colliders2D);
         }
     }
 }
