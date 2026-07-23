@@ -4,7 +4,6 @@ using IceFebruary.Space;
 public readonly struct MovementSettings
 {
     public float Speed { get; private init; }
-    public float SneakSpeed { get; private init; }
     public float JumpSpeed { get; private init; }
     public float SneakBoost { get; private init; }
     public float JumpBoost { get; private init; }
@@ -13,12 +12,11 @@ public readonly struct MovementSettings
     public Rotor2 LegAmplitude { get; private init; }
 
     [ScriptableObjectProxy]
-    public MovementSettings(float speed, float jumpSpeed, float sneakSpeed, float jumpBoost, float sneakBoost,
+    public MovementSettings(float speed, float jumpSpeed, float jumpBoost, float sneakBoost,
         float legsChangeRotationPeriod, Rotor2 legRest, Rotor2 legAmplitude)
     {
         Speed = speed;
         JumpSpeed = jumpSpeed;
-        SneakSpeed = sneakSpeed;
         JumpBoost = jumpBoost;
         SneakBoost = sneakBoost;
         LegsChangeRotationPeriod = legsChangeRotationPeriod;

@@ -26,18 +26,18 @@ public sealed class EntityMotorHandler : BaseEntity, IMotorHandler, IFixedFrame
     public void Jump() => _jumpTrigger.Charge();
     public void OnFixedFrame()
     {
-        _entityMotor.ForcePush(_movementCalculator.CalculateMovementVector(MovementDirection));
+        _entityMotor.ForcePush(_movementCalculator.GetMovementVector(MovementDirection));
 
         SetLegs();
 
         _groundChecker.Overlap();
 
-        if (_groundChecker.Succes)
+        if (_groundChecker.Succes && _jumpTrigger.Active != IsSneaking)
         {
-            if (_jumpTrigger.Active)
-                _entityMotor.ImpulsePush(_movementCalculator.CalculateJumpVector(MovementDirection));
-            else if (IsSneaking)
-                _entityMotor.ForcePush(_movementCalculator.CalculateSneakMovementVector(MovementDirection));
+            if (IsSneaking)
+                _entityMotor.ForcePush(_movementCalculator.GetSneakVector());
+            else
+                _entityMotor.ImpulsePush(_movementCalculator.GetJumpVector(MovementDirection));
         }
     }
     private void SetLegs()

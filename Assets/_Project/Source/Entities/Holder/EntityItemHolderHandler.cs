@@ -1,5 +1,4 @@
 using IceFebruary;
-using IceFebruary.Physics;
 using IceFebruary.Space;
 using IceFebruary.Space.Vector2Provider;
 
@@ -36,8 +35,8 @@ public sealed class EntityItemHolderHandler : BaseEntity, IItemHolderHandler
 
             if (Vector2.SqrDistance(gameObject.Transform.Position, entityPosition) > _sqrMaxPickUpDistance)
                 continue;
-            if (gameObject.TryGetComponent(out item))
-                break;
+            if (gameObject.MainComponent is IPickable pickable)
+                item = pickable;
         }
 
         if (item.Exists())

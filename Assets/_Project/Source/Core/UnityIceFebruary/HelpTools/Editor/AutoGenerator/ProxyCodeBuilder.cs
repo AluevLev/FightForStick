@@ -76,8 +76,10 @@ namespace UnityIceFebruary.HelpTools.AutoGenerator
                 Type parameterType = parameterInfo.ParameterType;
                 string parameterName = parameterType.FullName;
 
+                bool isArray = parameterType.IsProxyableArray(out Type arrayElementType);
+
                 stringBuilder.Append("    [UnityEngine.");
-                stringBuilder.Append(parameterType.IsInterface ? "SerializeReference, UnityIceFebruary.InterfaceImplementation.InterfaceImplementation" : "SerializeField");
+                stringBuilder.Append(parameterType.IsInterface || isArray && arrayElementType.IsInterface ? "SerializeReference, UnityIceFebruary.InterfaceImplementation.InterfaceImplementation" : "SerializeField");
                 stringBuilder.Append("] private ");
 
                 string parameterFieldName = $"_{parameterInfo.Name}";
@@ -88,18 +90,12 @@ namespace UnityIceFebruary.HelpTools.AutoGenerator
                     parametersNames.Add($"{parameterFieldName}.ToPoco()");
                 }
                     
-                else if (parameterType.IsProxyableArray(out Type arrayElementType))
+                else if (isArray && arrayElementType.IsProxyable())
                 {
                     string elementTypeName = arrayElementType.GetProxyName();
 
                     stringBuilder.Append($"{elementTypeName}[]");
                     parametersNames.Add($"System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Select({parameterFieldName} ?? new {elementTypeName}[0], element => element.ToPoco()))");
-                }
-                    
-                else if (parameterType.IsProxyableList(out Type listElementType))
-                {
-                    stringBuilder.Append($"System.Collections.Generic.List<{listElementType.GetProxyName()}>");
-                    parametersNames.Add($"System.Linq.Enumerable.ToList(System.Linq.Enumerable.Select({parameterFieldName} ?? new(), element => element.ToPoco()))");
                 }
 
                 else

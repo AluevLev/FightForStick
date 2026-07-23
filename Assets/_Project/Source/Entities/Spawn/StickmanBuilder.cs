@@ -88,10 +88,9 @@ public sealed class StickmanBuilder
 
         IMovementCalculator entityMovementCalculator = new EntityMovementCalculator(
             movementSettings.Speed,
-            movementSettings.SneakSpeed,
             movementSettings.JumpSpeed,
-            movementSettings.SneakBoost,
-            movementSettings.JumpBoost);
+            movementSettings.JumpBoost,
+            movementSettings.SneakBoost);
 
         Trigger trigger = new();
 

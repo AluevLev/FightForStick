@@ -2,7 +2,7 @@ using IceFebruary.Space;
 
 public interface IMovementCalculator
 {
-    Vector2 CalculateMovementVector(float movementDirection);
-    Vector2 CalculateSneakMovementVector(float movementDirection);
-    Vector2 CalculateJumpVector(float movementDirection);
+    Vector2 GetMovementVector(float movementDirection);
+    Vector2 GetJumpVector(float movementDirection);
+    Vector2 GetSneakVector();
 }

@@ -2,7 +2,6 @@ namespace UnityIceFebruary.HelpTools.AutoGenerator
 {
     using IceFebruary.Proxy;
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
 
@@ -36,12 +35,6 @@ namespace UnityIceFebruary.HelpTools.AutoGenerator
         {
             elementType = type.GetElementType();
             return type.IsArray && elementType.IsProxyable();
-        }
-        public static bool IsProxyableList(this Type type, out Type elementType)
-        {
-            Type[] genericArguments = type.GetGenericArguments();
-            elementType = genericArguments.Length > 0 ? genericArguments[0] : null;
-            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>) && elementType.IsProxyable();
         }
         public static bool IsUnityBaseEntity(this Type type, out Type unityType)
         {

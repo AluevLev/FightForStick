@@ -22,5 +22,7 @@ public sealed class EntityMovementController : BaseEntity, IFrame
 
         if (vertical > 0f)
             _playerMotorHandler.Jump();
+
+        _playerMotorHandler.IsSneaking = vertical < 0f;
     }
 }
