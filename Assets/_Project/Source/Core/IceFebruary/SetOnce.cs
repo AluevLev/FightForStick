@@ -1,6 +1,6 @@
 namespace IceFebruary
 {
-    public class SetOnce<T> where T : class, IBaseEntity
+    public sealed class SetOnce<T> where T : class, IBaseEntity
     {
         private T _value;
         public T Value

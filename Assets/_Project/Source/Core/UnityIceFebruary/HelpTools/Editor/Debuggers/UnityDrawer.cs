@@ -2,7 +2,6 @@ namespace UnityIceFebruary.HelpTools.Debuggers
 {
     using IceFebruary.Space;
     using IceFebruary.Shapes;
-    using UnityIceFebruary.Adaptation;
 
     public static class UnityDrawer
     {
@@ -62,20 +61,20 @@ namespace UnityIceFebruary.HelpTools.Debuggers
             Vector2 bottomRight = position + rotation * Vector2.BottomRight * halfSize;
             Vector2 bottomLeft = position + rotation * Vector2.BottomLeft * halfSize;
 
-            DrawLine(topLeft, topRight, duration);
-            DrawLine(topRight, bottomRight, duration);
-            DrawLine(bottomRight, bottomLeft, duration);
-            DrawLine(bottomLeft, topLeft, duration);
+            Debugger.DrawLine(topLeft, topRight, duration);
+            Debugger.DrawLine(topRight, bottomRight, duration);
+            Debugger.DrawLine(bottomRight, bottomLeft, duration);
+            Debugger.DrawLine(bottomLeft, topLeft, duration);
         }
         public static void DrawCircle(Vector2 position, float radius, float duration = StandartShowDurationTime)
         {
             for (int index = 1; index < _circlePositions.Length; index++)
-                DrawLine(position + _circlePositions[index - 1] * radius, position + _circlePositions[index] * radius, duration);
+                Debugger.DrawLine(position + _circlePositions[index - 1] * radius, position + _circlePositions[index] * radius, duration);
         }
         public static void DrawX(Vector2 position, float duration = StandartShowDurationTime)
         {
-            DrawLine(_topLeftX + position, _bottomRightX + position, duration);
-            DrawLine(_topRightX + position, _bottomLeftX + position, duration);
+            Debugger.DrawLine(_topLeftX + position, _bottomRightX + position, duration);
+            Debugger.DrawLine(_topRightX + position, _bottomLeftX + position, duration);
         }
         public static void DrawShape(IShape shape, Vector2 position, float duration = StandartShowDurationTime) => DrawShape(shape, position, Rotor2.Default, duration);
         public static void DrawShape(IShape shape, Vector2 position, Rotor2 rotation, float duration = StandartShowDurationTime)
@@ -91,8 +90,10 @@ namespace UnityIceFebruary.HelpTools.Debuggers
                 case Dot:
                     DrawX(position, duration);
                     break;
+                default:
+                    UnityDrawerDebugger.WarnAboutUnkonwnShape();
+                    break;
             }
         }
-        public static void DrawLine(Vector2 a, Vector2 b, float duration = StandartShowDurationTime) => UnityEngine.Debug.DrawLine(a.ToUnity(), b.ToUnity(), UnityEngine.Color.green, duration);
     }
 }

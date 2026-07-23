@@ -3,7 +3,7 @@ using IceFebruary.Space;
 using IceFebruary.Space.Vector2Provider;
 using IceFebruary.Time;
 
-public class EnemyInputProvider : BaseEntity, IInputProvider, IFrame
+public sealed class EnemyInputProvider : BaseEntity, IInputProvider, IFrame
 {
     private readonly IVector2Provider _enemyPosition;
     private readonly IVector2Provider _targetPosition;

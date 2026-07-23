@@ -3,7 +3,7 @@ namespace UnityIceFebruary.HelpTools
     using UnityEditor;
     using UnityEngine;
 
-    public class AnimatorHashTool : EditorWindow
+    public sealed class AnimatorHashTool : EditorWindow
     {
         private string _inputText;
         private int _calculatedHash;

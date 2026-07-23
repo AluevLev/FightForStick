@@ -3,7 +3,7 @@ using IceFebruary.Physics;
 using IceFebruary.Space;
 using IceFebruary.Space.Rotor2Provider;
 
-public class EntityMotor : BaseEntity, IEntityMotor
+public sealed class EntityMotor : BaseEntity, IEntityMotor
 {
 	private readonly IRigidbody2D _pushBody;
     private readonly IPhysicsBalancer _leftHip;

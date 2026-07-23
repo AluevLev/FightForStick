@@ -14,8 +14,6 @@ namespace IceFebruary.Space
         public static readonly Vector2 Bottom = new(0f, -1f);
         public static readonly Vector2 Right = new(1f, 0f);
         public static readonly Vector2 Left = new(-1f, 0f);
-
-        public static readonly Vector2 Far = new(Math.Big, Math.Big);
         public float X { get; private init; }
         public float Y { get; private init; }
         [FieldProxy, MethodImpl(MethodImplOptions.AggressiveInlining)]

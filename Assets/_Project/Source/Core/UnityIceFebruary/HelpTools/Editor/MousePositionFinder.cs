@@ -2,6 +2,7 @@ namespace UnityIceFebruary.HelpTools
 {
     using UnityEditor;
     using UnityEngine;
+    using UnityIceFebruary.Adaptation;
     using UnityIceFebruary.HelpTools.Debuggers;
 
     [InitializeOnLoad]
@@ -40,7 +41,7 @@ namespace UnityIceFebruary.HelpTools
 
             Vector3 worldMousePosition = ray.GetPoint(enterDistance);
 
-            MousePositionFinderDebugger.DebugMousePosition(worldMousePosition);
+            MousePositionFinderDebugger.DebugMousePosition(worldMousePosition.ToIce());
         }
         private static void UpdateMousePosition(SceneView sceneView)
         {

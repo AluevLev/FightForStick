@@ -3,7 +3,7 @@ using IceFebruary.Space.Rotor2Provider;
 using IceFebruary.Space.Vector2Provider;
 using IceFebruary.Time;
 
-public class StickmanBuilder
+public sealed class StickmanBuilder
 {
     private readonly ITime _time;
     private readonly IPhysics2D _physics2D;

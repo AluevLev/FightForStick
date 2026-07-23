@@ -4,7 +4,7 @@ namespace UnityIceFebruary.HelpTools
     using UnityEditor;
     using UnityEngine;
 
-    public class AngleToRotorConverter : EditorWindow
+    public sealed class AngleToRotorConverter : EditorWindow
     {
         private float _inputAngle;
         private Rotor2 _carculatedRotor;
