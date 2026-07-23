@@ -1,5 +1,4 @@
 using IceFebruary;
-using IceFebruary.Physics;
 using IceFebruary.Time;
 
 public sealed class EntityMotorHandler : BaseEntity, IMotorHandler, IFixedFrame
@@ -8,18 +7,20 @@ public sealed class EntityMotorHandler : BaseEntity, IMotorHandler, IFixedFrame
     private readonly IEntityMotor _entityMotor;
     private readonly IMovementCalculator _movementCalculator;
     private readonly IOverlapper _groundChecker;
-    private readonly Trigger _jumpTrigger = new();
+    private readonly Trigger _jumpTrigger;
     private readonly float _legsChangeRotationPeriod;
 
     private float _startTime;
     private bool _hipsOpen;
     public float MovementDirection { get; set; }
-    public EntityMotorHandler(ITime time, IEntityMotor entityMotor, IOverlapper groundChecker, IMovementCalculator movementCalculator, float legsChangeRotationPeriod)
+    public bool IsSneaking { get; set; }
+    public EntityMotorHandler(ITime time, IEntityMotor entityMotor, IOverlapper groundChecker, IMovementCalculator movementCalculator, Trigger jumpTrigger, float legsChangeRotationPeriod)
     {
         _time = time;
         _entityMotor = entityMotor;
         _groundChecker = groundChecker;
         _movementCalculator = movementCalculator;
+        _jumpTrigger = jumpTrigger;
         _legsChangeRotationPeriod = legsChangeRotationPeriod;
     }
     public void Jump() => _jumpTrigger.Charge();
@@ -31,8 +32,13 @@ public sealed class EntityMotorHandler : BaseEntity, IMotorHandler, IFixedFrame
 
         _groundChecker.Overlap();
 
-        if (_jumpTrigger.Active && _groundChecker.Succes)
-            _entityMotor.ImpulsePush(_movementCalculator.CalculateJumpVector(MovementDirection));
+        if (_groundChecker.Succes)
+        {
+            if (_jumpTrigger.Active)
+                _entityMotor.ImpulsePush(_movementCalculator.CalculateJumpVector(MovementDirection));
+            else if (IsSneaking)
+                _entityMotor.ForcePush(_movementCalculator.CalculateSneakMovementVector(MovementDirection));
+        }
     }
     private void SetLegs()
     {

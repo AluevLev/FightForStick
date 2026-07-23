@@ -27,11 +27,8 @@ namespace UnityIceFebruary.HelpTools
 
             EditorGUILayout.Space();
 
-            EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Result:", EditorStyles.boldLabel, GUILayout.Width(110));
-
             EditorGUILayout.SelectableLabel(_calculatedHash.ToString(), EditorStyles.textField, GUILayout.Height(18));
-            EditorGUILayout.EndHorizontal();
         }
     }
 }

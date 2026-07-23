@@ -97,7 +97,7 @@ public partial class @GameInputAction: IInputActionCollection2, IDisposable
                     ""type"": ""Value"",
                     ""id"": ""8548b9d6-5794-4585-ad62-aa36a54e2f10"",
                     ""expectedControlType"": ""Axis"",
-                    ""processors"": ""AxisDeadzone(min=0.1,max=0.11)"",
+                    ""processors"": ""AxisDeadzone"",
                     ""interactions"": """",
                     ""initialStateCheck"": true
                 },

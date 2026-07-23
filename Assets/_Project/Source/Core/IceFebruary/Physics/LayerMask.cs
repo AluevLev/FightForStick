@@ -7,6 +7,7 @@ namespace IceFebruary.Physics
     public readonly struct LayerMask : IEquatable<LayerMask>
     {
         public int Mask { get; private init; }
+
         [FieldProxy]
         public LayerMask(int mask)
         {

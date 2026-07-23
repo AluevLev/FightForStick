@@ -1,3 +1,4 @@
+using IceFebruary;
 using IceFebruary.Physics;
 using IceFebruary.Space.Rotor2Provider;
 using IceFebruary.Space.Vector2Provider;
@@ -87,14 +88,21 @@ public sealed class StickmanBuilder
 
         IMovementCalculator entityMovementCalculator = new EntityMovementCalculator(
             movementSettings.Speed,
-            movementSettings.JumpBoost,
-            movementSettings.JumpForce);
+            movementSettings.SneakSpeed,
+            movementSettings.JumpSpeed,
+            movementSettings.SneakBoost,
+            movementSettings.JumpBoost);
+
+        Trigger trigger = new();
+
+        _time.LaunchIFixedFrame(trigger);
 
         _motorHandler = new EntityMotorHandler(
             _time,
             entityMotor,
             groundChecker,
             entityMovementCalculator,
+            trigger,
             movementSettings.LegsChangeRotationPeriod);
 
         _time.LaunchIFixedFrame(_motorHandler);

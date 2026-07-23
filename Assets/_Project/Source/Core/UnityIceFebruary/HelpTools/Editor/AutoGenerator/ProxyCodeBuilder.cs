@@ -29,7 +29,7 @@ namespace UnityIceFebruary.HelpTools.AutoGenerator
             stringBuilder.Append($"public sealed class {type.GetProxyName()}");
 
             Type fieldProxyInterface = fieldProxy.InterfaceType;
-            bool fieldProxyInterfaceExists = fieldProxyInterface == null;
+            bool fieldProxyInterfaceExists = fieldProxyInterface != null;
 
             if (fieldProxyInterfaceExists && !fieldProxyInterface.HasAttribute<InterfaceProxy>())
             {
@@ -40,7 +40,7 @@ namespace UnityIceFebruary.HelpTools.AutoGenerator
                 return stringBuilder.ToString();
             }
 
-            stringBuilder.AppendLine(fieldProxyInterfaceExists ? string.Empty : $" : {fieldProxyInterface.GetProxyName()}");
+            stringBuilder.AppendLine(fieldProxyInterfaceExists ? $" : {fieldProxyInterface.GetProxyName()}" : string.Empty);
             stringBuilder.SetAverageBody(type, fieldProxy.InterfaceType);
 
             return stringBuilder.ToString();

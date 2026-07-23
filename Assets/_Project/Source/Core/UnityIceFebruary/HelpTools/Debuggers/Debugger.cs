@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 namespace UnityIceFebruary.HelpTools.Debuggers
 {
     using UnityEngine;
@@ -13,3 +14,4 @@ namespace UnityIceFebruary.HelpTools.Debuggers
         public static void DrawLine(IceVector2 a, IceVector2 b, float duration) => Debug.DrawLine(a.ToUnity(), b.ToUnity(), Color.green, duration);
     }
 }
+#endif

@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 namespace UnityIceFebruary.HelpTools.Debuggers
 {
     using IceFebruary.Space;
@@ -8,3 +9,4 @@ namespace UnityIceFebruary.HelpTools.Debuggers
         public static void WarnAboutInsolvencyToDebugCoordinates() => Debugger.LogWarning("The scene window is not active or could not be found");
     }
 }
+#endif

@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 namespace UnityIceFebruary.HelpTools.Debuggers
 {
     using IceFebruary.Space;
@@ -56,10 +57,10 @@ namespace UnityIceFebruary.HelpTools.Debuggers
         {
             Vector2 halfSize = size * 0.5f;
 
-            Vector2 topLeft = position + rotation * Vector2.TopLeft * halfSize;
-            Vector2 topRight = position + rotation * Vector2.TopRight * halfSize;
-            Vector2 bottomRight = position + rotation * Vector2.BottomRight * halfSize;
-            Vector2 bottomLeft = position + rotation * Vector2.BottomLeft * halfSize;
+            Vector2 topLeft = position + rotation * (Vector2.TopLeft * halfSize);
+            Vector2 topRight = position + rotation * (Vector2.TopRight * halfSize);
+            Vector2 bottomRight = position + rotation * (Vector2.BottomRight * halfSize);
+            Vector2 bottomLeft = position + rotation * (Vector2.BottomLeft * halfSize);
 
             Debugger.DrawLine(topLeft, topRight, duration);
             Debugger.DrawLine(topRight, bottomRight, duration);
@@ -97,3 +98,4 @@ namespace UnityIceFebruary.HelpTools.Debuggers
         }
     }
 }
+#endif

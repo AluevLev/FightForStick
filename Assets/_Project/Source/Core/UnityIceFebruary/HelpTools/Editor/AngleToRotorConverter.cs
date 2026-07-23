@@ -13,7 +13,7 @@ namespace UnityIceFebruary.HelpTools
         public static void ShowWindow()
         {
             AngleToRotorConverter window = GetWindow<AngleToRotorConverter>("Angle to rotor converter");
-            window.minSize = new(300, 100);
+            window.minSize = new(300, 150);
         }
         private void OnGUI()
         {
@@ -28,12 +28,9 @@ namespace UnityIceFebruary.HelpTools
 
             EditorGUILayout.Space();
 
-            EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Result:", EditorStyles.boldLabel, GUILayout.Width(110));
-
             EditorGUILayout.SelectableLabel($"Scalar: {_carculatedRotor.Scalar}", EditorStyles.textField, GUILayout.Height(18));
             EditorGUILayout.SelectableLabel($"XY: {_carculatedRotor.XY}", EditorStyles.textField, GUILayout.Height(18));
-            EditorGUILayout.EndHorizontal();
         }
     }
 }

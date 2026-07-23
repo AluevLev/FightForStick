@@ -8,6 +8,7 @@ namespace IceFebruary.Physics
     {
         public bool UseTriggers { get; private init; }
         public LayerMask LayerMask { get; private init; }
+
         [FieldProxy]
         public ContactFilter2D(LayerMask layerMask, bool useTriggers = true)
         {

@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 namespace UnityIceFebruary.HelpTools.Debuggers
 {
     using System;
@@ -17,3 +18,4 @@ namespace UnityIceFebruary.HelpTools.Debuggers
         public static void WarnAboutUnproxyableObject() => Debugger.LogError("Cannot generate a proxy for an object with a non-proxied interface or an object that is not an interface!");
     }
 }
+#endif

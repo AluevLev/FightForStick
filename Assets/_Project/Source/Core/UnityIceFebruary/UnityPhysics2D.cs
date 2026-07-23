@@ -22,7 +22,6 @@ namespace UnityIceFebruary
         private float _angle;
 
         private UnityVector2 _rectangleSize;
-
         private float _circleRadius;
         public UnityPhysics2D(int collidersBufferLength)
         {
@@ -81,6 +80,7 @@ namespace UnityIceFebruary
             if (count == _collidersBuffer.Length)
             {
                 int power = Math.GetPower2WithReserve(count);
+
                 _collidersBuffer = new UnityCollider2D[1 << power];
 
                 return Overlap();
