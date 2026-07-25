@@ -6,22 +6,10 @@ namespace UnityIceFebruary
 
     public sealed class UnityGameObject : UnityBaseEntity<GameObject>, IGameObject
     {
-        private IBaseEntity _mainComponent;
         public ITransform Transform { get; private init; }
-        public IBaseEntity MainComponent
-        {
-            get => _mainComponent;
-            private set
-            {
-                if (_mainComponentSetted || value == null)
-                    return;
-
-                _mainComponent = value;
-                _mainComponentSetted = true;
-            }
-        }
-        private bool _mainComponentSetted;
+        public SetOnce<IBaseEntity> MainComponent { get; private init; } = new();
         private bool _instantiateInfoGetted;
+
         [FieldProxy(typeof(IGameObject))]
         public UnityGameObject(GameObject gameObject) : base(gameObject)
         {

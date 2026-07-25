@@ -1,3 +1,5 @@
+using IceFebruary.Space.Vector2Provider;
+
 namespace IceFebruary.Space.Rotor2Provider
 {
     public static class Rotor2ProviderExtensions
@@ -8,6 +10,11 @@ namespace IceFebruary.Space.Rotor2Provider
                 return rotor2Provider.TryGet(out value);
             value = Rotor2.Default;
             return false;
+        }
+        public static Rotor2 GetSafety(this IRotor2Provider rotor2Provider)
+        {
+            rotor2Provider.TryGetSafety(out Rotor2 rotation);
+            return rotation;
         }
     }
 }

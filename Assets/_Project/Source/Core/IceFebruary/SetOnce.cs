@@ -8,7 +8,7 @@ namespace IceFebruary
             get => _value;
             set
             {
-                if (Setted || value != null)
+                if (Setted)
                     return;
 
                 _value = value;
@@ -16,11 +16,7 @@ namespace IceFebruary
             }
         }
         public bool Setted { get; private set; }
-        public SetOnce(T value = null)
-        {
-            Setted = value != null;
-            _value = Setted ? value : null;
-        }
+        public SetOnce() { }
         public bool TryGetValue(out T value)
         {
             value = Value;

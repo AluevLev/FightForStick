@@ -9,15 +9,16 @@ public readonly struct PickUpConfig
     public AreaScannerSettings ItemAreaScannerSettings { get; private init; }
 
     [FieldProxy]
-    public PickUpConfig(IRigidbody2D[] entityHandsRigidbodies2D, IGameObject[] entityHandsGameObjects,
-        PickUpSettings settings, AreaScannerSettings itemAreaScannerSettings)
+    public PickUpConfig(Rigidbody2DComponent[] entityHands, PickUpSettings settings, AreaScannerSettings itemAreaScannerSettings)
     {
-        Component<IRigidbody2D>[] components = new Component<IRigidbody2D>[entityHandsRigidbodies2D.Length];
+        EntityHands = new Component<IRigidbody2D>[entityHands.Length];
 
-        for (int index = 0; index < entityHandsRigidbodies2D.Length; index++)
-            components[index] = new Component<IRigidbody2D>(entityHandsRigidbodies2D[index], entityHandsGameObjects[index]);
+        for (int index = 0; index < entityHands.Length; index++)
+        {
+            Rigidbody2DComponent rigidbody2DComponent = entityHands[index];
+            EntityHands[index] = new Component<IRigidbody2D>(rigidbody2DComponent.Rigidbody2D, rigidbody2DComponent.GameObject);
+        }
 
-        EntityHands = components;
         Settings = settings;
         ItemAreaScannerSettings = itemAreaScannerSettings;
     }

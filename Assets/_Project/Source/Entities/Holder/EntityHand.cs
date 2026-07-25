@@ -13,7 +13,7 @@ public sealed class EntityHand : BaseEntity, IHand
     {
         _holderHingeJoint2D = holder.Value;
 
-        _hand.Transform.Position = holder.GameObject.Transform.TransformPoint(_holderHingeJoint2D.Anchor);
+        _hand.Value.Position = holder.GameObject.Transform.TransformPoint(_holderHingeJoint2D.Anchor);
         _holderHingeJoint2D.ConnectedBody = _hand.Value;
         _holderHingeJoint2D.Enabled = true;
     }

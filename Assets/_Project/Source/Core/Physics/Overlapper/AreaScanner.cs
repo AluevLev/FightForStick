@@ -7,16 +7,15 @@ using IceFebruary.Space.Vector2Provider;
 
 public sealed class AreaScanner : BaseEntity, IOverlapper
 {
+    private readonly IPhysics2D _physics2D;
     public Component<ICollider2D>[] Colliders2D { get; private init; }
     public int Colliders2DActualLength { get; private set; }
     public bool Succes => Colliders2DActualLength > 0;
-    private readonly IPhysics2D _physics2D;
     private readonly IShape _shape;
     private readonly IVector2Provider _position;
     private readonly IRotor2Provider _rotation;
     private readonly ContactFilter2D _contactFilter2D;
-    public AreaScanner(IPhysics2D physics2D, IShape shape, IVector2Provider position, IRotor2Provider rotation, int collider2DBufferSize) : this(physics2D, shape, position, rotation, collider2DBufferSize, ContactFilter2D.Default) { }
-    public AreaScanner(IPhysics2D physics2D, IShape shape, IVector2Provider position, IRotor2Provider rotation, int collider2DBufferSize, ContactFilter2D contactFilter)
+    public AreaScanner(IPhysics2D physics2D, IShape shape, IVector2Provider position, IRotor2Provider rotation, ContactFilter2D contactFilter, int collider2DBufferSize)
     {
         _physics2D = physics2D;
         _shape = shape;
@@ -26,13 +25,5 @@ public sealed class AreaScanner : BaseEntity, IOverlapper
 
         Colliders2D = new Component<ICollider2D>[collider2DBufferSize.ClampForArray()];
     }
-    public void Overlap()
-    {
-        _position.TryGetSafety(out Vector2 position);
-        _rotation.TryGetSafety(out Rotor2 rotation);
-
-        UnityIceFebruary.HelpTools.Debuggers.UnityDrawer.DrawShape(_shape, position, rotation, 0.02f);
-
-        Colliders2DActualLength = _physics2D.Overlap(_shape, position, _contactFilter2D, rotation, Colliders2D);
-    }
+    public void Overlap(IShape shape = null, Vector2? position = null, Rotor2? rotation = null, ContactFilter2D? contactFilter2D = null) => _physics2D.Overlap(shape ?? _shape, position ?? _position.GetSafety(), rotation ?? _rotation.GetSafety(), contactFilter2D ?? _contactFilter2D, Colliders2D);
 }

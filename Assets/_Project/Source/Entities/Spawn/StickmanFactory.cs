@@ -16,7 +16,7 @@ public sealed class StickmanFactory
     }
     public StickmanBuilder Create(IGameObject stickman, Vector2 position)
     {
-        bool success = _objectManager.Create(stickman, position).TryGetInstantiateInfo(out StickmanConfig stickmanConfig);
+        bool success = _objectManager.Create(stickman, position, Rotor2.Default).TryGetInstantiateInfo(out StickmanConfig stickmanConfig);
 
         return success ? new(_time, _physics2D, stickmanConfig) : null;
     }

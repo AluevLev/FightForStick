@@ -5,7 +5,7 @@ namespace IceFebruary.Space
 
     public readonly struct Vector2 : System.IEquatable<Vector2>
     {
-        public static readonly Vector2 Center = new(0f, 0f);
+        public static readonly Vector2 Zero = default;
         public static readonly Vector2 TopRight = new(1f, 1f);
         public static readonly Vector2 TopLeft = new(-1f, 1f);
         public static readonly Vector2 BottomLeft = new(-1f, -1f);

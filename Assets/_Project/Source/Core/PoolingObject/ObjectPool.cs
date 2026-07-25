@@ -25,7 +25,7 @@ public sealed class ObjectPool
     }
     public IGameObject InstantiateObjectInPool()
     {
-        IGameObject objectInPool = _objectManager.Create(_prefab);
+        IGameObject objectInPool = _objectManager.Create(_prefab, Vector2.Zero, Rotor2.Default);
 
         objectInPool.Enabled = false;
 

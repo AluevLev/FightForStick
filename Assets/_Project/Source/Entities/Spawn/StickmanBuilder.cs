@@ -75,8 +75,8 @@ public sealed class StickmanBuilder
             groundAreaScannerSettings.Shape,
             groundAreaScannerConfig.Position,
             groundAreaScannerConfig.Rotation,
-            groundAreaScannerSettings.CollidersMaxCount,
-            groundAreaScannerSettings.ContactFilter2D);
+            groundAreaScannerSettings.ContactFilter2D,
+            groundAreaScannerSettings.CollidersMaxCount);
 
         IEntityMotor entityMotor = new EntityMotor(
             movementConfig.PushBody,
@@ -127,8 +127,8 @@ public sealed class StickmanBuilder
             itemAreaScannerSettings.Shape,
             cursor,
             rotation,
-            itemAreaScannerSettings.CollidersMaxCount,
-            itemAreaScannerSettings.ContactFilter2D);
+            itemAreaScannerSettings.ContactFilter2D,
+            itemAreaScannerSettings.CollidersMaxCount);
 
         _itemHolderHandler = new EntityItemHolderHandler(
             pickUpChecker,

@@ -35,11 +35,11 @@ public sealed class EntityItemHolderHandler : BaseEntity, IItemHolderHandler
 
             if (Vector2.SqrDistance(gameObject.Transform.Position, entityPosition) > _sqrMaxPickUpDistance)
                 continue;
-            if (gameObject.MainComponent is IPickable pickable)
+            if (gameObject.MainComponent.Value is IPickable pickable)
                 item = pickable;
         }
 
-        if (item.Exists())
+        if (!item.Exists())
             return;
 
         if (ItemInHand.Exists())
