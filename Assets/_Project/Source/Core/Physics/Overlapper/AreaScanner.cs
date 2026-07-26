@@ -25,5 +25,9 @@ public sealed class AreaScanner : BaseEntity, IOverlapper
 
         Colliders2D = new Component<ICollider2D>[collider2DBufferSize.ClampForArray()];
     }
-    public void Overlap(IShape shape = null, Vector2? position = null, Rotor2? rotation = null, ContactFilter2D? contactFilter2D = null) => _physics2D.Overlap(shape ?? _shape, position ?? _position.GetSafety(), rotation ?? _rotation.GetSafety(), contactFilter2D ?? _contactFilter2D, Colliders2D);
+    public void Overlap(IShape shape = null, Vector2? position = null, Rotor2? rotation = null, ContactFilter2D? contactFilter2D = null)
+    {
+        Colliders2DActualLength = _physics2D.Overlap(shape ?? _shape, position ?? _position.GetSafety(), rotation ?? _rotation.GetSafety(), contactFilter2D ?? _contactFilter2D, Colliders2D);
+        UnityIceFebruary.HelpTools.Debuggers.UnityDrawer.DrawShape(shape ?? _shape, position ?? _position.GetSafety(), rotation ?? _rotation.GetSafety(), 0.02f);
+    }
 }

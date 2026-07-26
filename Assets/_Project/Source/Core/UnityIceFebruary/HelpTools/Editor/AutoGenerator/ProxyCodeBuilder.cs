@@ -87,7 +87,7 @@ namespace UnityIceFebruary.HelpTools.AutoGenerator
                 if (parameterType.IsProxyable())
                 {
                     stringBuilder.Append(parameterType.GetProxyName());
-                    parametersNames.Add($"{parameterFieldName}.ToPoco()");
+                    parametersNames.Add($"{parameterFieldName} == null ? default : {parameterFieldName}.ToPoco()");
                 }
                     
                 else if (isArray && arrayElementType.IsProxyable())

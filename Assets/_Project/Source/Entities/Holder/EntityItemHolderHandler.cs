@@ -1,25 +1,29 @@
 using IceFebruary;
 using IceFebruary.Space;
+using IceFebruary.Space.Rotor2Provider;
 using IceFebruary.Space.Vector2Provider;
 
 public sealed class EntityItemHolderHandler : BaseEntity, IItemHolderHandler
 {
     private readonly IOverlapper _pickUpChecker;
     private readonly IItemHolder _entityItemHolder;
-    private readonly IVector2Provider _humanPosition;
+    private readonly IVector2Provider _stickmanPosition;
+    private readonly IVector2Provider _cursorPosition;
+    private readonly IRotor2Provider _targetItemRotation;
     private readonly float _sqrMaxPickUpDistance;
-
     public IPickable ItemInHand { get; private set; }
-    public EntityItemHolderHandler(IOverlapper pickUpChecker, IItemHolder entityItemHolder, IVector2Provider humanPosition, float sqrMaxPickUpDistance)
+    public EntityItemHolderHandler(IOverlapper pickUpChecker, IItemHolder entityItemHolder, IVector2Provider stickmanPosition, IVector2Provider cursorPosition, IRotor2Provider targetItemRotation, float sqrMaxPickUpDistance)
     {
         _pickUpChecker = pickUpChecker;
         _entityItemHolder = entityItemHolder;
-        _humanPosition = humanPosition;
+        _stickmanPosition = stickmanPosition;
+        _cursorPosition = cursorPosition;
+        _targetItemRotation = targetItemRotation;
         _sqrMaxPickUpDistance = sqrMaxPickUpDistance;
     }
     public void PickUp()
     {
-        if (!_humanPosition.TryGetSafety(out Vector2 entityPosition))
+        if (!_stickmanPosition.TryGetSafety(out Vector2 entityPosition) || !_cursorPosition.TryGetSafety(out Vector2 cursorPosition) || Vector2.SqrDistance(cursorPosition, entityPosition) > _sqrMaxPickUpDistance)
             return;
 
         _pickUpChecker.Overlap();
@@ -28,15 +32,17 @@ public sealed class EntityItemHolderHandler : BaseEntity, IItemHolderHandler
             return;
 
         IPickable item = null;
+        IGameObject gameObject = null;
 
         for (int index = 0; index < _pickUpChecker.Colliders2DActualLength; index++)
         {
-            IGameObject gameObject = _pickUpChecker.Colliders2D[index].GameObject;
+            gameObject = _pickUpChecker.Colliders2D[index].GameObject;
 
-            if (Vector2.SqrDistance(gameObject.Transform.Position, entityPosition) > _sqrMaxPickUpDistance)
-                continue;
             if (gameObject.MainComponent.Value is IPickable pickable)
+            {
                 item = pickable;
+                break;
+            }
         }
 
         if (!item.Exists())
@@ -48,10 +54,14 @@ public sealed class EntityItemHolderHandler : BaseEntity, IItemHolderHandler
         _entityItemHolder.PickUpItem(item);
 
         ItemInHand = item;
+
+        ItemInHand.PhysicsBalancer.SetTarget(_targetItemRotation);
     }
     public void Drop()
     {
         _entityItemHolder.DropItemInHand();
+
+        ItemInHand.PhysicsBalancer.ResetTarget();
 
         ItemInHand = null;
     }

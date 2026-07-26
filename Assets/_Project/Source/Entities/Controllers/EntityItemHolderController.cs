@@ -12,7 +12,7 @@ public sealed class EntityItemHolderController : BaseEntity, IFrame
     }
     public void OnFrame(float frameLength)
     {
-        if (_inputProvider.IsPickingUp)
+        if (_inputProvider.IsPickingUpItem)
             _playerHolderHandler.PickUp();
         if (_inputProvider.IsDroppingItem)
             _playerHolderHandler.Drop();

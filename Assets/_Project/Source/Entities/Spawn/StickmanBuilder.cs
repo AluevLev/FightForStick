@@ -47,7 +47,7 @@ public sealed class StickmanBuilder
 
         return this;
     }
-    private IPhysicsBalancer SetLimb(PhysicsLimbConfig physicsLimbSettings)
+    private IPhysicsBalancer SetLimb(PhysicsBalancerConfig physicsLimbSettings)
     {
         PhysicsBalancerSettings physicsBalancerSettings = physicsLimbSettings.Settings;
 
@@ -78,11 +78,13 @@ public sealed class StickmanBuilder
             groundAreaScannerSettings.ContactFilter2D,
             groundAreaScannerSettings.CollidersMaxCount);
 
+        IPhysicsBalancer[] shins = new IPhysicsBalancer[] { _shin1Balancer, _shin2Balancer };
+
         IEntityMotor entityMotor = new EntityMotor(
             movementConfig.PushBody,
             _hip1Balancer,
             _hip2Balancer,
-            new IPhysicsBalancer[] { _shin1Balancer, _shin2Balancer },
+            shins,
             movementSettings.LegRest,
             movementSettings.LegAmplitude);
 
@@ -108,7 +110,7 @@ public sealed class StickmanBuilder
 
         return this;
     }
-    public StickmanBuilder SetItemHolder(IVector2Provider cursor, IRotor2Provider rotation = null)
+    public StickmanBuilder SetItemHolder(IVector2Provider cursorPosition, IRotor2Provider rotation = null)
     {
         PickUpConfig pickUpConfig = _stickmanConfig.PickUpConfig;
         PickUpSettings pickUpSettings = pickUpConfig.Settings;
@@ -125,15 +127,19 @@ public sealed class StickmanBuilder
         IOverlapper pickUpChecker = new AreaScanner(
             _physics2D,
             itemAreaScannerSettings.Shape,
-            cursor,
+            cursorPosition,
             rotation,
             itemAreaScannerSettings.ContactFilter2D,
             itemAreaScannerSettings.CollidersMaxCount);
+
+        IRotor2Provider targetItemRotation = new DirectionRotor2Provider(StickmanPosition, cursorPosition);
 
         _itemHolderHandler = new EntityItemHolderHandler(
             pickUpChecker,
             itemHolderController,
             StickmanPosition,
+            cursorPosition,
+            targetItemRotation,
             pickUpSettings.MaxSqrPickUpDistance);
 
         return this;

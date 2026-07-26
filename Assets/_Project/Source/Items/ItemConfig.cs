@@ -5,10 +5,10 @@ using IceFebruary.Physics;
 public readonly struct ItemConfig
 {
 	public Component<IHingeJoint2D>[] Holders { get; private init; }
-	public IRigidbody2D Rigidbody2D { get; private init; }
+	public PhysicsBalancerConfig PhysicsLimbConfig { get; private init; }
 
 	[Proxy]
-	public ItemConfig(HingeJoint2DComponent[] holders, IRigidbody2D rigidbody2D)
+	public ItemConfig(HingeJoint2DComponent[] holders, PhysicsBalancerConfig physicsLimbConfig)
 	{
 		Holders = new Component<IHingeJoint2D>[holders.Length];
 
@@ -18,6 +18,6 @@ public readonly struct ItemConfig
 			Holders[index] = new Component<IHingeJoint2D>(hingeJoint2DComponent.HingeJoint2D, hingeJoint2DComponent.GameObject);
         }
 
-		Rigidbody2D = rigidbody2D;
+		PhysicsLimbConfig = physicsLimbConfig;
 	}
 }

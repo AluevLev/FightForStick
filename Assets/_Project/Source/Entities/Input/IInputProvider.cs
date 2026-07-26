@@ -5,9 +5,9 @@ public interface IInputProvider : IBaseEntity
 {
     float HorizontalMovement { get; }
     float VerticalMovement { get; }
-    bool IsDroppingItem { get; }
-
     Vector2 MousePosition { get; }
+
+    bool IsPickingUpItem { get; }
+    bool IsDroppingItem { get; }
     bool IsAttacking { get; }
-    bool IsPickingUp { get; }
 }

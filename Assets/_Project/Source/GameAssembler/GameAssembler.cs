@@ -1,4 +1,3 @@
-using IceFebruary;
 using IceFebruary.Space.Vector2Provider;
 using UnityEngine;
 using UnityIceFebruary;
@@ -13,8 +12,6 @@ public sealed class GameAssembler : MonoBehaviour
     private UnityPhysics2D _physics2D;
     private UnityObjectManager _objectManager;
 
-    private UnityPlayerInputProvider _input;
-
     private void Awake()
     {
         GameAssemblerConfig gameAssemblerConfig = _config.ToPoco();
@@ -24,16 +21,16 @@ public sealed class GameAssembler : MonoBehaviour
         _physics2D = new(gameAssemblerSettings.StartPhysicsCollidersBufferLength);
         _objectManager = new();
 
-        _input = new(new());
+        UnityPlayerInputProvider playerInput = new(new());
 
-        _time.LaunchIFrame(_input);
+        _time.LaunchIFrame(playerInput);
+
+        IVector2Provider playerCursorPosition = new ScreenToWorldVector2Provider(
+            new MouseVector2Provider(playerInput),
+            gameAssemblerConfig.Camera);
 
         StickmanSpawnList stickmanSpawnList = gameAssemblerConfig.StickmanSpawnList;
         StickmanFactory stickmanFactory = new(_time, _physics2D, _objectManager);
-
-        IVector2Provider playerCursor = new ScreenToWorldVector2Provider(
-            new MouseVector2Provider(_input),
-            gameAssemblerConfig.Camera);
 
         StickmanBuilder playerStickmanBuilder = stickmanFactory
             .Create(
@@ -41,8 +38,8 @@ public sealed class GameAssembler : MonoBehaviour
             stickmanSpawnList.PlayerSpawnsSetting.Position)
             .SetLimbs()
             .SetMovement()
-            .SetItemHolder(playerCursor)
-            .SetInput(_input);
+            .SetItemHolder(playerCursorPosition)
+            .SetInput(playerInput);
 
         IVector2Provider playerStickmanPosition = playerStickmanBuilder.StickmanPosition;
 
@@ -56,14 +53,14 @@ public sealed class GameAssembler : MonoBehaviour
                 enemyStickmanBuilder.StickmanPosition,
                 playerStickmanPosition);
 
-            IVector2Provider enemyCursor = new MouseVector2Provider(enemyInput);
-
             _time.LaunchIFrame(enemyInput);
+
+            IVector2Provider enemyCursorProvider = new MouseVector2Provider(enemyInput);
 
             enemyStickmanBuilder
                 .SetLimbs()
                 .SetMovement()
-                .SetItemHolder(enemyCursor)
+                .SetItemHolder(enemyCursorProvider)
                 .SetInput(enemyInput);
         }
 

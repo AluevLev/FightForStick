@@ -19,7 +19,7 @@ public sealed class EnemyInputProvider : BaseEntity, IInputProvider, IFrame
 
     public bool IsDroppingItem { get; private set; }
     public bool IsAttacking { get; private set; }
-    public bool IsPickingUp { get; private set; }
+    public bool IsPickingUpItem { get; private set; }
     public void OnFrame(float frameLength)
     {
         bool itemInHandExists = EnemyHolderHandler.TryGetValue(out IItemHolderHandler itemHolderHandler) && itemHolderHandler.ItemInHand.Exists();
@@ -44,7 +44,7 @@ public sealed class EnemyInputProvider : BaseEntity, IInputProvider, IFrame
         }
 
         IsAttacking = itemInHandExists;
-        IsPickingUp = !itemInHandExists;
+        IsPickingUpItem = !itemInHandExists;
         IsDroppingItem = false;
     }
 }

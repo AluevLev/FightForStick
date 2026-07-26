@@ -2,19 +2,19 @@ using IceFebruary.Proxy;
 
 public readonly struct RagdollConfig
 {
-    public PhysicsLimbConfig Head { get; private init; }
-    public PhysicsLimbConfig Body { get; private init; }
-    public PhysicsLimbConfig Hip1 { get; private init; }
-    public PhysicsLimbConfig Shin1 { get; private init; }
-    public PhysicsLimbConfig Foot1 { get; private init; }
-    public PhysicsLimbConfig Hip2 { get; private init; }
-    public PhysicsLimbConfig Shin2 { get; private init; }
-    public PhysicsLimbConfig Foot2 { get; private init; }
+    public PhysicsBalancerConfig Head { get; private init; }
+    public PhysicsBalancerConfig Body { get; private init; }
+    public PhysicsBalancerConfig Hip1 { get; private init; }
+    public PhysicsBalancerConfig Shin1 { get; private init; }
+    public PhysicsBalancerConfig Foot1 { get; private init; }
+    public PhysicsBalancerConfig Hip2 { get; private init; }
+    public PhysicsBalancerConfig Shin2 { get; private init; }
+    public PhysicsBalancerConfig Foot2 { get; private init; }
 
     [FieldProxy]
-    public RagdollConfig(PhysicsLimbConfig head, PhysicsLimbConfig body,
-        PhysicsLimbConfig hip1, PhysicsLimbConfig shin1, PhysicsLimbConfig foot1,
-        PhysicsLimbConfig hip2, PhysicsLimbConfig shin2, PhysicsLimbConfig foot2)
+    public RagdollConfig(PhysicsBalancerConfig head, PhysicsBalancerConfig body,
+        PhysicsBalancerConfig hip1, PhysicsBalancerConfig shin1, PhysicsBalancerConfig foot1,
+        PhysicsBalancerConfig hip2, PhysicsBalancerConfig shin2, PhysicsBalancerConfig foot2)
     {
         Head = head;
         Body = body;

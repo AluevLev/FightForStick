@@ -1,6 +1,6 @@
 using IceFebruary;
-using IceFebruary.Time;
 using IceFebruary.Space;
+using IceFebruary.Time;
 using UnityIceFebruary.Adaptation;
 
 public sealed class UnityPlayerInputProvider : BaseEntity, IInputProvider, IFrame
@@ -9,11 +9,11 @@ public sealed class UnityPlayerInputProvider : BaseEntity, IInputProvider, IFram
     private readonly GameInputAction.PlayerActions _playerActions;
     public float HorizontalMovement { get; private set; }
     public float VerticalMovement { get; private set; }
-    public bool IsDroppingItem { get; private set; }
-
     public Vector2 MousePosition { get; private set; }
+
+    public bool IsPickingUpItem { get; private set; }
+    public bool IsDroppingItem { get; private set; }
     public bool IsAttacking { get; private set; }
-    public bool IsPickingUp { get; private set; }
     public UnityPlayerInputProvider(GameInputAction controls)
     {
         _controls = controls;
@@ -25,11 +25,11 @@ public sealed class UnityPlayerInputProvider : BaseEntity, IInputProvider, IFram
     {
         HorizontalMovement = _playerActions.HorizontalMovement.ReadValue<float>();
         VerticalMovement = _playerActions.VerticalMovement.ReadValue<float>();
-
         MousePosition = _playerActions.LookPositionOnScreen.ReadValue<UnityEngine.Vector2>().ToIce();
+
         IsAttacking = _playerActions.Attack.IsPressed();
 
-        IsPickingUp = _playerActions.PickUp.WasPressedThisFrame();
+        IsPickingUpItem = _playerActions.PickUp.WasPressedThisFrame();
         IsDroppingItem = _playerActions.Drop.WasPressedThisFrame();
     }
 }

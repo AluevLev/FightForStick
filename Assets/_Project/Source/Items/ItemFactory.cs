@@ -14,10 +14,20 @@ public class ItemFactory
     {
         IGameObject gameObject = _objectManager.Create(_weapon, Vector2.Zero, Rotor2.Default);
 
-        if (gameObject.TryGetInstantiateInfo(out ItemConfig itemConfig))
-        {
-            Item item = new(itemConfig.Holders, itemConfig.Rigidbody2D);
-            gameObject.MainComponent.Value = item;
-        }
+        if (!gameObject.TryGetInstantiateInfo(out ItemConfig itemConfig))
+            return;
+
+        PhysicsBalancerConfig physicsBalancerConfig = itemConfig.PhysicsLimbConfig;
+        PhysicsBalancerSettings settings = physicsBalancerConfig.Settings;
+
+        PhysicsBalancerCalculator physicsBalancerCalculator = new(settings.Force);
+
+        IPhysicsBalancer physicsBalancer = new PhysicsBalancer(
+            physicsBalancerConfig.Rigidbody2D,
+            physicsBalancerCalculator,
+            settings.Target);
+
+        Item item = new(itemConfig.Holders, physicsBalancer);
+        gameObject.MainComponent.Value = item;
     }
 }
