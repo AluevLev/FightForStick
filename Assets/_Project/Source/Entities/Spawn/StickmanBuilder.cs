@@ -4,13 +4,14 @@ using IceFebruary.Space.Rotor2Provider;
 using IceFebruary.Space.Vector2Provider;
 using IceFebruary.Time;
 
-public sealed class StickmanBuilder
+public sealed class StickmanBuilder : IBuilder<StickmanConfig>
 {
     private readonly ITime _time;
     private readonly IPhysics2D _physics2D;
 
-    private readonly StickmanConfig _stickmanConfig;
-    
+    private StickmanConfig _stickmanConfig;
+    private bool _isSetted;
+
     private EntityMotorHandler _motorHandler;
     private EntityItemHolderHandler _itemHolderHandler;
 
@@ -20,16 +21,22 @@ public sealed class StickmanBuilder
     private IPhysicsBalancer _hip2Balancer;
     private IPhysicsBalancer _shin2Balancer;
 
-    public IVector2Provider StickmanPosition { get; private init; }
+    public IVector2Provider StickmanPosition { get; private set; }
 
-    public StickmanBuilder(ITime time, IPhysics2D physics2D, StickmanConfig stickmanConfig)
+    public StickmanBuilder(ITime time, IPhysics2D physics2D)
     {
         _time = time;
         _physics2D = physics2D;
+    }
+    public void SetConfig(StickmanConfig config)
+    {
+        if (_isSetted)
+            return;
 
-        _stickmanConfig = stickmanConfig;
+        _stickmanConfig = config;
+        StickmanPosition = config.StickmanPosition;
 
-        StickmanPosition = stickmanConfig.StickmanPosition;
+        _isSetted = true;
     }
     public StickmanBuilder SetLimbs()
     {
