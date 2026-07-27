@@ -29,7 +29,7 @@ public sealed class GameAssembler : MonoBehaviour
 
         Factory<StickmanBuilder, StickmanConfig> stickmanFactory = new(_objectManager, () => new(_time, _physics2D));
 
-        SpawnList spawnList = gameAssemblerConfig.StickmanSpawnList;
+        SpawnList spawnList = gameAssemblerConfig.SpawnList;
         SpawnSettings playerSpawnSettings = spawnList.PlayerSpawnsSetting;
 
         StickmanBuilder playerStickmanBuilder = stickmanFactory
@@ -78,7 +78,8 @@ public sealed class GameAssembler : MonoBehaviour
 
             itemFactory.Create(
                 itemSpawnSettings.GameObject,
-                itemSpawnSettings.Position);
+                itemSpawnSettings.Position)
+                .SetUp();
         }
     }
     private void Update() => _time.DoFrame(Time.deltaTime);

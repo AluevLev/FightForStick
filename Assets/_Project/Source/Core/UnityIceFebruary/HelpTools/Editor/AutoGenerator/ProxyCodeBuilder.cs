@@ -41,7 +41,11 @@ namespace UnityIceFebruary.HelpTools.AutoGenerator
             }
 
             stringBuilder.AppendLine(fieldProxyInterfaceExists ? $" : {fieldProxyInterface.GetProxyName()}" : string.Empty);
-            stringBuilder.SetAverageBody(type, fieldProxy.InterfaceType);
+
+            if (type.IsUnityBaseEntity(out Type unityType))
+                stringBuilder.SetUnityComponentBody(unityType, fieldProxyInterface);
+            else
+                stringBuilder.SetAverageBody(type, fieldProxy.InterfaceType);
 
             return stringBuilder.ToString();
         }
@@ -64,6 +68,15 @@ namespace UnityIceFebruary.HelpTools.AutoGenerator
 
             return stringBuilder.ToString();
         }
+        private static void SetUnityComponentBody(this StringBuilder stringBuilder, Type unityType, Type interfaceType)
+        {
+            string interfaceFullName = interfaceType.FullName;
+
+            stringBuilder.AppendLine("{");
+            stringBuilder.AppendLine($"    [UnityEngine.SerializeField] private {unityType.FullName} _unityObject;");
+            stringBuilder.AppendLine($"    public {interfaceFullName} ToPoco() => ({interfaceFullName})UnityIceFebruary.UnityMethods.Upsert(_unityObject);");
+            stringBuilder.AppendLine("}");
+        }
         private static void SetAverageBody(this StringBuilder stringBuilder, Type type, Type toPocoType = null, string toPocoAdditionalKeys = null)
         {
             stringBuilder.AppendLine("{");
@@ -74,7 +87,6 @@ namespace UnityIceFebruary.HelpTools.AutoGenerator
             foreach (ParameterInfo parameterInfo in parameters)
             {
                 Type parameterType = parameterInfo.ParameterType;
-                string parameterName = parameterType.FullName;
 
                 bool isArray = parameterType.IsProxyableArray(out Type arrayElementType);
 
@@ -100,7 +112,7 @@ namespace UnityIceFebruary.HelpTools.AutoGenerator
 
                 else
                 {
-                    stringBuilder.Append(parameterName);
+                    stringBuilder.Append(parameterType.FullName);
                     parametersNames.Add(parameterFieldName);
                 }
 

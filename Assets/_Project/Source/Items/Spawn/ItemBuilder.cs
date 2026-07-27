@@ -9,8 +9,11 @@ public sealed class ItemBuilder : IBuilder<ItemConfig>
     {
         _time = time;
     }
-    public void SetConfig(ItemConfig config) => _itemConfig.Value = config;
-    public void Create()
+    public void SetConfig(ItemConfig config)
+    {
+        _itemConfig.Value = config;
+    }
+    public ItemBuilder SetUp()
     {
         ItemConfig itemConfig = _itemConfig.Value;
 
@@ -26,8 +29,10 @@ public sealed class ItemBuilder : IBuilder<ItemConfig>
 
         _time.LaunchIFixedFrame(physicsBalancer);
 
-        //Item item = new(itemConfig.Holders, physicsBalancer);
+        Item item = new(itemConfig.Holders, physicsBalancer);
 
-        //gameObject.MainComponent.Value = item;
+        itemConfig.GameObject.MainComponent.Value = item;
+
+        return this;
     }
 }

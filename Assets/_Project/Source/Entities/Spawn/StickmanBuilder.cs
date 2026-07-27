@@ -9,9 +9,12 @@ public sealed class StickmanBuilder : IBuilder<StickmanConfig>
     private readonly ITime _time;
     private readonly IPhysics2D _physics2D;
 
-    private StickmanConfig _stickmanConfig;
-    private bool _isSetted;
+    private StickmanConfig StickmanConfig => _stickmanConfig.Value;
+    private readonly SetOnce<StickmanConfig> _stickmanConfig = new();
 
+    public IVector2Provider StickmanPosition => _stickmanPosition.Value;
+    private readonly SetOnce<IVector2Provider> _stickmanPosition = new();
+    
     private EntityMotorHandler _motorHandler;
     private EntityItemHolderHandler _itemHolderHandler;
 
@@ -21,7 +24,7 @@ public sealed class StickmanBuilder : IBuilder<StickmanConfig>
     private IPhysicsBalancer _hip2Balancer;
     private IPhysicsBalancer _shin2Balancer;
 
-    public IVector2Provider StickmanPosition { get; private set; }
+    
 
     public StickmanBuilder(ITime time, IPhysics2D physics2D)
     {
@@ -30,17 +33,12 @@ public sealed class StickmanBuilder : IBuilder<StickmanConfig>
     }
     public void SetConfig(StickmanConfig config)
     {
-        if (_isSetted)
-            return;
-
-        _stickmanConfig = config;
-        StickmanPosition = config.StickmanPosition;
-
-        _isSetted = true;
+        _stickmanConfig.Value = config;
+        _stickmanPosition.Value = config.StickmanPosition;
     }
     public StickmanBuilder SetLimbs()
     {
-        RagdollConfig ragdollConfig = _stickmanConfig.RagdollConfig;
+        RagdollConfig ragdollConfig = StickmanConfig.RagdollConfig;
 
         SetLimb(ragdollConfig.Head);
         SetLimb(ragdollConfig.Body);
@@ -71,7 +69,7 @@ public sealed class StickmanBuilder : IBuilder<StickmanConfig>
     }
     public StickmanBuilder SetMovement()
     {
-        MovementConfig movementConfig = _stickmanConfig.MovementConfig;
+        MovementConfig movementConfig = StickmanConfig.MovementConfig;
         MovementSettings movementSettings = movementConfig.Settings;
 
         AreaScannerConfig groundAreaScannerConfig = movementConfig.GroundAreaScannerConfig;
@@ -119,7 +117,7 @@ public sealed class StickmanBuilder : IBuilder<StickmanConfig>
     }
     public StickmanBuilder SetItemHolder(IVector2Provider cursorPosition, IRotor2Provider rotation = null)
     {
-        PickUpConfig pickUpConfig = _stickmanConfig.PickUpConfig;
+        PickUpConfig pickUpConfig = StickmanConfig.PickUpConfig;
         PickUpSettings pickUpSettings = pickUpConfig.Settings;
 
         AreaScannerSettings itemAreaScannerSettings = pickUpConfig.ItemAreaScannerSettings;

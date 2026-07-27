@@ -35,6 +35,13 @@ namespace UnityIceFebruary.HelpTools.AutoGenerator
 
             ProxyGeneratorDebugger.DebugInformationAboutProxyableTypes(proxyableTypes);
 
+            UnityMatchPair[] pairs = inGameTypes
+                .Select<Type, UnityMatchPair?>(type => type.IsUnityBaseEntity(out Type unityType) ? new(type, unityType) : null)
+                .OfType<UnityMatchPair>()
+                .ToArray();
+
+            Generate(typeof(StaticProxy), StaticProxy.UnityMatchObjectsName, StaticProxyCodeBuilder.GetStaticUnityMatchComponentCode(pairs));
+
             foreach (Type type in proxyableTypes)
             {
                 GeneratorAttribute generatorAttribute = type.GetAttribute<GeneratorAttribute>();
@@ -51,13 +58,6 @@ namespace UnityIceFebruary.HelpTools.AutoGenerator
                 if (attributeType != null)
                     Generate(attributeType, type.GetProxyName(), code);
             }
-
-            UnityMatchPair[] pairs = inGameTypes
-                .Select<Type, UnityMatchPair?>(type => type.IsUnityBaseEntity(out Type unityType) ? new(type, unityType) : null)
-                .OfType<UnityMatchPair>()
-                .ToArray();
-
-            Generate(typeof(StaticProxy), StaticProxy.UnityMatchObjectsName, StaticProxyCodeBuilder.GetStaticUnityMatchComponentCode(pairs));
 
             ProxyGeneratorDebugger.DebugSucces();
     
