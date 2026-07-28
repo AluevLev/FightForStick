@@ -32,7 +32,7 @@ public sealed class EntityItemHolderHandler : BaseEntity, IItemHolderHandler
             return;
 
         IPickable item = null;
-        IGameObject gameObject = null;
+        IGameObject gameObject;
 
         for (int index = 0; index < _pickUpChecker.Colliders2DActualLength; index++)
         {
@@ -55,13 +55,13 @@ public sealed class EntityItemHolderHandler : BaseEntity, IItemHolderHandler
 
         ItemInHand = item;
 
-        ItemInHand.PhysicsBalancer.SetTarget(_targetItemRotation);
+        ItemInHand.ItemHolder.PhysicsBalancer.SetTarget(_targetItemRotation);
     }
     public void Drop()
     {
         _entityItemHolder.DropItemInHand();
 
-        ItemInHand.PhysicsBalancer.ResetTarget();
+        ItemInHand.ItemHolder.PhysicsBalancer.ResetTarget();
 
         ItemInHand = null;
     }

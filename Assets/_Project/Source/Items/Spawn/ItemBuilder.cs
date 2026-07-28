@@ -29,7 +29,7 @@ public sealed class ItemBuilder : IBuilder<ItemConfig>
 
         _time.LaunchIFixedFrame(physicsBalancer);
 
-        Item item = new(itemConfig.Holders, physicsBalancer);
+        Item item = new(new(itemConfig.Holders, physicsBalancer));
 
         itemConfig.GameObject.MainComponent.Value = item;
 

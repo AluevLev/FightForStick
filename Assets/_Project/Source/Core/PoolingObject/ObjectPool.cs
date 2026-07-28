@@ -1,66 +1,53 @@
 using IceFebruary;
 using IceFebruary.Space;
+using IceFebruary.Time;
 
 public sealed class ObjectPool
 {
+    private readonly ITime _time;
     private readonly IObjectManager _objectManager;
     private readonly IGameObject _prefab;
+    private readonly float _objectLifeTime;
     
-    private readonly IGameObject[] _pool;
-    private readonly int _poolSize;
-
-    private int _lastObjectIndex;
-    public ObjectPool(IObjectManager objectManager, IGameObject prefab, int poolSize)
+    private readonly TemporaryObject[] _pool;
+    private int _currentObjectIndex;
+    public ObjectPool(ITime time, IObjectManager objectManager, IGameObject prefab, int poolSize, float objectLifeTime)
     {
+        _time = time;
         _objectManager = objectManager;
         _prefab = prefab;
+        _objectLifeTime = objectLifeTime;
 
-        _pool = new IGameObject[poolSize];
-        _poolSize = poolSize;
-        
-        for (int objectInPoolIndex = 0; objectInPoolIndex < _poolSize; objectInPoolIndex++)
-            _pool[objectInPoolIndex] = InstantiateObjectInPool();
+        _pool = new TemporaryObject[poolSize];
 
-        _lastObjectIndex = _poolSize - 1;
+        for (int index = 0; index < poolSize; index++)
+            _pool[index] = CreateObject();
     }
-    public IGameObject InstantiateObjectInPool()
+    public TemporaryObject CreateObject()
     {
         IGameObject objectInPool = _objectManager.Create(_prefab, Vector2.Zero, Rotor2.Default);
 
-        objectInPool.Enabled = false;
-
-        return objectInPool;
+        return new(objectInPool, new(_time, _objectLifeTime));
     }
-    public void Spawn(Vector2 position)
+    public IGameObject Spawn(Vector2 position) => Spawn(position, Rotor2.Default);
+    public IGameObject Spawn(Vector2 position, Rotor2 rotation)
     {
-        IGameObject target = null;
+        ref TemporaryObject temp = ref _pool[_currentObjectIndex];
 
-        for (int index = 0; index < _poolSize; index++)
-        {
-            int currentIndex = (_lastObjectIndex + index) % _poolSize;
-            IGameObject slot = _pool[currentIndex];
+        IGameObject created = temp.GameObject;
 
-            bool alive = slot.Exists();
+        if (!created.Exists())
+            temp = CreateObject();
 
-            if (!alive)
-                slot = InstantiateObjectInPool();
+        ITransform transform = created.Transform;
 
-            if (!alive || !slot.Enabled)
-            {
-                target = slot;
-                _lastObjectIndex = (currentIndex + 1) % _poolSize;
-                break;
-            }
-        }
+        transform.Position = position;
+        transform.Rotation = rotation;
 
-        if (!target.Exists())
-            return;
+        temp.Start();
 
-        target = _pool[_lastObjectIndex];
-        _lastObjectIndex = (_lastObjectIndex + 1) % _poolSize;
+        _currentObjectIndex = (_currentObjectIndex + 1) % _pool.Length;
 
-        target.Enabled = false;
-        target.Transform.Position = position;
-        target.Enabled = true;
+        return created;
     }
 }

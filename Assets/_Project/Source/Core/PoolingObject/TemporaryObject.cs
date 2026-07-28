@@ -1,11 +1,29 @@
 using IceFebruary;
+using IceFebruary.Time;
 
-public sealed class TemporaryObject
+public class TemporaryObject : BaseEntity, IFixedFrame
 {
-    private readonly IBaseEntity _togglable;
-    public TemporaryObject(IBaseEntity togglable)
-    {
-        _togglable = togglable;
-    }
-    public void Destroy() => _togglable.Enabled = false;
+    public IGameObject GameObject { get; private init; }
+	private readonly Timer _timer;
+	public TemporaryObject(IGameObject gameObject, Timer timer)
+	{
+		_timer = timer;
+
+		GameObject = gameObject;
+
+		gameObject.Enabled = false;
+	}
+	public void Start()
+	{
+		_timer.SetCooldown();
+
+		GameObject.Enabled = true;
+	}
+	public void OnFixedFrame()
+	{
+		if (_timer.InCoolDown || !GameObject.Active())
+			return;
+
+		GameObject.Enabled = false;
+	}
 }

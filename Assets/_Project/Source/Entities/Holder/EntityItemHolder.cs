@@ -10,7 +10,7 @@ public sealed class EntityItemHolder : IItemHolder
     }
     public void PickUpItem(IPickable item)
     {
-        Component<IHingeJoint2D>[] holders = item.Holders;
+        Component<IHingeJoint2D>[] holders = item.ItemHolder.Holders;
 
         int connections = Math.Min(_entityHands.Length, holders.Length);
 

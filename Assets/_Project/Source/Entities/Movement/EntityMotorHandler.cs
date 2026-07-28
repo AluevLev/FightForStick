@@ -3,25 +3,22 @@ using IceFebruary.Time;
 
 public sealed class EntityMotorHandler : BaseEntity, IMotorHandler, IFixedFrame
 {
-    private readonly ITime _time;
     private readonly IEntityMotor _entityMotor;
     private readonly IMovementCalculator _movementCalculator;
     private readonly IOverlapper _groundChecker;
+    private readonly Timer _hipsTimer;
     private readonly Trigger _jumpTrigger;
-    private readonly float _legsChangeRotationPeriod;
 
-    private float _startTime;
     private bool _hipsOpen;
     public float MovementDirection { get; set; }
     public bool IsSneaking { get; set; }
-    public EntityMotorHandler(ITime time, IEntityMotor entityMotor, IOverlapper groundChecker, IMovementCalculator movementCalculator, Trigger jumpTrigger, float legsChangeRotationPeriod)
+    public EntityMotorHandler(IEntityMotor entityMotor, IOverlapper groundChecker, IMovementCalculator movementCalculator, Timer hipsTimer, Trigger jumpTrigger)
     {
-        _time = time;
         _entityMotor = entityMotor;
         _groundChecker = groundChecker;
         _movementCalculator = movementCalculator;
+        _hipsTimer = hipsTimer;
         _jumpTrigger = jumpTrigger;
-        _legsChangeRotationPeriod = legsChangeRotationPeriod;
     }
     public void Jump() => _jumpTrigger.Charge();
     public void OnFixedFrame()
@@ -42,12 +39,10 @@ public sealed class EntityMotorHandler : BaseEntity, IMotorHandler, IFixedFrame
     }
     private void SetLegs()
     {
-        float currentTime = _time.CurrentTime;
-
         if (MovementDirection == 0f)
         {
             _hipsOpen = false;
-            _startTime = currentTime + _legsChangeRotationPeriod;
+            _hipsTimer.ResetCooldown();
             _entityMotor.ResetLegs();
 
             return;
@@ -58,10 +53,10 @@ public sealed class EntityMotorHandler : BaseEntity, IMotorHandler, IFixedFrame
         if (MovementDirection < 0f)
             _entityMotor.SetMaxShins();
 
-        if (currentTime - _startTime < _legsChangeRotationPeriod)
+        if (_hipsTimer.InCoolDown)
             return;
 
-        _startTime = currentTime;
+        _hipsTimer.SetCooldown();
         _hipsOpen = !_hipsOpen;
 
         if (_hipsOpen)

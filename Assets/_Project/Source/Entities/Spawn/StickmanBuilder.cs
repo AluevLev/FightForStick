@@ -24,8 +24,6 @@ public sealed class StickmanBuilder : IBuilder<StickmanConfig>
     private IPhysicsBalancer _hip2Balancer;
     private IPhysicsBalancer _shin2Balancer;
 
-    
-
     public StickmanBuilder(ITime time, IPhysics2D physics2D)
     {
         _time = time;
@@ -103,13 +101,16 @@ public sealed class StickmanBuilder : IBuilder<StickmanConfig>
 
         _time.LaunchIFixedFrame(trigger);
 
-        _motorHandler = new EntityMotorHandler(
+        Timer hipsTimer = new(
             _time,
+            movementSettings.LegsChangeRotationPeriod);
+
+        _motorHandler = new EntityMotorHandler(
             entityMotor,
             groundChecker,
             entityMovementCalculator,
-            trigger,
-            movementSettings.LegsChangeRotationPeriod);
+            hipsTimer,
+            trigger);
 
         _time.LaunchIFixedFrame(_motorHandler);
 
