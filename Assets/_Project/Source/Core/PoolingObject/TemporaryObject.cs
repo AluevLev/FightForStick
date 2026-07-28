@@ -1,7 +1,7 @@
 using IceFebruary;
 using IceFebruary.Time;
 
-public class TemporaryObject : BaseEntity, IFixedFrame
+public sealed class TemporaryObject : BaseEntity, IFixedFrame
 {
     public IGameObject GameObject { get; private init; }
 	private readonly Timer _timer;

@@ -1,6 +1,6 @@
 using IceFebruary.Space;
 
-public class ShootingDirectionCalculator : IShootingDirectionCalculator
+public sealed class ShootingDirectionCalculator : IShootingDirectionCalculator
 {
 	private readonly float _shootingForce;
 	public ShootingDirectionCalculator(float shootingForce)

@@ -1,7 +1,7 @@
 using IceFebruary;
 using IceFebruary.Animation;
 
-public class Saw : BaseEntity, IPickable, IUsable, IReleasable
+public sealed class Saw : BaseEntity, IPickable, IUsable, IReleasable
 {
     public ItemHolder ItemHolder { get; private init; }
     private readonly AnimatorBoolField _isUsing;
