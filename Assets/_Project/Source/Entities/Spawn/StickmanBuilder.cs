@@ -4,7 +4,7 @@ using IceFebruary.Space.Rotor2Provider;
 using IceFebruary.Space.Vector2Provider;
 using IceFebruary.Time;
 
-public sealed class StickmanBuilder : IBuilder<StickmanConfig>
+public sealed class StickmanBuilder : ISetUpper<StickmanConfig>
 {
     private readonly ITime _time;
     private readonly IPhysics2D _physics2D;
@@ -29,7 +29,7 @@ public sealed class StickmanBuilder : IBuilder<StickmanConfig>
         _time = time;
         _physics2D = physics2D;
     }
-    public void SetConfig(StickmanConfig config)
+    public void SetUp(StickmanConfig config)
     {
         _stickmanConfig.Value = config;
         _stickmanPosition.Value = config.StickmanPosition;

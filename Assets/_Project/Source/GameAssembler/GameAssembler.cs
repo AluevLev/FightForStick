@@ -1,3 +1,4 @@
+using IceFebruary.Space;
 using IceFebruary.Space.Vector2Provider;
 using UnityEngine;
 using UnityIceFebruary;
@@ -27,7 +28,7 @@ public sealed class GameAssembler : MonoBehaviour
             new MouseVector2Provider(playerInput),
             gameAssemblerConfig.Camera);
 
-        Factory<StickmanBuilder, StickmanConfig> stickmanFactory = new(_objectManager, () => new(_time, _physics2D));
+        BuilderFactory<StickmanBuilder, StickmanConfig> stickmanFactory = new(_objectManager, () => new(_time, _physics2D));
 
         SpawnList spawnList = gameAssemblerConfig.SpawnList;
         SpawnSettings playerSpawnSettings = spawnList.PlayerSpawnsSetting;
@@ -35,7 +36,8 @@ public sealed class GameAssembler : MonoBehaviour
         StickmanBuilder playerStickmanBuilder = stickmanFactory
             .Create(
             playerSpawnSettings.GameObject,
-            playerSpawnSettings.Position)
+            playerSpawnSettings.Position,
+            Rotor2.Default)
             .SetLimbs()
             .SetMovement()
             .SetItemHolder(playerCursorPosition)
@@ -51,7 +53,8 @@ public sealed class GameAssembler : MonoBehaviour
 
             StickmanBuilder enemyStickmanBuilder = stickmanFactory.Create(
                 enemySpawnSettings.GameObject,
-                enemySpawnSettings.Position);
+                enemySpawnSettings.Position,
+                Rotor2.Default);
 
             EnemyInputProvider enemyInput = new(
                 enemyStickmanBuilder.StickmanPosition,
@@ -68,7 +71,7 @@ public sealed class GameAssembler : MonoBehaviour
                 .SetInput(enemyInput);
         }
 
-        Factory<ItemBuilder, ItemConfig> itemFactory = new(_objectManager, () => new(_time));
+        Factory<ItemBuilder, ItemConfig> itemFactory = new(_objectManager, new(_time));
 
         SpawnSettings[] itemsSpawnList = spawnList.ItemsSpawnList;
 
@@ -78,8 +81,8 @@ public sealed class GameAssembler : MonoBehaviour
 
             itemFactory.Create(
                 itemSpawnSettings.GameObject,
-                itemSpawnSettings.Position)
-                .SetUp();
+                itemSpawnSettings.Position,
+                Rotor2.Default);
         }
     }
     private void Update() => _time.DoFrame(Time.deltaTime);

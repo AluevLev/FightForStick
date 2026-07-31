@@ -1,27 +1,24 @@
 using IceFebruary;
 using IceFebruary.Space;
-using System;
 
-public sealed class Factory<TBuilder, TConfig> where TBuilder : IBuilder<TConfig> where TConfig : struct
+public sealed class Factory<TSetUpper, TConfig> : BaseEntity, IObjectManager where TSetUpper : ISetUpper<TConfig> where TConfig : struct
 {
     private readonly IObjectManager _objectManager;
-    private readonly Func<TBuilder> _builderFactory;
-    public Factory(IObjectManager objectManager, Func<TBuilder> builderFactory)
+    private readonly TSetUpper _builderFactory;
+    public Factory(IObjectManager objectManager, TSetUpper builderFactory)
     {
         _objectManager = objectManager;
         _builderFactory = builderFactory;
     }
-	public TBuilder Create(IGameObject prefab, Vector2 position)
-	{
-        bool success = _objectManager.Create(prefab, position, Rotor2.Default).TryGetInstantiateInfo(out TConfig config);
+    public IGameObject Create(IGameObject prefab, Vector2 position, Rotor2 rotation)
+    {
+        IGameObject created = _objectManager.Create(prefab, position, rotation);
 
-        if (!success)
-            return default;
+        if (!created.TryGetInstantiateInfo(out TConfig config))
+            return null;
 
-        TBuilder builder = _builderFactory.Invoke();
+        _builderFactory.SetUp(config);
 
-        builder.SetConfig(config);
-
-        return builder;
+        return created;
     }
 }

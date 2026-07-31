@@ -1,23 +1,15 @@
-using IceFebruary;
 using IceFebruary.Time;
 
-public sealed class ItemBuilder : IBuilder<ItemConfig>
+public sealed class ItemBuilder : ISetUpper<ItemConfig>
 {
     private readonly ITime _time;
-    private readonly SetOnce<ItemConfig> _itemConfig = new();
     public ItemBuilder(ITime time)
     {
         _time = time;
     }
-    public void SetConfig(ItemConfig config)
+    public void SetUp(ItemConfig config)
     {
-        _itemConfig.Value = config;
-    }
-    public ItemBuilder SetUp()
-    {
-        ItemConfig itemConfig = _itemConfig.Value;
-
-        PhysicsBalancerConfig physicsBalancerConfig = itemConfig.PhysicsLimbConfig;
+        PhysicsBalancerConfig physicsBalancerConfig = config.PhysicsLimbConfig;
         PhysicsBalancerSettings settings = physicsBalancerConfig.Settings;
 
         PhysicsBalancerCalculator physicsBalancerCalculator = new(settings.Force);
@@ -29,10 +21,8 @@ public sealed class ItemBuilder : IBuilder<ItemConfig>
 
         _time.LaunchIFixedFrame(physicsBalancer);
 
-        Item item = new(new(itemConfig.Holders, physicsBalancer));
+        Item item = new(new(config.Holders, physicsBalancer));
 
-        itemConfig.GameObject.MainComponent.Value = item;
-
-        return this;
+        config.GameObject.MainComponent.Value = item;
     }
 }

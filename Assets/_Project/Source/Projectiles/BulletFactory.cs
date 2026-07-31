@@ -1,0 +1,14 @@
+using IceFebruary;
+
+public class BulletFactory : ISetUpper<BulletConfig>
+{
+	private readonly IObjectManager _objectManager;
+	public BulletFactory(IObjectManager objectManager)
+	{
+		_objectManager = objectManager;
+	}
+	public void SetUp(BulletConfig config)
+	{
+        config.GameObject.MainComponent.Value = config.Rigidbody2D;
+    }
+}
