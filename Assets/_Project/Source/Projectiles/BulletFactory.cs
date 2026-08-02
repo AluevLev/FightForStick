@@ -1,4 +1,5 @@
 using IceFebruary;
+using IceFebruary.Factories;
 
 public sealed class BulletFactory : ISettableUp<BulletConfig>
 {

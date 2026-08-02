@@ -1,3 +1,5 @@
+using IceFebruary.Factories;
+
 public sealed class ItemSetterUp : ISettableUp<ItemConfig>
 {
     private readonly ISettableUp<ItemSettings, ItemHolder> _holderSettableUp;

@@ -3,6 +3,7 @@ using IceFebruary.Physics;
 using IceFebruary.Space;
 using IceFebruary.Space.Vector2Provider;
 using IceFebruary.Time;
+using IceFebruary.Factories;
 
 public sealed class GameAssembler
 {
