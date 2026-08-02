@@ -2,7 +2,7 @@ using IceFebruary;
 using IceFebruary.Space;
 using System;
 
-public sealed class BuilderFactory<TBuilder, TConfig> : BaseEntity where TBuilder : ISetUpper<TConfig> where TConfig : struct
+public sealed class BuilderFactory<TBuilder, TConfig> : BaseEntity where TBuilder : ISettableUp<TConfig> where TConfig : struct
 {
     private readonly IObjectManager _objectManager;
     private readonly Func<TBuilder> _builderFactory;

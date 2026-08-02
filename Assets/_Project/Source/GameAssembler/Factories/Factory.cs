@@ -1,11 +1,11 @@
 using IceFebruary;
 using IceFebruary.Space;
 
-public sealed class Factory<TSetUpper, TConfig> : BaseEntity, IObjectManager where TSetUpper : ISetUpper<TConfig> where TConfig : struct
+public sealed class Factory<TSettableUp, TConfig> : BaseEntity, IObjectManager where TSettableUp : ISettableUp<TConfig> where TConfig : struct
 {
     private readonly IObjectManager _objectManager;
-    private readonly TSetUpper _builderFactory;
-    public Factory(IObjectManager objectManager, TSetUpper builderFactory)
+    private readonly TSettableUp _builderFactory;
+    public Factory(IObjectManager objectManager, TSettableUp builderFactory)
     {
         _objectManager = objectManager;
         _builderFactory = builderFactory;

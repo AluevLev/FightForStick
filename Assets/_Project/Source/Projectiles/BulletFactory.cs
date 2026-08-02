@@ -1,6 +1,6 @@
 using IceFebruary;
 
-public class BulletFactory : ISetUpper<BulletConfig>
+public sealed class BulletFactory : ISettableUp<BulletConfig>
 {
 	private readonly IObjectManager _objectManager;
 	public BulletFactory(IObjectManager objectManager)

@@ -1,0 +1,47 @@
+using IceFebruary;
+using IceFebruary.Time;
+
+public sealed class ShootingSetterUp : ISettableUp<ShootingConfig>
+{
+    private readonly ITime _time;
+    private readonly IObjectManager _objectManager;
+    private readonly ISettableUp<ItemSettings, ItemHolder> _holderSettableUp;
+    public ShootingSetterUp(ITime time, IObjectManager objectManager, ISettableUp<ItemSettings, ItemHolder> holderSettableUp)
+    {
+        _time = time;
+        _objectManager = objectManager;
+        _holderSettableUp = holderSettableUp;
+    }
+    public void SetUp(ShootingConfig config)
+    {
+        ItemSettings itemSettings = config.ItemSettings;
+        ItemHolder itemHolder = _holderSettableUp.SetUp(itemSettings);
+
+        ShootingSettings settings = config.Settings;
+        ProjectileSettings projectileSettings = settings.ProjectileSettings;
+
+        ShootingDirectionCalculator shootingDirectionCalculator = new(settings.ShootingForce);
+        Factory<BulletFactory, BulletConfig> bulletFactory = new(_objectManager, new(_objectManager));
+
+        Timer timer = new(
+            _time,
+            settings.Cooldown);
+
+        ObjectPool objectPool = new(
+            _time,
+            bulletFactory,
+            settings.BulletsCount,
+            projectileSettings.Prefab,
+            projectileSettings.ObjectLifetime);
+
+        Shooting shooting = new(
+            itemHolder,
+            shootingDirectionCalculator,
+            config.ShootDirection,
+            config.ShootPoint,
+            objectPool,
+            timer);
+
+        itemSettings.GameObject.MainComponent.Value = shooting;
+    }
+}
