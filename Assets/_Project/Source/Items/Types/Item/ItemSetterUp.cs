@@ -7,5 +7,10 @@ public sealed class ItemSetterUp : ISettableUp<ItemConfig>
     {
         _holderSettableUp = holderSettableUp;
     }
-    public void SetUp(ItemConfig config) => config.settings.GameObject.MainComponent.Value = new Item(_holderSettableUp.SetUp(config.settings));
+    public void SetUp(ItemConfig config)
+    {
+        ItemSettings itemHolder = config.Settings;
+
+        itemHolder.GameObject.MainComponent.Value = new Item(_holderSettableUp.SetUp(itemHolder));
+    }
 }

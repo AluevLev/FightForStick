@@ -8,10 +8,10 @@ namespace IceFebruary.Space.Vector2Provider
         private readonly IVector2Provider _second;
 
         [FieldProxy(typeof(IVector2Provider))]
-        public SumVector2Provider(IVector2Provider minuend, IVector2Provider subtrahend)
+        public SumVector2Provider(IVector2Provider first, IVector2Provider second)
         {
-            _first = minuend;
-            _second = subtrahend;
+            _first = first;
+            _second = second;
         }
         public bool TryGet(out Vector2 point)
         {
