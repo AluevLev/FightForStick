@@ -9,5 +9,5 @@ public interface IInputProvider : IBaseEntity
 
     bool IsPickingUpItem { get; }
     bool IsDroppingItem { get; }
-    bool IsAttacking { get; }
+    bool IsUsing { get; }
 }

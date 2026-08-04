@@ -12,6 +12,8 @@ public sealed class EntityItemHolderHandler : BaseEntity, IItemHolderHandler
     private readonly IRotor2Provider _targetItemRotation;
     private readonly float _sqrMaxPickUpDistance;
     public IPickable ItemInHand { get; private set; }
+    private IUsable _usable;
+    private IReleasable _releasable;
     public EntityItemHolderHandler(IOverlapper pickUpChecker, IItemHolder entityItemHolder, IVector2Provider stickmanPosition, IVector2Provider cursorPosition, IRotor2Provider targetItemRotation, float sqrMaxPickUpDistance)
     {
         _pickUpChecker = pickUpChecker;
@@ -55,7 +57,20 @@ public sealed class EntityItemHolderHandler : BaseEntity, IItemHolderHandler
 
         ItemInHand = item;
 
+        _usable = ItemInHand as IUsable;
+        _releasable = ItemInHand as IReleasable;
+
         ItemInHand.ItemHolder.PhysicsBalancer.SetTarget(_targetItemRotation);
+    }
+    public void Use()
+    {
+        if (_usable.Exists())
+            _usable.Use();
+    }
+    public void Release()
+    {
+        if (_releasable.Exists())
+            _releasable.Release();
     }
     public void Drop()
     {
@@ -64,5 +79,8 @@ public sealed class EntityItemHolderHandler : BaseEntity, IItemHolderHandler
         ItemInHand.ItemHolder.PhysicsBalancer.ResetTarget();
 
         ItemInHand = null;
+
+        _usable = null;
+        _releasable = null;
     }
 }

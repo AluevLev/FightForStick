@@ -21,7 +21,7 @@ public sealed class ShootingSetterUp : ISettableUp<ShootingConfig>
         ShootingSettings settings = config.Settings;
         ProjectileSettings projectileSettings = settings.ProjectileSettings;
 
-        ShootingDirectionCalculator shootingDirectionCalculator = new(settings.ShootingForce);
+        ShootingCalculator shootingDirectionCalculator = new(settings.ShootingForce, settings.RecoilForce);
         Factory<BulletFactory, BulletConfig> bulletFactory = new(_objectManager, new(_objectManager));
 
         Timer timer = new(
@@ -37,6 +37,7 @@ public sealed class ShootingSetterUp : ISettableUp<ShootingConfig>
 
         Shooting shooting = new(
             itemHolder,
+            config.Rigidbody2D,
             shootingDirectionCalculator,
             config.ShootDirection,
             config.ShootPoint,

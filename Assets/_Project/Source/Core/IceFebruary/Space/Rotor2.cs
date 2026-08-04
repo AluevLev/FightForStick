@@ -14,12 +14,19 @@ namespace IceFebruary.Space
             Scalar = scalar;
             XY = xy;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Rotor2(float angle, bool radian)
         {
             float halfAngle = (radian ? angle : angle * Math.Deg2Rad) * 0.5f;
 
             Scalar = Math.NimbleCos(halfAngle);
             XY = Math.NimbleSin(halfAngle);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Rotor2(Vector2 v)
+        {
+            Scalar = Math.Sqrt(0.5f + v.X * 0.5f);
+            XY = v.Y / (2.0f * Scalar);
         }
         public readonly Rotor2 Inverse
         {

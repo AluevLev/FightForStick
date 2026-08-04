@@ -14,6 +14,10 @@ public sealed class EntityItemHolderController : BaseEntity, IFrame
     {
         if (_inputProvider.IsPickingUpItem)
             _playerHolderHandler.PickUp();
+        if (_inputProvider.IsUsing)
+            _playerHolderHandler.Use();
+        else
+            _playerHolderHandler.Release();
         if (_inputProvider.IsDroppingItem)
             _playerHolderHandler.Drop();
     }

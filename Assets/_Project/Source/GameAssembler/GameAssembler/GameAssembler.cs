@@ -82,15 +82,17 @@ public sealed class GameAssembler
 
         ItemHolderSetterUp itemHolderSetterUp = new(Time);
 
-        ItemSetterUp itemSetterUp = new(itemHolderSetterUp);
-        Factory<ItemSetterUp, ItemConfig> itemFactory = new(_objectManager, itemSetterUp);
+        Factory<ItemSetterUp, ItemConfig> itemFactory = new(_objectManager, new(itemHolderSetterUp));
 
         CreateByList(spawnList.ItemsSpawnList, itemFactory);
 
-        ShootingSetterUp shootingSetterUp = new(Time, _objectManager, itemHolderSetterUp);
-        Factory<ShootingSetterUp, ShootingConfig> shootingFactory = new(_objectManager, shootingSetterUp);
+        Factory<ShootingSetterUp, ShootingConfig> shootingFactory = new(_objectManager, new(Time, _objectManager, itemHolderSetterUp));
 
-        CreateByList(spawnList.ShootingSpawnList, itemFactory);
+        CreateByList(spawnList.ShootingsSpawnList, shootingFactory);
+
+        Factory<SawSetterUp, SawConfig> sawFactory = new(_objectManager, new(itemHolderSetterUp));
+
+        CreateByList(spawnList.SawsSpawnList, sawFactory);
     }
     private void CreateByList<TSettableUp, TConfig>(SpawnSettings[] spawnList, Factory<TSettableUp, TConfig> factory) where TSettableUp : ISettableUp<TConfig> where TConfig : struct
     {

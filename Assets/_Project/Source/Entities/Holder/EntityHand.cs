@@ -19,6 +19,9 @@ public sealed class EntityHand : BaseEntity, IHand
     }
     public void Disconnect()
     {
+        if (!_holderHingeJoint2D.Exists())
+            return;
+
         _holderHingeJoint2D.Enabled = false;
         _holderHingeJoint2D.ConnectedBody = null;
         _holderHingeJoint2D = null;

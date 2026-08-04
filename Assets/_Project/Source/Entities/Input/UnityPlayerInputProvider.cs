@@ -13,7 +13,7 @@ public sealed class UnityPlayerInputProvider : BaseEntity, IInputProvider, IFram
 
     public bool IsPickingUpItem { get; private set; }
     public bool IsDroppingItem { get; private set; }
-    public bool IsAttacking { get; private set; }
+    public bool IsUsing { get; private set; }
     public UnityPlayerInputProvider(GameInputAction controls)
     {
         _controls = controls;
@@ -27,7 +27,7 @@ public sealed class UnityPlayerInputProvider : BaseEntity, IInputProvider, IFram
         VerticalMovement = _playerActions.VerticalMovement.ReadValue<float>();
         MousePosition = _playerActions.LookPositionOnScreen.ReadValue<UnityEngine.Vector2>().ToIce();
 
-        IsAttacking = _playerActions.Attack.IsPressed();
+        IsUsing = _playerActions.Attack.IsPressed();
 
         IsPickingUpItem = _playerActions.PickUp.WasPressedThisFrame();
         IsDroppingItem = _playerActions.Drop.WasPressedThisFrame();
