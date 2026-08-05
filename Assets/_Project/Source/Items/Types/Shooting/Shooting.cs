@@ -34,6 +34,7 @@ public sealed class Shooting : BaseEntity, IPickable, IUsable
             return;
 
         IGameObject bullet = _bulletsPool.Spawn(shootPoint, new(shootDirection));
+        bullet.Layer = ItemHolder.GameObject.Layer;
 
         if (bullet.MainComponent.Value is IRigidbody2D bulletRigidbody2D)
         {

@@ -147,7 +147,8 @@ public sealed class StickmanBuilder : ISettableUp<StickmanConfig>
             StickmanPosition,
             cursorPosition,
             targetItemRotation,
-            pickUpSettings.MaxSqrPickUpDistance);
+            pickUpSettings.MaxSqrPickUpDistance,
+            pickUpSettings.EntityLayer);
 
         return this;
     }

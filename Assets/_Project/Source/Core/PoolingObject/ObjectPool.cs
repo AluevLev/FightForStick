@@ -27,7 +27,11 @@ public sealed class ObjectPool
     {
         IGameObject objectInPool = _objectManager.Create(_prefab, Vector2.Zero, Rotor2.Default);
 
-        return new(objectInPool, new(_time, _objectLifeTime));
+        TemporaryObject temporaryObject = new(objectInPool, new(_time, _objectLifeTime));
+
+        _time.LaunchIFixedFrame(temporaryObject);
+
+        return temporaryObject;
     }
     public IGameObject Spawn(Vector2 position) => Spawn(position, Rotor2.Default);
     public IGameObject Spawn(Vector2 position, Rotor2 rotation)

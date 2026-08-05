@@ -6,8 +6,8 @@ namespace IceFebruary
     public interface IGameObject : IBaseEntity
     {
         ITransform Transform { get; }
+        int Layer { get; set; }
         SetOnce<IBaseEntity> MainComponent { get; }
-        bool TryGetComponent<T>(out T component) where T : class, IBaseEntity;
         public bool TryGetInstantiateInfo<T>(out T content) where T : struct;
     }
 }

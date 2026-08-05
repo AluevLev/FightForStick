@@ -11,10 +11,14 @@ public sealed class EntityItemHolderHandler : BaseEntity, IItemHolderHandler
     private readonly IVector2Provider _cursorPosition;
     private readonly IRotor2Provider _targetItemRotation;
     private readonly float _sqrMaxPickUpDistance;
-    public IPickable ItemInHand { get; private set; }
-    private IUsable _usable;
-    private IReleasable _releasable;
-    public EntityItemHolderHandler(IOverlapper pickUpChecker, IItemHolder entityItemHolder, IVector2Provider stickmanPosition, IVector2Provider cursorPosition, IRotor2Provider targetItemRotation, float sqrMaxPickUpDistance)
+    private readonly int _entityLayer;
+    public IPickable Item { get; private set; }
+    private ItemHolder _itemHolder;
+    private IUsable _itemUsable;
+    private IReleasable _itemReleasable;
+    private int _itemLayer;
+    private bool _isItemPickedUp;
+    public EntityItemHolderHandler(IOverlapper pickUpChecker, IItemHolder entityItemHolder, IVector2Provider stickmanPosition, IVector2Provider cursorPosition, IRotor2Provider targetItemRotation, float sqrMaxPickUpDistance, int entityLayer)
     {
         _pickUpChecker = pickUpChecker;
         _entityItemHolder = entityItemHolder;
@@ -22,6 +26,7 @@ public sealed class EntityItemHolderHandler : BaseEntity, IItemHolderHandler
         _cursorPosition = cursorPosition;
         _targetItemRotation = targetItemRotation;
         _sqrMaxPickUpDistance = sqrMaxPickUpDistance;
+        _entityLayer = entityLayer;
     }
     public void PickUp()
     {
@@ -34,13 +39,13 @@ public sealed class EntityItemHolderHandler : BaseEntity, IItemHolderHandler
             return;
 
         IPickable item = null;
-        IGameObject gameObject;
+        IGameObject itemGameObject = null;
 
         for (int index = 0; index < _pickUpChecker.Colliders2DActualLength; index++)
         {
-            gameObject = _pickUpChecker.Colliders2D[index].GameObject;
+            itemGameObject = _pickUpChecker.Colliders2D[index].GameObject;
 
-            if (gameObject.MainComponent.Value is IPickable pickable)
+            if (itemGameObject.MainComponent.Value is IPickable pickable)
             {
                 item = pickable;
                 break;
@@ -50,37 +55,52 @@ public sealed class EntityItemHolderHandler : BaseEntity, IItemHolderHandler
         if (!item.Exists())
             return;
 
-        if (ItemInHand.Exists())
+        _isItemPickedUp = true;
+
+        if (Item.Exists())
             Drop();
 
         _entityItemHolder.PickUpItem(item);
 
-        ItemInHand = item;
+        Item = item;
 
-        _usable = ItemInHand as IUsable;
-        _releasable = ItemInHand as IReleasable;
+        _itemHolder = Item.ItemHolder;
+        _itemUsable = Item as IUsable;
+        _itemReleasable = Item as IReleasable;
+        _itemLayer = _itemHolder.GameObject.Layer;
 
-        ItemInHand.ItemHolder.PhysicsBalancer.SetTarget(_targetItemRotation);
+        _itemHolder.GameObject.Layer = _entityLayer;
+
+        _itemHolder.PhysicsBalancer.SetTarget(_targetItemRotation);
     }
     public void Use()
     {
-        if (_usable.Exists())
-            _usable.Use();
+        if (_itemUsable.Exists())
+            _itemUsable.Use();
     }
     public void Release()
     {
-        if (_releasable.Exists())
-            _releasable.Release();
+        if (_itemReleasable.Exists())
+            _itemReleasable.Release();
     }
     public void Drop()
     {
+        if (!_isItemPickedUp)
+            return;
+
+        _isItemPickedUp = false;
+
         _entityItemHolder.DropItemInHand();
 
-        ItemInHand.ItemHolder.PhysicsBalancer.ResetTarget();
+        _itemHolder.PhysicsBalancer.ResetTarget();
 
-        ItemInHand = null;
+        _itemHolder.GameObject.Layer = _itemLayer;
 
-        _usable = null;
-        _releasable = null;
+        Item = null;
+
+        _itemHolder = default;
+        _itemUsable = null;
+        _itemReleasable = null;
+        _itemLayer = 0;
     }
 }

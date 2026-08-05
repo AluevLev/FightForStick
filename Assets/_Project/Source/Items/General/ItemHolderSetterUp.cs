@@ -22,6 +22,6 @@ public sealed class ItemHolderSetterUp : ISettableUp<ItemSettings, ItemHolder>
 
         _time.LaunchIFixedFrame(physicsBalancer);
 
-        return new(config.Holders, physicsBalancer);
+        return new(config.GameObject, config.Holders, physicsBalancer);
     }
 }

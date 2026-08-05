@@ -22,7 +22,7 @@ public sealed class EnemyInputProvider : BaseEntity, IInputProvider, IFrame
     public bool IsPickingUpItem { get; private set; }
     public void OnFrame(float frameLength)
     {
-        bool itemInHandExists = EnemyHolderHandler.TryGetValue(out IItemHolderHandler itemHolderHandler) && itemHolderHandler.ItemInHand.Exists();
+        bool itemInHandExists = EnemyHolderHandler.TryGetValue(out IItemHolderHandler itemHolderHandler) && itemHolderHandler.Item.Exists();
 
         Vector2 enemyPosition = default;
         Vector2 targetPosition = default;
