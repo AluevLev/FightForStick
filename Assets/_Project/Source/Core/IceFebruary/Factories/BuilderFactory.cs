@@ -4,7 +4,7 @@ namespace IceFebruary.Factories
     using IceFebruary.Space;
     using System;
 
-    public sealed class BuilderFactory<TBuilder, TConfig> : BaseEntity where TBuilder : ISettableUp<TConfig> where TConfig : struct
+    public sealed class BuilderFactory<TBuilder, TConfig> : BaseEntity where TBuilder : ISettableUp<TConfig>
     {
         private readonly IObjectManager _objectManager;
         private readonly Func<TBuilder> _builderFactory;
@@ -15,7 +15,9 @@ namespace IceFebruary.Factories
         }
         public TBuilder Create(IGameObject prefab, Vector2 position, Rotor2 rotation)
         {
-            if (!_objectManager.Create(prefab, position, rotation).TryGetInstantiateInfo(out TConfig config))
+            IRootConfig rootConfig = _objectManager.Create(prefab, position, rotation).GetRootConfig();
+
+            if (rootConfig == null || rootConfig is not TConfig config)
                 return default;
 
             TBuilder builder = _builderFactory.Invoke();

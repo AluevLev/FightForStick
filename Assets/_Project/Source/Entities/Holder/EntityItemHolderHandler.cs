@@ -55,10 +55,10 @@ public sealed class EntityItemHolderHandler : BaseEntity, IItemHolderHandler
         if (!item.Exists())
             return;
 
-        _isItemPickedUp = true;
-
         if (Item.Exists())
             Drop();
+
+        _isItemPickedUp = true;
 
         _entityItemHolder.PickUpItem(item);
 

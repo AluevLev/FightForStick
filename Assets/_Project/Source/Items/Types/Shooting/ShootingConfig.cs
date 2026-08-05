@@ -1,8 +1,9 @@
-using IceFebruary.Space.Vector2Provider;
-using IceFebruary.Proxy;
+using IceFebruary;
 using IceFebruary.Physics;
+using IceFebruary.Proxy;
+using IceFebruary.Space.Vector2Provider;
 
-public readonly struct ShootingConfig
+public sealed class ShootingConfig : IRootConfig
 {
     public ItemSettings ItemSettings { get; private init; }
     public IRigidbody2D Rigidbody2D { get; private init; }

@@ -1,6 +1,7 @@
+using IceFebruary;
 using IceFebruary.Proxy;
 
-public readonly struct ItemConfig
+public sealed class ItemConfig : IRootConfig
 {
 	public ItemSettings Settings { get; private init; }
 

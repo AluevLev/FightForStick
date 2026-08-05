@@ -151,7 +151,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Weapons_1
+      name: Cleaver
       rect:
         serializedVersion: 2
         x: 114
@@ -478,6 +478,7 @@ TextureImporter:
       Bullet: -1546494956
       ChainSaw1: -1677114134
       ChainSaw2: 565830172
+      Cleaver: -761887118410055393
       DesertEagle: -1323339027
       Hammer: 975724367
       Katana: 5601323976189978565
@@ -486,7 +487,6 @@ TextureImporter:
       Saw: -10228727
       Shield: -539037286
       Uzi: 63155610
-      Weapons_1: -761887118410055393
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

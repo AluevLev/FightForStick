@@ -24,9 +24,13 @@ public sealed class ShootingSetterUp : ISettableUp<ShootingConfig>
         ShootingCalculator shootingDirectionCalculator = new(settings.ShootingForce, settings.RecoilForce);
         Factory<BulletFactory, BulletConfig> bulletFactory = new(_objectManager, new(_objectManager));
 
-        Timer timer = new(
+        Timer cooldown = new(
             _time,
             settings.Cooldown);
+
+        Timer reloadCooldown = new(
+            _time,
+            settings.ReloadCooldown);
 
         ObjectPool objectPool = new(
             _time,
@@ -42,7 +46,9 @@ public sealed class ShootingSetterUp : ISettableUp<ShootingConfig>
             config.ShootDirection,
             config.ShootPoint,
             objectPool,
-            timer);
+            cooldown,
+            reloadCooldown,
+            settings.BulletsCount);
 
         itemSettings.GameObject.MainComponent.Value = shooting;
     }

@@ -2,7 +2,7 @@ using IceFebruary;
 using IceFebruary.Physics;
 using IceFebruary.Proxy;
 
-public readonly struct BulletConfig
+public sealed class BulletConfig : IRootConfig
 {
 	public IGameObject GameObject { get; private init; }
 	public IRigidbody2D Rigidbody2D { get; private init; }

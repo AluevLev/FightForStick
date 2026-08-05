@@ -7,6 +7,7 @@ namespace UnityIceFebruary.HelpTools.AutoGenerator
     using System.Text;
     using System.Collections.Generic;
     using UnityIceFebruary.HelpTools.Debuggers;
+    using IceFebruary;
 
     public static class ProxyCodeBuilder
     {
@@ -63,8 +64,8 @@ namespace UnityIceFebruary.HelpTools.AutoGenerator
         {
             StringBuilder stringBuilder = new();
 
-            stringBuilder.AppendLine($"public sealed class {type.GetProxyName()} : UnityIceFebruary.UnityInstantiateInfo<{type.FullName}>");
-            stringBuilder.SetAverageBody(type, null, "override");
+            stringBuilder.AppendLine($"public sealed class {type.GetProxyName()} : UnityIceFebruary.UnityInfo");
+            stringBuilder.SetAverageBody(type, typeof(IRootConfig), "override");
 
             return stringBuilder.ToString();
         }

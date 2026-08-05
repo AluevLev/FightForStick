@@ -94,7 +94,7 @@ public sealed class GameAssembler
 
         CreateByList(spawnList.SawsSpawnList, sawFactory);
     }
-    private void CreateByList<TSettableUp, TConfig>(SpawnSettings[] spawnList, Factory<TSettableUp, TConfig> factory) where TSettableUp : ISettableUp<TConfig> where TConfig : struct
+    private void CreateByList<TSettableUp, TConfig>(SpawnSettings[] spawnList, Factory<TSettableUp, TConfig> factory) where TSettableUp : ISettableUp<TConfig>
     {
         for (int index = 0; index < spawnList.Length; index++)
         {

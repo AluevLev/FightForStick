@@ -1,7 +1,8 @@
+using IceFebruary;
 using IceFebruary.Animation;
 using IceFebruary.Proxy;
 
-public readonly struct SawConfig
+public sealed class SawConfig : IRootConfig
 {
 	public ItemSettings ItemSettings { get; private init; }
 	public AnimatorBoolField AnimatorField { get; private init; }

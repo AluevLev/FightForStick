@@ -13,32 +13,22 @@ namespace UnityIceFebruary
             set => Original.layer = value;
         }
         public SetOnce<IBaseEntity> MainComponent { get; private init; } = new();
-        private bool _instantiateInfoGetted;
 
         [FieldProxy(typeof(IGameObject))]
         public UnityGameObject(GameObject gameObject) : base(gameObject)
         {
             Transform = (ITransform)UnityMethods.Upsert(gameObject.transform);
         }
-        public bool TryGetInstantiateInfo<T>(out T content) where T : struct
+        public IRootConfig GetRootConfig()
         {
-            if (_instantiateInfoGetted)
-            {
-                content = default;
-                return false;
-            }
+            if (!Original.TryGetComponent(out UnityInfo info))
+                return null;
 
-            _instantiateInfoGetted = true;
+            IRootConfig rootConfig = info.ToPoco();
 
-            if (Original.TryGetComponent(out UnityInstantiateInfo<T> context))
-            {
-                content = context.ToPoco();
-                Object.Destroy(context);
-                return true;
-            }
+            Object.Destroy(info);
 
-            content = default;
-            return false;
+            return rootConfig;
         }
     }
 }

@@ -1,7 +1,8 @@
+using IceFebruary;
 using IceFebruary.Proxy;
 using IceFebruary.Space.Vector2Provider;
 
-public readonly struct StickmanConfig
+public sealed class StickmanConfig : IRootConfig
 {
     public IVector2Provider StickmanPosition { get; private init; }
     public RagdollConfig RagdollConfig { get; private init; }

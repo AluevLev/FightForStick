@@ -15,7 +15,10 @@ public sealed class Shooting : BaseEntity, IPickable, IUsable
     private readonly IVector2Provider _shootPoint;
     private readonly ObjectPool _bulletsPool;
     private readonly Timer _cooldown;
-    public Shooting(ItemHolder itemHolder, IRigidbody2D rigidbody2D, IShootingCalculator shootingDirectionCalculator, IVector2Provider shootDirection, IVector2Provider shootPoint, ObjectPool bulletsPool, Timer cooldown)
+    private readonly Timer _reloadCooldown;
+    private readonly int _maxBulletsCount;
+    private int _bullets;
+    public Shooting(ItemHolder itemHolder, IRigidbody2D rigidbody2D, IShootingCalculator shootingDirectionCalculator, IVector2Provider shootDirection, IVector2Provider shootPoint, ObjectPool bulletsPool, Timer cooldown, Timer reloadCooldown, int maxBulletsCount)
     {
         ItemHolder = itemHolder;
 
@@ -25,13 +28,24 @@ public sealed class Shooting : BaseEntity, IPickable, IUsable
         _shootPoint = shootPoint;
         _bulletsPool = bulletsPool;
         _cooldown = cooldown;
+        _reloadCooldown = reloadCooldown;
+        _maxBulletsCount = maxBulletsCount;
     }
     public void Use()
     {
         if (_cooldown.InCoolDown ||
+            _reloadCooldown.InCoolDown ||
             !_shootPoint.TryGetSafety(out Vector2 shootPoint) ||
             !_shootDirection.TryGetSafety(out Vector2 shootDirection))
             return;
+
+        _bullets++;
+
+        if (_bullets >= _maxBulletsCount)
+        {
+            _reloadCooldown.SetCooldown();
+            _bullets = 0;
+        }
 
         IGameObject bullet = _bulletsPool.Spawn(shootPoint, new(shootDirection));
         bullet.Layer = ItemHolder.GameObject.Layer;
