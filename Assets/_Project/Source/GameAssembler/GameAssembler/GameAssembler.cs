@@ -1,9 +1,9 @@
 using IceFebruary;
+using IceFebruary.Factories;
 using IceFebruary.Physics;
 using IceFebruary.Space;
 using IceFebruary.Space.Vector2Provider;
 using IceFebruary.Time;
-using IceFebruary.Factories;
 
 public sealed class GameAssembler
 {
@@ -12,6 +12,8 @@ public sealed class GameAssembler
     private readonly IPhysics2D _physics2D;
     private readonly IObjectManager _objectManager;
     private readonly IInputProvider _playerInput;
+
+    private CameraConfig _cameraConfig;
 
     private bool _assembled;
 
@@ -33,14 +35,57 @@ public sealed class GameAssembler
 
         _assembled = true;
 
-        IVector2Provider playerCursorPosition = new ScreenToWorldVector2Provider(
-            new MouseVector2Provider(_playerInput),
-            _config.Camera);
-
         BuilderFactory<StickmanBuilder, StickmanConfig> stickmanFactory = new(_objectManager, () => new(Time, _physics2D));
 
+        CreateCamera();
+
+        IVector2Provider playerStickmanPosition = SetUpPlayer(stickmanFactory);
+
+        SetUpCamera(playerStickmanPosition);
+        SetUpEnemies(stickmanFactory, playerStickmanPosition);
+        SetUpItems();
+    }
+    private void CreateCamera()
+    {
+        SpawnSettings cameraSpawnSettings = _config.SpawnList.CameraSpawnSettings;
+
+        IGameObject gameObject = _objectManager.Create(
+            cameraSpawnSettings.GameObject,
+            cameraSpawnSettings.Position,
+            Rotor2.Default);
+
+        ITransform transform = gameObject.Transform;
+
+        _cameraConfig = gameObject.GetRootConfig() as CameraConfig;
+    }
+    private void SetUpCamera(IVector2Provider playerStickmanPosition)
+    {
+        IVector2Provider cameraTarget = new LerpVector2Provider(
+            new TransformVector2Provider(_cameraConfig.Transform),
+            playerStickmanPosition,
+            _cameraConfig.Interpolation);
+
+        CameraFollow cameraFollow = new(_cameraConfig.Transform);
+
+        CameraSizeChanger cameraSizeChanger = new(
+            _playerInput,
+            _cameraConfig.Camera,
+            _cameraConfig.MinSize,
+            _cameraConfig.MaxSize);
+
+        cameraFollow.SetTarget(cameraTarget);
+
+        Time.LaunchIFrame(cameraFollow);
+        Time.LaunchIFrame(cameraSizeChanger);
+    }
+    private IVector2Provider SetUpPlayer(BuilderFactory<StickmanBuilder, StickmanConfig> stickmanFactory)
+    {
         SpawnList spawnList = _config.SpawnList;
         SpawnSettings playerSpawnSettings = spawnList.PlayerSpawnsSetting;
+
+        IVector2Provider playerCursorPosition = new ScreenToWorldVector2Provider(
+            new MouseVector2Provider(_playerInput),
+            _cameraConfig.Camera);
 
         StickmanBuilder playerStickmanBuilder = stickmanFactory
             .Create(
@@ -52,9 +97,11 @@ public sealed class GameAssembler
             .SetItemHolder(playerCursorPosition)
             .SetInput(_playerInput);
 
-        IVector2Provider playerStickmanPosition = playerStickmanBuilder.StickmanPosition;
-
-        SpawnSettings[] enemiesSpawnList = spawnList.EnemiesSpawnSettings;
+        return playerStickmanBuilder.StickmanPosition;
+    }
+    private void SetUpEnemies(BuilderFactory<StickmanBuilder, StickmanConfig> stickmanFactory, IVector2Provider playerStickmanPosition)
+    {
+        SpawnSettings[] enemiesSpawnList = _config.SpawnList.EnemiesSpawnSettings;
 
         for (int index = 0; index < enemiesSpawnList.Length; index++)
         {
@@ -79,31 +126,41 @@ public sealed class GameAssembler
                 .SetItemHolder(enemyCursorProvider)
                 .SetInput(enemyInput);
         }
+    }
+    private void SetUpItems()
+    {
+        SpawnSettings[] itemsSpawnList = _config.SpawnList.ItemsSpawnList;
 
         ItemHolderSetterUp itemHolderSetterUp = new(Time);
 
-        Factory<ItemSetterUp, ItemConfig> itemFactory = new(_objectManager, new(itemHolderSetterUp));
+        ItemSetterUp itemSetterUp = new(itemHolderSetterUp);
+        ShootingSetterUp shootingSetterUp = new(Time, _objectManager, itemHolderSetterUp);
+        SawSetterUp sawSetterUp = new(itemHolderSetterUp);
 
-        CreateByList(spawnList.ItemsSpawnList, itemFactory);
-
-        Factory<ShootingSetterUp, ShootingConfig> shootingFactory = new(_objectManager, new(Time, _objectManager, itemHolderSetterUp));
-
-        CreateByList(spawnList.ShootingsSpawnList, shootingFactory);
-
-        Factory<SawSetterUp, SawConfig> sawFactory = new(_objectManager, new(itemHolderSetterUp));
-
-        CreateByList(spawnList.SawsSpawnList, sawFactory);
-    }
-    private void CreateByList<TSettableUp, TConfig>(SpawnSettings[] spawnList, Factory<TSettableUp, TConfig> factory) where TSettableUp : ISettableUp<TConfig>
-    {
-        for (int index = 0; index < spawnList.Length; index++)
+        for (int index = 0; index < itemsSpawnList.Length; index++)
         {
-            SpawnSettings shootingSpawnSettings = spawnList[index];
+            SpawnSettings spawnSettings = itemsSpawnList[index];
 
-            factory.Create(
-                shootingSpawnSettings.GameObject,
-                shootingSpawnSettings.Position,
-                Rotor2.Default);
+            IRootConfig rootConfig = _objectManager.Create(
+                spawnSettings.GameObject,
+                spawnSettings.Position,
+                Rotor2.Default)
+                .GetRootConfig();
+
+            switch (rootConfig)
+            {
+                case ItemConfig itemConfig:
+                    itemSetterUp.SetUp(itemConfig);
+                    break;
+
+                case ShootingConfig shootingConfig:
+                    shootingSetterUp.SetUp(shootingConfig);
+                    break;
+
+                case SawConfig sawConfig:
+                    sawSetterUp.SetUp(sawConfig);
+                    break;
+            }
         }
     }
 }

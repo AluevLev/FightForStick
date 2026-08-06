@@ -16,8 +16,9 @@ public sealed class EnemyInputProvider : BaseEntity, IInputProvider, IFrame
     public float HorizontalMovement { get; private set; }
     public float VerticalMovement { get; private set; }
     public Vector2 MousePosition { get; private set; }
+    public float MouseScrolldown => 0f;
 
-    public bool IsDroppingItem { get; private set; }
+    public bool IsDroppingItem => false;
     public bool IsUsing { get; private set; }
     public bool IsPickingUpItem { get; private set; }
     public void OnFrame(float frameLength)
@@ -45,6 +46,5 @@ public sealed class EnemyInputProvider : BaseEntity, IInputProvider, IFrame
 
         IsUsing = itemInHandExists;
         IsPickingUpItem = !itemInHandExists;
-        IsDroppingItem = false;
     }
 }

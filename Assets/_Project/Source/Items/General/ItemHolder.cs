@@ -1,5 +1,6 @@
 using IceFebruary;
 using IceFebruary.Physics;
+using IceFebruary.Physics.Balancer;
 
 public readonly struct ItemHolder
 {

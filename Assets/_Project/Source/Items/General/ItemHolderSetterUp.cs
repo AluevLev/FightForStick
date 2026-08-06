@@ -1,5 +1,6 @@
 using IceFebruary.Time;
 using IceFebruary.Factories;
+using IceFebruary.Physics.Balancer;
 
 public sealed class ItemHolderSetterUp : ISettableUp<ItemSettings, ItemHolder>
 {

@@ -1,5 +1,6 @@
 using IceFebruary;
 using IceFebruary.Time;
+using IceFebruary.Physics;
 
 public sealed class EntityMotorHandler : BaseEntity, IMotorHandler, IFixedFrame
 {

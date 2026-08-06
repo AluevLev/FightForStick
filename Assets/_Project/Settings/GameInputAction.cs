@@ -120,7 +120,7 @@ public partial class @GameInputAction: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Attack"",
+                    ""name"": ""IsUsing"",
                     ""type"": ""Button"",
                     ""id"": ""a70297da-9b6c-46b9-8a6f-c632997c7ed9"",
                     ""expectedControlType"": """",
@@ -129,7 +129,7 @@ public partial class @GameInputAction: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""PickUp"",
+                    ""name"": ""IsPickingUp"",
                     ""type"": ""Button"",
                     ""id"": ""d2b5d4ab-10e9-4b75-97ce-a6aabb33e0ab"",
                     ""expectedControlType"": """",
@@ -138,7 +138,7 @@ public partial class @GameInputAction: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Drop"",
+                    ""name"": ""IsDropping"",
                     ""type"": ""Button"",
                     ""id"": ""5a2d7078-e2f3-4358-a09f-408d493e70a3"",
                     ""expectedControlType"": """",
@@ -147,13 +147,13 @@ public partial class @GameInputAction: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""DialogueInteract"",
-                    ""type"": ""Button"",
-                    ""id"": ""1b21939d-3479-428f-8c11-7f6b7eea469e"",
-                    ""expectedControlType"": """",
+                    ""name"": ""Scroll"",
+                    ""type"": ""Value"",
+                    ""id"": ""994007f2-768a-4833-bc71-82b994ba6db4"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -164,7 +164,7 @@ public partial class @GameInputAction: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Drop"",
+                    ""action"": ""IsDropping"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -351,7 +351,7 @@ public partial class @GameInputAction: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Attack"",
+                    ""action"": ""IsUsing"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -362,18 +362,18 @@ public partial class @GameInputAction: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""PickUp"",
+                    ""action"": ""IsPickingUp"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""0064ba4c-6a54-46dd-a86f-c5635da5556e"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""id"": ""7eb12b44-dc95-4e2a-a2a3-e42f43cee1b9"",
+                    ""path"": ""<Mouse>/scroll"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""DialogueInteract"",
+                    ""action"": ""Scroll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -964,10 +964,10 @@ public partial class @GameInputAction: IInputActionCollection2, IDisposable
         m_Player_VerticalMovement = m_Player.FindAction("VerticalMovement", throwIfNotFound: true);
         m_Player_HorizontalMovement = m_Player.FindAction("HorizontalMovement", throwIfNotFound: true);
         m_Player_LookPositionOnScreen = m_Player.FindAction("LookPositionOnScreen", throwIfNotFound: true);
-        m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
-        m_Player_PickUp = m_Player.FindAction("PickUp", throwIfNotFound: true);
-        m_Player_Drop = m_Player.FindAction("Drop", throwIfNotFound: true);
-        m_Player_DialogueInteract = m_Player.FindAction("DialogueInteract", throwIfNotFound: true);
+        m_Player_IsUsing = m_Player.FindAction("IsUsing", throwIfNotFound: true);
+        m_Player_IsPickingUp = m_Player.FindAction("IsPickingUp", throwIfNotFound: true);
+        m_Player_IsDropping = m_Player.FindAction("IsDropping", throwIfNotFound: true);
+        m_Player_Scroll = m_Player.FindAction("Scroll", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1064,10 +1064,10 @@ public partial class @GameInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_VerticalMovement;
     private readonly InputAction m_Player_HorizontalMovement;
     private readonly InputAction m_Player_LookPositionOnScreen;
-    private readonly InputAction m_Player_Attack;
-    private readonly InputAction m_Player_PickUp;
-    private readonly InputAction m_Player_Drop;
-    private readonly InputAction m_Player_DialogueInteract;
+    private readonly InputAction m_Player_IsUsing;
+    private readonly InputAction m_Player_IsPickingUp;
+    private readonly InputAction m_Player_IsDropping;
+    private readonly InputAction m_Player_Scroll;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1092,21 +1092,21 @@ public partial class @GameInputAction: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @LookPositionOnScreen => m_Wrapper.m_Player_LookPositionOnScreen;
         /// <summary>
-        /// Provides access to the underlying input action "Player/Attack".
+        /// Provides access to the underlying input action "Player/IsUsing".
         /// </summary>
-        public InputAction @Attack => m_Wrapper.m_Player_Attack;
+        public InputAction @IsUsing => m_Wrapper.m_Player_IsUsing;
         /// <summary>
-        /// Provides access to the underlying input action "Player/PickUp".
+        /// Provides access to the underlying input action "Player/IsPickingUp".
         /// </summary>
-        public InputAction @PickUp => m_Wrapper.m_Player_PickUp;
+        public InputAction @IsPickingUp => m_Wrapper.m_Player_IsPickingUp;
         /// <summary>
-        /// Provides access to the underlying input action "Player/Drop".
+        /// Provides access to the underlying input action "Player/IsDropping".
         /// </summary>
-        public InputAction @Drop => m_Wrapper.m_Player_Drop;
+        public InputAction @IsDropping => m_Wrapper.m_Player_IsDropping;
         /// <summary>
-        /// Provides access to the underlying input action "Player/DialogueInteract".
+        /// Provides access to the underlying input action "Player/Scroll".
         /// </summary>
-        public InputAction @DialogueInteract => m_Wrapper.m_Player_DialogueInteract;
+        public InputAction @Scroll => m_Wrapper.m_Player_Scroll;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1142,18 +1142,18 @@ public partial class @GameInputAction: IInputActionCollection2, IDisposable
             @LookPositionOnScreen.started += instance.OnLookPositionOnScreen;
             @LookPositionOnScreen.performed += instance.OnLookPositionOnScreen;
             @LookPositionOnScreen.canceled += instance.OnLookPositionOnScreen;
-            @Attack.started += instance.OnAttack;
-            @Attack.performed += instance.OnAttack;
-            @Attack.canceled += instance.OnAttack;
-            @PickUp.started += instance.OnPickUp;
-            @PickUp.performed += instance.OnPickUp;
-            @PickUp.canceled += instance.OnPickUp;
-            @Drop.started += instance.OnDrop;
-            @Drop.performed += instance.OnDrop;
-            @Drop.canceled += instance.OnDrop;
-            @DialogueInteract.started += instance.OnDialogueInteract;
-            @DialogueInteract.performed += instance.OnDialogueInteract;
-            @DialogueInteract.canceled += instance.OnDialogueInteract;
+            @IsUsing.started += instance.OnIsUsing;
+            @IsUsing.performed += instance.OnIsUsing;
+            @IsUsing.canceled += instance.OnIsUsing;
+            @IsPickingUp.started += instance.OnIsPickingUp;
+            @IsPickingUp.performed += instance.OnIsPickingUp;
+            @IsPickingUp.canceled += instance.OnIsPickingUp;
+            @IsDropping.started += instance.OnIsDropping;
+            @IsDropping.performed += instance.OnIsDropping;
+            @IsDropping.canceled += instance.OnIsDropping;
+            @Scroll.started += instance.OnScroll;
+            @Scroll.performed += instance.OnScroll;
+            @Scroll.canceled += instance.OnScroll;
         }
 
         /// <summary>
@@ -1174,18 +1174,18 @@ public partial class @GameInputAction: IInputActionCollection2, IDisposable
             @LookPositionOnScreen.started -= instance.OnLookPositionOnScreen;
             @LookPositionOnScreen.performed -= instance.OnLookPositionOnScreen;
             @LookPositionOnScreen.canceled -= instance.OnLookPositionOnScreen;
-            @Attack.started -= instance.OnAttack;
-            @Attack.performed -= instance.OnAttack;
-            @Attack.canceled -= instance.OnAttack;
-            @PickUp.started -= instance.OnPickUp;
-            @PickUp.performed -= instance.OnPickUp;
-            @PickUp.canceled -= instance.OnPickUp;
-            @Drop.started -= instance.OnDrop;
-            @Drop.performed -= instance.OnDrop;
-            @Drop.canceled -= instance.OnDrop;
-            @DialogueInteract.started -= instance.OnDialogueInteract;
-            @DialogueInteract.performed -= instance.OnDialogueInteract;
-            @DialogueInteract.canceled -= instance.OnDialogueInteract;
+            @IsUsing.started -= instance.OnIsUsing;
+            @IsUsing.performed -= instance.OnIsUsing;
+            @IsUsing.canceled -= instance.OnIsUsing;
+            @IsPickingUp.started -= instance.OnIsPickingUp;
+            @IsPickingUp.performed -= instance.OnIsPickingUp;
+            @IsPickingUp.canceled -= instance.OnIsPickingUp;
+            @IsDropping.started -= instance.OnIsDropping;
+            @IsDropping.performed -= instance.OnIsDropping;
+            @IsDropping.canceled -= instance.OnIsDropping;
+            @Scroll.started -= instance.OnScroll;
+            @Scroll.performed -= instance.OnScroll;
+            @Scroll.canceled -= instance.OnScroll;
         }
 
         /// <summary>
@@ -1508,33 +1508,33 @@ public partial class @GameInputAction: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnLookPositionOnScreen(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Attack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "IsUsing" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnAttack(InputAction.CallbackContext context);
+        void OnIsUsing(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "PickUp" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "IsPickingUp" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnPickUp(InputAction.CallbackContext context);
+        void OnIsPickingUp(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Drop" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "IsDropping" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnDrop(InputAction.CallbackContext context);
+        void OnIsDropping(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "DialogueInteract" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Scroll" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnDialogueInteract(InputAction.CallbackContext context);
+        void OnScroll(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

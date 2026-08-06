@@ -34,7 +34,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Attack",
+                    "name": "IsUsing",
                     "type": "Button",
                     "id": "a70297da-9b6c-46b9-8a6f-c632997c7ed9",
                     "expectedControlType": "",
@@ -43,7 +43,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "PickUp",
+                    "name": "IsPickingUp",
                     "type": "Button",
                     "id": "d2b5d4ab-10e9-4b75-97ce-a6aabb33e0ab",
                     "expectedControlType": "",
@@ -52,7 +52,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Drop",
+                    "name": "IsDropping",
                     "type": "Button",
                     "id": "5a2d7078-e2f3-4358-a09f-408d493e70a3",
                     "expectedControlType": "",
@@ -61,13 +61,13 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "DialogueInteract",
-                    "type": "Button",
-                    "id": "1b21939d-3479-428f-8c11-7f6b7eea469e",
-                    "expectedControlType": "",
+                    "name": "Scroll",
+                    "type": "Value",
+                    "id": "994007f2-768a-4833-bc71-82b994ba6db4",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -78,7 +78,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Drop",
+                    "action": "IsDropping",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -265,7 +265,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Attack",
+                    "action": "IsUsing",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -276,18 +276,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "PickUp",
+                    "action": "IsPickingUp",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "0064ba4c-6a54-46dd-a86f-c5635da5556e",
-                    "path": "<Keyboard>/e",
+                    "id": "7eb12b44-dc95-4e2a-a2a3-e42f43cee1b9",
+                    "path": "<Mouse>/scroll",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "DialogueInteract",
+                    "action": "Scroll",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

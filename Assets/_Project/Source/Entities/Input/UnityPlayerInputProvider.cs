@@ -10,6 +10,7 @@ public sealed class UnityPlayerInputProvider : BaseEntity, IInputProvider, IFram
     public float HorizontalMovement { get; private set; }
     public float VerticalMovement { get; private set; }
     public Vector2 MousePosition { get; private set; }
+    public float MouseScrolldown { get; private set; }
 
     public bool IsPickingUpItem { get; private set; }
     public bool IsDroppingItem { get; private set; }
@@ -26,10 +27,11 @@ public sealed class UnityPlayerInputProvider : BaseEntity, IInputProvider, IFram
         HorizontalMovement = _playerActions.HorizontalMovement.ReadValue<float>();
         VerticalMovement = _playerActions.VerticalMovement.ReadValue<float>();
         MousePosition = _playerActions.LookPositionOnScreen.ReadValue<UnityEngine.Vector2>().ToIce();
+        MouseScrolldown = _playerActions.Scroll.ReadValue<UnityEngine.Vector2>().ToIce().Y;
 
-        IsUsing = _playerActions.Attack.IsPressed();
+        IsUsing = _playerActions.IsUsing.IsPressed();
 
-        IsPickingUpItem = _playerActions.PickUp.WasPressedThisFrame();
-        IsDroppingItem = _playerActions.Drop.WasPressedThisFrame();
+        IsPickingUpItem = _playerActions.IsPickingUp.WasPressedThisFrame();
+        IsDroppingItem = _playerActions.IsDropping.WasPressedThisFrame();
     }
 }

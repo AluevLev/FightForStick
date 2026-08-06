@@ -1,5 +1,6 @@
 using IceFebruary;
 using IceFebruary.Physics;
+using IceFebruary.Physics.Balancer;
 using IceFebruary.Space.Rotor2Provider;
 using IceFebruary.Space.Vector2Provider;
 using IceFebruary.Time;
