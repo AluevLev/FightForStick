@@ -9,7 +9,7 @@ public sealed class CameraSizeChanger : BaseEntity, IFrame
 	private readonly float _minSize;
 	private readonly float _maxSize;
 	private readonly float _sensitivity;
-	public CameraSizeChanger(IInputProvider inputProvider, ICamera camera, float minSize, float maxSize, float sensitivity = -0.5f)
+	public CameraSizeChanger(IInputProvider inputProvider, ICamera camera, float minSize, float maxSize, float sensitivity)
 	{
 		_inputProvider = inputProvider;
 		_camera = camera;

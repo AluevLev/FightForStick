@@ -23,7 +23,7 @@ public sealed class UnityGameAssembler : MonoBehaviour
 
         time.LaunchIFrame(playerInput);
 
-        _gameAssembler = new(config, time, physics2D, objectManager, playerInput);
+        _gameAssembler = new(config.SpawnList, time, physics2D, objectManager, playerInput);
 
         _gameAssembler.Assemble();
     }

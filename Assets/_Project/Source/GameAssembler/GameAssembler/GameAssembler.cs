@@ -7,20 +7,18 @@ using IceFebruary.Time;
 
 public sealed class GameAssembler
 {
-    private readonly GameAssemblerConfig _config;
+    private readonly SpawnList _spawnList;
 
     private readonly IPhysics2D _physics2D;
     private readonly IObjectManager _objectManager;
     private readonly IInputProvider _playerInput;
 
-    private CameraConfig _cameraConfig;
-
     private bool _assembled;
 
     public ITime Time { get; private init; }
-    public GameAssembler(GameAssemblerConfig config, ITime time, IPhysics2D physics2D, IObjectManager objectManager, IInputProvider playerInput)
+    public GameAssembler(SpawnList spawnList, ITime time, IPhysics2D physics2D, IObjectManager objectManager, IInputProvider playerInput)
     {
-        _config = config;
+        _spawnList = spawnList;
 
         _physics2D = physics2D;
         _objectManager = objectManager;
@@ -37,60 +35,69 @@ public sealed class GameAssembler
 
         BuilderFactory<StickmanBuilder, StickmanConfig> stickmanFactory = new(_objectManager, () => new(Time, _physics2D));
 
-        CreateCamera();
+        CreateLevel();
 
-        IVector2Provider playerStickmanPosition = SetUpPlayer(stickmanFactory);
+        CameraConfig cameraConfig = CreateCamera();
+        IVector2Provider playerStickmanPosition = SetUpPlayer(stickmanFactory, cameraConfig);
 
-        SetUpCamera(playerStickmanPosition);
-        SetUpEnemies(stickmanFactory, playerStickmanPosition);
-        SetUpItems();
+        SetUpCamera(playerStickmanPosition, cameraConfig);
+        CreateEnemies(stickmanFactory, playerStickmanPosition);
+        CreateItems();
     }
-    private void CreateCamera()
+    private void CreateLevel()
     {
-        SpawnSettings cameraSpawnSettings = _config.SpawnList.CameraSpawnSettings;
+        SpawnSettings spawnSettings = _spawnList.LevelSpawnSettings;
 
-        IGameObject gameObject = _objectManager.Create(
-            cameraSpawnSettings.GameObject,
-            cameraSpawnSettings.Position,
+        _objectManager.Create(
+            spawnSettings.GameObject,
+            spawnSettings.Position,
             Rotor2.Default);
-
-        ITransform transform = gameObject.Transform;
-
-        _cameraConfig = gameObject.GetRootConfig() as CameraConfig;
     }
-    private void SetUpCamera(IVector2Provider playerStickmanPosition)
+    private CameraConfig CreateCamera()
     {
-        IVector2Provider cameraTarget = new LerpVector2Provider(
-            new TransformVector2Provider(_cameraConfig.Transform),
+        SpawnSettings spawnSettings = _spawnList.CameraSpawnSettings;
+
+        return _objectManager.Create(
+            spawnSettings.GameObject,
+            spawnSettings.Position,
+            Rotor2.Default)
+            .GetRootConfig() as CameraConfig;
+    }
+    private void SetUpCamera(IVector2Provider playerStickmanPosition, CameraConfig cameraConfig)
+    {
+        CameraSettings settings = cameraConfig.Settings;
+
+        IVector2Provider target = new LerpVector2Provider(
+            new TransformVector2Provider(cameraConfig.Transform),
             playerStickmanPosition,
-            _cameraConfig.Interpolation);
+            settings.Interpolation);
 
-        CameraFollow cameraFollow = new(_cameraConfig.Transform);
+        CameraFollow follow = new(cameraConfig.Transform);
 
-        CameraSizeChanger cameraSizeChanger = new(
+        CameraSizeChanger sizeChanger = new(
             _playerInput,
-            _cameraConfig.Camera,
-            _cameraConfig.MinSize,
-            _cameraConfig.MaxSize);
+            cameraConfig.Camera,
+            settings.MinSize,
+            settings.MaxSize,
+            settings.Sensitivity);
 
-        cameraFollow.SetTarget(cameraTarget);
+        follow.SetTarget(target);
 
-        Time.LaunchIFrame(cameraFollow);
-        Time.LaunchIFrame(cameraSizeChanger);
+        Time.LaunchIFrame(follow);
+        Time.LaunchIFrame(sizeChanger);
     }
-    private IVector2Provider SetUpPlayer(BuilderFactory<StickmanBuilder, StickmanConfig> stickmanFactory)
+    private IVector2Provider SetUpPlayer(BuilderFactory<StickmanBuilder, StickmanConfig> stickmanFactory, CameraConfig cameraConfig)
     {
-        SpawnList spawnList = _config.SpawnList;
-        SpawnSettings playerSpawnSettings = spawnList.PlayerSpawnsSetting;
+        SpawnSettings spawnSettings = _spawnList.PlayerSpawnsSetting;
 
         IVector2Provider playerCursorPosition = new ScreenToWorldVector2Provider(
             new MouseVector2Provider(_playerInput),
-            _cameraConfig.Camera);
+            cameraConfig.Camera);
 
         StickmanBuilder playerStickmanBuilder = stickmanFactory
             .Create(
-            playerSpawnSettings.GameObject,
-            playerSpawnSettings.Position,
+            spawnSettings.GameObject,
+            spawnSettings.Position,
             Rotor2.Default)
             .SetLimbs()
             .SetMovement()
@@ -99,37 +106,37 @@ public sealed class GameAssembler
 
         return playerStickmanBuilder.StickmanPosition;
     }
-    private void SetUpEnemies(BuilderFactory<StickmanBuilder, StickmanConfig> stickmanFactory, IVector2Provider playerStickmanPosition)
+    private void CreateEnemies(BuilderFactory<StickmanBuilder, StickmanConfig> stickmanFactory, IVector2Provider playerStickmanPosition)
     {
-        SpawnSettings[] enemiesSpawnList = _config.SpawnList.EnemiesSpawnSettings;
+        SpawnSettings[] spawnList = _spawnList.EnemiesSpawnList;
 
-        for (int index = 0; index < enemiesSpawnList.Length; index++)
+        for (int index = 0; index < spawnList.Length; index++)
         {
-            SpawnSettings enemySpawnSettings = enemiesSpawnList[index];
+            SpawnSettings spawnSettings = spawnList[index];
 
-            StickmanBuilder enemyStickmanBuilder = stickmanFactory.Create(
-                enemySpawnSettings.GameObject,
-                enemySpawnSettings.Position,
+            StickmanBuilder stickmanBuilder = stickmanFactory.Create(
+                spawnSettings.GameObject,
+                spawnSettings.Position,
                 Rotor2.Default);
 
-            EnemyInputProvider enemyInput = new(
-                enemyStickmanBuilder.StickmanPosition,
+            EnemyInputProvider input = new(
+                stickmanBuilder.StickmanPosition,
                 playerStickmanPosition);
 
-            Time.LaunchIFrame(enemyInput);
+            Time.LaunchIFrame(input);
 
-            IVector2Provider enemyCursorProvider = new MouseVector2Provider(enemyInput);
+            IVector2Provider cursor = new MouseVector2Provider(input);
 
-            enemyStickmanBuilder
+            stickmanBuilder
                 .SetLimbs()
                 .SetMovement()
-                .SetItemHolder(enemyCursorProvider)
-                .SetInput(enemyInput);
+                .SetItemHolder(cursor)
+                .SetInput(input);
         }
     }
-    private void SetUpItems()
+    private void CreateItems()
     {
-        SpawnSettings[] itemsSpawnList = _config.SpawnList.ItemsSpawnList;
+        SpawnSettings[] spawnList = _spawnList.ItemsSpawnList;
 
         ItemHolderSetterUp itemHolderSetterUp = new(Time);
 
@@ -137,9 +144,9 @@ public sealed class GameAssembler
         ShootingSetterUp shootingSetterUp = new(Time, _objectManager, itemHolderSetterUp);
         SawSetterUp sawSetterUp = new(itemHolderSetterUp);
 
-        for (int index = 0; index < itemsSpawnList.Length; index++)
+        for (int index = 0; index < spawnList.Length; index++)
         {
-            SpawnSettings spawnSettings = itemsSpawnList[index];
+            SpawnSettings spawnSettings = spawnList[index];
 
             IRootConfig rootConfig = _objectManager.Create(
                 spawnSettings.GameObject,

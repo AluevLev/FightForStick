@@ -8,6 +8,12 @@ TextureImporter:
   - first:
       213: -761887118410055393
     second: Weapons_1
+  - first:
+      213: 9147546874185701050
+    second: Weapons_2
+  - first:
+      213: -8951780388439148649
+    second: Weapons_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -129,13 +135,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Katana
+      name: Shield
       rect:
         serializedVersion: 2
         x: 0
-        y: 11
-        width: 8
-        height: 53
+        y: 8
+        width: 23
+        height: 56
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,10 +160,10 @@ TextureImporter:
       name: Cleaver
       rect:
         serializedVersion: 2
-        x: 114
-        y: 42
-        width: 12
-        height: 22
+        x: 106
+        y: 2
+        width: 22
+        height: 12
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,10 +179,274 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Uzi
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 38
+        width: 31
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab6d2129a6d92fe70800000000000000
+      internalID: 9147546874185701050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Saw
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 14
+        width: 29
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 797b6cf4a23e4c380800000000000000
+      internalID: -8951780388439148649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BrokenBottle
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 19
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae494ecb00b16f644a9b73551fd1a618
+      internalID: -616641609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bullet
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 0
+        width: 11
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff95516749e400a41822dea83b0793d9
+      internalID: 1423713985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Baton
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 4
+        width: 26
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e052ec283bbc7f4b90a4424aa490751
+      internalID: -647685470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hammer
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 14
+        width: 30
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b4610419250f4944a3b4bc0b744785d
+      internalID: 739098680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knife
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 5
+        width: 19
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 991170087d49f934fa314ea69d71ace1
+      internalID: 1314170712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChainSaw2
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 12
+        width: 28
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c4c250d8d2c0f4429aadb8bc8fae9eb
+      internalID: 114570934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChainSaw1
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 21
+        width: 28
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: afd8043ea940c904580fa94ece6d8541
+      internalID: 28823109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DesertEagle
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 30
+        width: 19
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61b992c6d487c694db8d46fcf9582781
+      internalID: -2111148771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rapire
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 30
+        width: 44
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b4b274447e35a74c8b2054441e04781
+      internalID: -166854152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Katana
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 37
+        width: 53
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7523bb643c8178944a5f2370f4723366
+      internalID: -1543575821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: AK47
       rect:
         serializedVersion: 2
-        x: 8
+        x: 23
         y: 45
         width: 70
         height: 19
@@ -188,272 +458,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 75338f8e8a0b9da45a71af58370dd678
-      internalID: -591974103
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Shield
-      rect:
-        serializedVersion: 2
-        x: 8
-        y: 1
-        width: 17
-        height: 44
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 20f46c3e0ad4f9548910a65e871705bf
-      internalID: -539037286
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Hammer
-      rect:
-        serializedVersion: 2
-        x: 25
-        y: 15
-        width: 16
-        height: 30
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 16e85d29d92d41a4ab8b5c86d4f6c2f7
-      internalID: 975724367
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bullet
-      rect:
-        serializedVersion: 2
-        x: 25
-        y: 11
-        width: 11
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 26cfb322e1be2f64488b3e464c986c20
-      internalID: -1546494956
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Baton
-      rect:
-        serializedVersion: 2
-        x: 41
-        y: 12
-        width: 10
-        height: 26
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 32822d300a358c84aa18b37203da1b1b
-      internalID: -333489171
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Rapire
-      rect:
-        serializedVersion: 2
-        x: 41
-        y: 38
-        width: 44
-        height: 7
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bcced0b7b1916034885897f70d7940a7
-      internalID: -374875124
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Knife
-      rect:
-        serializedVersion: 2
-        x: 78
-        y: 45
-        width: 7
-        height: 19
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7053dab622199eb49bf95c9d118837e2
-      internalID: 355694845
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Saw
-      rect:
-        serializedVersion: 2
-        x: 85
-        y: 40
-        width: 29
-        height: 24
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1290849b0d66fca478002731f425ea9b
-      internalID: -10228727
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Uzi
-      rect:
-        serializedVersion: 2
-        x: 51
-        y: 12
-        width: 31
-        height: 26
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9f8bcf942e0665e4285bec5af50376b6
-      internalID: 63155610
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DesertEagle
-      rect:
-        serializedVersion: 2
-        x: 82
-        y: 5
-        width: 19
-        height: 15
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b1f34eee8ee666f4390a5586513bd455
-      internalID: -1323339027
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BrokenBottle
-      rect:
-        serializedVersion: 2
-        x: 110
-        y: 21
-        width: 8
-        height: 19
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9ff6049062420bc42b182312e2b49b8b
-      internalID: -883999809
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ChainSaw1
-      rect:
-        serializedVersion: 2
-        x: 82
-        y: 29
-        width: 28
-        height: 9
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b63aab58babd32e4ebccab9b8a592dae
-      internalID: -1677114134
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ChainSaw2
-      rect:
-        serializedVersion: 2
-        x: 82
-        y: 20
-        width: 28
-        height: 9
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8f47d46e959eb3b4ba98edeb2bf72b99
-      internalID: 565830172
+      spriteID: faaaa00f2b39f7049967c6ae8ada9da1
+      internalID: 189536540
       vertices: []
       indices: 
       edges: []
@@ -462,7 +468,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: af071de7ac422e94dbb3602fa3460e37
+    spriteID: 7443e2a7a5ed54a4289c98922fb3ea97
     internalID: 0
     vertices: []
     indices: 
@@ -472,21 +478,21 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      AK47: -591974103
-      Baton: -333489171
-      BrokenBottle: -883999809
-      Bullet: -1546494956
-      ChainSaw1: -1677114134
-      ChainSaw2: 565830172
+      AK47: 189536540
+      Baton: -647685470
+      BrokenBottle: -616641609
+      Bullet: 1423713985
+      ChainSaw1: 28823109
+      ChainSaw2: 114570934
       Cleaver: -761887118410055393
-      DesertEagle: -1323339027
-      Hammer: 975724367
-      Katana: 5601323976189978565
-      Knife: 355694845
-      Rapire: -374875124
-      Saw: -10228727
-      Shield: -539037286
-      Uzi: 63155610
+      DesertEagle: -2111148771
+      Hammer: 739098680
+      Katana: -1543575821
+      Knife: 1314170712
+      Rapire: -166854152
+      Saw: -8951780388439148649
+      Shield: 5601323976189978565
+      Uzi: 9147546874185701050
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
