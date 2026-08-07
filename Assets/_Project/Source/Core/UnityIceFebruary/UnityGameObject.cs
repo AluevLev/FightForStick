@@ -12,7 +12,7 @@ namespace UnityIceFebruary
             get => Original.layer;
             set => Original.layer = value;
         }
-        public SetOnce<IBaseEntity> MainComponent { get; private init; } = new();
+        public IBaseEntity MainComponent { get; set; }
 
         [FieldProxy(typeof(IGameObject))]
         public UnityGameObject(GameObject gameObject) : base(gameObject)

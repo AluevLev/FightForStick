@@ -11,14 +11,11 @@ public sealed class StickmanBuilder : ISettableUp<StickmanConfig>
     private readonly ITime _time;
     private readonly IPhysics2D _physics2D;
 
-    private StickmanConfig StickmanConfig => _stickmanConfig.Value;
-    private readonly SetOnce<StickmanConfig> _stickmanConfig = new();
-
-    public IVector2Provider StickmanPosition => _stickmanPosition.Value;
-    private readonly SetOnce<IVector2Provider> _stickmanPosition = new();
+    private StickmanConfig _stickmanConfig;
+    public IVector2Provider StickmanPosition { get; private set; }
     
-    private EntityMotorHandler _motorHandler;
-    private EntityItemHolderHandler _itemHolderHandler;
+    public EntityMotorHandler MotorHandler { get; private set; }
+    public EntityItemHolderHandler ItemHolderHandler { get; private set; }
 
     private IPhysicsBalancer _hip1Balancer;
     private IPhysicsBalancer _shin1Balancer;
@@ -33,12 +30,12 @@ public sealed class StickmanBuilder : ISettableUp<StickmanConfig>
     }
     public void SetUp(StickmanConfig config)
     {
-        _stickmanConfig.Value = config;
-        _stickmanPosition.Value = config.StickmanPosition;
+        _stickmanConfig = config;
+        StickmanPosition = config.StickmanPosition;
     }
     public StickmanBuilder SetLimbs()
     {
-        RagdollConfig ragdollConfig = StickmanConfig.RagdollConfig;
+        RagdollConfig ragdollConfig = _stickmanConfig.RagdollConfig;
 
         SetLimb(ragdollConfig.Head);
         SetLimb(ragdollConfig.Body);
@@ -69,7 +66,7 @@ public sealed class StickmanBuilder : ISettableUp<StickmanConfig>
     }
     public StickmanBuilder SetMovement()
     {
-        MovementConfig movementConfig = StickmanConfig.MovementConfig;
+        MovementConfig movementConfig = _stickmanConfig.MovementConfig;
         MovementSettings movementSettings = movementConfig.Settings;
 
         AreaScannerConfig groundAreaScannerConfig = movementConfig.GroundAreaScannerConfig;
@@ -107,20 +104,20 @@ public sealed class StickmanBuilder : ISettableUp<StickmanConfig>
             _time,
             movementSettings.LegsChangeRotationPeriod);
 
-        _motorHandler = new EntityMotorHandler(
+        MotorHandler = new EntityMotorHandler(
             entityMotor,
             groundChecker,
             entityMovementCalculator,
             hipsTimer,
             trigger);
 
-        _time.LaunchIFixedFrame(_motorHandler);
+        _time.LaunchIFixedFrame(MotorHandler);
 
         return this;
     }
     public StickmanBuilder SetItemHolder(IVector2Provider cursorPosition, IRotor2Provider rotation = null)
     {
-        PickUpConfig pickUpConfig = StickmanConfig.PickUpConfig;
+        PickUpConfig pickUpConfig = _stickmanConfig.PickUpConfig;
         PickUpSettings pickUpSettings = pickUpConfig.Settings;
 
         AreaScannerSettings itemAreaScannerSettings = pickUpConfig.ItemAreaScannerSettings;
@@ -142,7 +139,7 @@ public sealed class StickmanBuilder : ISettableUp<StickmanConfig>
 
         IRotor2Provider targetItemRotation = new DirectionRotor2Provider(StickmanPosition, cursorPosition);
 
-        _itemHolderHandler = new EntityItemHolderHandler(
+        ItemHolderHandler = new EntityItemHolderHandler(
             pickUpChecker,
             itemHolderController,
             StickmanPosition,
@@ -155,8 +152,8 @@ public sealed class StickmanBuilder : ISettableUp<StickmanConfig>
     }
     public StickmanBuilder SetInput(IInputProvider inputProvider)
     {
-        IFrame movementController = new EntityMovementController(inputProvider, _motorHandler);
-        IFrame itemHolderController = new EntityItemHolderController(inputProvider, _itemHolderHandler);
+        IFrame movementController = new EntityMovementController(inputProvider, MotorHandler);
+        IFrame itemHolderController = new EntityItemHolderController(inputProvider, ItemHolderHandler);
 
         _time.LaunchIFrame(movementController);
         _time.LaunchIFrame(itemHolderController);

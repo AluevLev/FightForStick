@@ -7,7 +7,7 @@ public sealed class EnemyInputProvider : BaseEntity, IInputProvider, IFrame
 {
     private readonly IVector2Provider _enemyPosition;
     private readonly IVector2Provider _targetPosition;
-    public SetOnce<IItemHolderHandler> EnemyHolderHandler { get; private init; } = new();
+    public IItemHolderHandler EnemyHolderHandler { get; set; }
     public EnemyInputProvider(IVector2Provider enemyPosition, IVector2Provider targetPosition)
     {
         _enemyPosition = enemyPosition;
@@ -23,26 +23,15 @@ public sealed class EnemyInputProvider : BaseEntity, IInputProvider, IFrame
     public bool IsPickingUpItem { get; private set; }
     public void OnFrame(float frameLength)
     {
-        bool itemInHandExists = EnemyHolderHandler.TryGetValue(out IItemHolderHandler itemHolderHandler) && itemHolderHandler.Item.Exists();
+        bool itemInHandExists = EnemyHolderHandler.Item.Exists();
 
-        Vector2 enemyPosition = default;
         Vector2 targetPosition = default;
 
-        bool success = _enemyPosition.TryGetSafety(out enemyPosition) && _targetPosition.TryGetSafety(out targetPosition);
+        bool success = _enemyPosition.TryGetSafety(out Vector2 enemyPosition) && _targetPosition.TryGetSafety(out targetPosition);
 
-        if (success)
-        {
-            HorizontalMovement = targetPosition.X.CompareTo(enemyPosition.X);
-            VerticalMovement = targetPosition.Y.CompareTo(enemyPosition.Y);
-            MousePosition = targetPosition;
-        }
-
-        else
-        {
-            HorizontalMovement = 0f;
-            VerticalMovement = 0f;
-            MousePosition = enemyPosition;
-        }
+        HorizontalMovement = success ? targetPosition.X.CompareTo(enemyPosition.X) : 0f;
+        VerticalMovement = success ? targetPosition.Y.CompareTo(enemyPosition.Y) : 0f;
+        MousePosition = success && itemInHandExists ? targetPosition : enemyPosition;
 
         IsUsing = itemInHandExists;
         IsPickingUpItem = !itemInHandExists;

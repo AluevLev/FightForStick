@@ -11,6 +11,6 @@ public sealed class ItemSetterUp : ISettableUp<ItemConfig>
     {
         ItemSettings itemHolder = config.Settings;
 
-        itemHolder.GameObject.MainComponent.Value = new Item(_holderSettableUp.SetUp(itemHolder));
+        itemHolder.GameObject.MainComponent = new Item(_holderSettableUp.SetUp(itemHolder));
     }
 }

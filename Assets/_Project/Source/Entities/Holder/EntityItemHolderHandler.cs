@@ -46,7 +46,7 @@ public sealed class EntityItemHolderHandler : BaseEntity, IItemHolderHandler
         {
             itemGameObject = _pickUpChecker.Colliders2D[index].GameObject;
 
-            if (itemGameObject.MainComponent.Value is IPickable pickable)
+            if (itemGameObject.MainComponent is IPickable pickable)
             {
                 item = pickable;
                 break;

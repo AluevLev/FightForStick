@@ -7,7 +7,7 @@ namespace IceFebruary
     {
         ITransform Transform { get; }
         int Layer { get; set; }
-        SetOnce<IBaseEntity> MainComponent { get; }
+        IBaseEntity MainComponent { get; set; }
         IRootConfig GetRootConfig();
     }
 }

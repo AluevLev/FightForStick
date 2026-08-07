@@ -50,7 +50,7 @@ public sealed class Shooting : BaseEntity, IPickable, IUsable
         IGameObject bullet = _bulletsPool.Spawn(shootPoint, new(shootDirection));
         bullet.Layer = ItemHolder.GameObject.Layer;
 
-        if (bullet.MainComponent.Value is IRigidbody2D bulletRigidbody2D)
+        if (bullet.MainComponent is IRigidbody2D bulletRigidbody2D)
         {
             bulletRigidbody2D.LinearVelocity = Vector2.Zero;
             bulletRigidbody2D.AngularVelocity = 0f;

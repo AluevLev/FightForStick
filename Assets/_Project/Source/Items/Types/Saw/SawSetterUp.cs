@@ -11,6 +11,6 @@ public sealed class SawSetterUp : ISettableUp<SawConfig>
 	{
         ItemSettings itemSettings = config.ItemSettings;
 
-        itemSettings.GameObject.MainComponent.Value = new Saw(_holderSettableUp.SetUp(itemSettings), config.AnimatorField);
+        itemSettings.GameObject.MainComponent = new Saw(_holderSettableUp.SetUp(itemSettings), config.AnimatorField);
 	}
 }

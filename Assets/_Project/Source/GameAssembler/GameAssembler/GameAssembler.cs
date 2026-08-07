@@ -132,6 +132,8 @@ public sealed class GameAssembler
                 .SetMovement()
                 .SetItemHolder(cursor)
                 .SetInput(input);
+
+            input.EnemyHolderHandler = stickmanBuilder.ItemHolderHandler;
         }
     }
     private void CreateItems()

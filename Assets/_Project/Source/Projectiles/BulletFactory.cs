@@ -10,6 +10,6 @@ public sealed class BulletFactory : ISettableUp<BulletConfig>
 	}
 	public void SetUp(BulletConfig config)
 	{
-        config.GameObject.MainComponent.Value = config.Rigidbody2D;
+        config.GameObject.MainComponent = config.Rigidbody2D;
     }
 }

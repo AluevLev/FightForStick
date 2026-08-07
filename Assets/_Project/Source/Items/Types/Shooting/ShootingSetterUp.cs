@@ -50,6 +50,6 @@ public sealed class ShootingSetterUp : ISettableUp<ShootingConfig>
             reloadCooldown,
             settings.BulletsCount);
 
-        itemSettings.GameObject.MainComponent.Value = shooting;
+        itemSettings.GameObject.MainComponent = shooting;
     }
 }
