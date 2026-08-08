@@ -71,6 +71,8 @@ namespace IceFebruary.Space
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override int GetHashCode() => System.HashCode.Combine(X, Y);
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float Dot(Vector2 a, Vector2 b) => a.X * b.X + a.Y * b.Y;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float SqrDistance(Vector2 a, Vector2 b) => (a - b).SqrLength;
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Distance(Vector2 a, Vector2 b) => (a - b).Length;

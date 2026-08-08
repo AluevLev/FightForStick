@@ -18,7 +18,6 @@ public sealed class EntityItemHolderHandler : BaseEntity, IItemHolderHandler
     private IUsable _itemUsable;
     private IReleasable _itemReleasable;
     private int _itemLayer;
-    private bool _isItemPickedUp;
     public EntityItemHolderHandler(IOverlapper pickUpChecker, IItemHolder entityItemHolder, IVector2Provider stickmanPosition, IVector2Provider cursorPosition, IRotor2Provider targetItemRotation, float sqrMaxPickUpDistance, int entityLayer)
     {
         _pickUpChecker = pickUpChecker;
@@ -59,8 +58,6 @@ public sealed class EntityItemHolderHandler : BaseEntity, IItemHolderHandler
         if (Item.Exists())
             Drop();
 
-        _isItemPickedUp = true;
-
         _entityItemHolder.PickUpItem(item);
 
         Item = item;
@@ -86,10 +83,8 @@ public sealed class EntityItemHolderHandler : BaseEntity, IItemHolderHandler
     }
     public void Drop()
     {
-        if (!_isItemPickedUp)
+        if (!Item.Exists())
             return;
-
-        _isItemPickedUp = false;
 
         _entityItemHolder.DropItemInHand();
 
@@ -99,7 +94,7 @@ public sealed class EntityItemHolderHandler : BaseEntity, IItemHolderHandler
 
         Item = null;
 
-        _itemHolder = default;
+        _itemHolder = null;
         _itemUsable = null;
         _itemReleasable = null;
         _itemLayer = 0;

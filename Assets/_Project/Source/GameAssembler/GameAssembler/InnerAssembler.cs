@@ -5,7 +5,7 @@ using IceFebruary.Space;
 using IceFebruary.Space.Vector2Provider;
 using IceFebruary.Time;
 
-public sealed class GameAssembler
+public sealed class InnerAssembler : IInnerAssembler
 {
     private readonly SpawnList _spawnList;
 
@@ -16,7 +16,7 @@ public sealed class GameAssembler
     private bool _assembled;
 
     public ITime Time { get; private init; }
-    public GameAssembler(SpawnList spawnList, ITime time, IPhysics2D physics2D, IObjectManager objectManager, IInputProvider playerInput)
+    public InnerAssembler(SpawnList spawnList, ITime time, IPhysics2D physics2D, IObjectManager objectManager, IInputProvider playerInput)
     {
         _spawnList = spawnList;
 

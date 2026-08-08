@@ -1,20 +1,20 @@
 using IceFebruary;
 using IceFebruary.Physics;
-using IceFebruary.Physics.Balancer;
 using IceFebruary.Space;
+using IceFebruary.Space.Follow;
 using IceFebruary.Space.Rotor2Provider;
 
 public sealed class EntityMotor : BaseEntity, IEntityMotor
 {
 	private readonly IRigidbody2D _pushBody;
-    private readonly IPhysicsBalancer _leftHip;
-    private readonly IPhysicsBalancer _rightHip;
-    private readonly IPhysicsBalancer[] _shins;
+    private readonly ITargetPossessing<IRotor2Provider> _leftHip;
+    private readonly ITargetPossessing<IRotor2Provider> _rightHip;
+    private readonly ITargetPossessing<IRotor2Provider>[] _shins;
 
     private readonly IRotor2Provider _limbMinRotation;
     private readonly IRotor2Provider _limbMaxRotation;
     
-    public EntityMotor(IRigidbody2D pushBody, IPhysicsBalancer leftHip, IPhysicsBalancer rightHip, IPhysicsBalancer[] shins, Rotor2 rest, Rotor2 amplitude)
+    public EntityMotor(IRigidbody2D pushBody, ITargetPossessing<IRotor2Provider> leftHip, ITargetPossessing<IRotor2Provider> rightHip, ITargetPossessing<IRotor2Provider>[] shins, Rotor2 rest, Rotor2 amplitude)
     {
         _pushBody = pushBody;
         _leftHip = leftHip;

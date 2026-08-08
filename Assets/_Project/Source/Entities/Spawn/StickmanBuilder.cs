@@ -1,10 +1,11 @@
 using IceFebruary;
+using IceFebruary.Factories;
 using IceFebruary.Physics;
 using IceFebruary.Physics.Balancer;
+using IceFebruary.Space.Follow;
 using IceFebruary.Space.Rotor2Provider;
 using IceFebruary.Space.Vector2Provider;
 using IceFebruary.Time;
-using IceFebruary.Factories;
 
 public sealed class StickmanBuilder : ISettableUp<StickmanConfig>
 {
@@ -17,11 +18,11 @@ public sealed class StickmanBuilder : ISettableUp<StickmanConfig>
     public EntityMotorHandler MotorHandler { get; private set; }
     public EntityItemHolderHandler ItemHolderHandler { get; private set; }
 
-    private IPhysicsBalancer _hip1Balancer;
-    private IPhysicsBalancer _shin1Balancer;
+    private ITargetPossessing<IRotor2Provider> _hip1Balancer;
+    private ITargetPossessing<IRotor2Provider> _shin1Balancer;
 
-    private IPhysicsBalancer _hip2Balancer;
-    private IPhysicsBalancer _shin2Balancer;
+    private ITargetPossessing<IRotor2Provider> _hip2Balancer;
+    private ITargetPossessing<IRotor2Provider> _shin2Balancer;
 
     public StickmanBuilder(ITime time, IPhysics2D physics2D)
     {
@@ -49,7 +50,7 @@ public sealed class StickmanBuilder : ISettableUp<StickmanConfig>
 
         return this;
     }
-    private IPhysicsBalancer SetLimb(PhysicsBalancerConfig physicsLimbSettings)
+    private ITargetPossessing<IRotor2Provider> SetLimb(PhysicsBalancerConfig physicsLimbSettings)
     {
         PhysicsBalancerSettings physicsBalancerSettings = physicsLimbSettings.Settings;
 
@@ -80,7 +81,7 @@ public sealed class StickmanBuilder : ISettableUp<StickmanConfig>
             groundAreaScannerSettings.ContactFilter2D,
             groundAreaScannerSettings.CollidersMaxCount);
 
-        IPhysicsBalancer[] shins = new IPhysicsBalancer[] { _shin1Balancer, _shin2Balancer };
+        ITargetPossessing<IRotor2Provider>[] shins = new ITargetPossessing<IRotor2Provider>[] { _shin1Balancer, _shin2Balancer };
 
         IEntityMotor entityMotor = new EntityMotor(
             movementConfig.PushBody,

@@ -6,7 +6,7 @@ namespace IceFebruary.Physics.Balancer
     using IceFebruary.Space.Rotor2Provider;
     using IceFebruary.Time;
 
-    public sealed class PhysicsBalancer : BaseEntity, ITargetPossessing<IRotor2Provider>, IPhysicsBalancer, IFixedFrame
+    public sealed class PhysicsBalancer : BaseEntity, ITargetPossessing<IRotor2Provider>, IFixedFrame
     {
         private readonly IRigidbody2D _physicsBody;
         private readonly IPhysicsBalancerCalculator _physicsBalancerCalculator;
@@ -26,7 +26,7 @@ namespace IceFebruary.Physics.Balancer
         public void ResetTarget() => _targetAngle = _defaultAngleProvider;
         public void OnFixedFrame()
         {
-            if (!_physicsBody.Exists() || !_targetAngle.TryGetSafety(out Rotor2 angle))
+            if (!_targetAngle.TryGetSafety(out Rotor2 angle))
                 return;
 
             Rotor2 rotation = _physicsBalancerCalculator.CalculateAngle(_physicsBody.Rotation, angle);

@@ -1,14 +1,15 @@
 using IceFebruary;
 using IceFebruary.Physics;
-using IceFebruary.Physics.Balancer;
+using IceFebruary.Space.Rotor2Provider;
+using IceFebruary.Space.Follow;
 
-public readonly struct ItemHolder
+public sealed class ItemHolder : BaseEntity
 {
     public IGameObject GameObject { get; private init; }
     public Component<IHingeJoint2D>[] Holders { get; private init; }
-    public IPhysicsBalancer PhysicsBalancer { get; private init; }
+    public ITargetPossessing<IRotor2Provider> PhysicsBalancer { get; private init; }
 
-    public ItemHolder(IGameObject gameObject, Component<IHingeJoint2D>[] holders, IPhysicsBalancer physicsBalancer)
+    public ItemHolder(IGameObject gameObject, Component<IHingeJoint2D>[] holders, ITargetPossessing<IRotor2Provider> physicsBalancer)
     {
         GameObject = gameObject;
         Holders = holders;

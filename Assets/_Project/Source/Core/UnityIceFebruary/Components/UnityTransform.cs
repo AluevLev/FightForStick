@@ -31,6 +31,11 @@ namespace UnityIceFebruary.Components
             get => Original.localRotation.ToIce();
             set => Original.localRotation = value.ToUnity();
         }
+        public Vector2 LocalScale
+        {
+            get => Original.localScale.ToIce();
+            set => Original.localScale = value.ToUnity();
+        }
         public Vector2 TransformDirection(Vector2 v) => Original.TransformDirection(v.ToUnity()).ToIce();
         public Vector2 TransformPoint(Vector2 v) => Original.TransformPoint(v.ToUnity()).ToIce();
     }
