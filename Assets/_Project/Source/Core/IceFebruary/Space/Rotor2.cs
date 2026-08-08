@@ -25,8 +25,19 @@ namespace IceFebruary.Space
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Rotor2(Vector2 v)
         {
-            Scalar = Math.Sqrt(0.5f + v.X * 0.5f);
-            XY = v.Y / (2.0f * Scalar);
+            float dot = 0.5f + v.X * 0.5f;
+
+            if (dot < Math.Epsilon)
+            {
+                Scalar = 0f;
+                XY = 1f;
+            }
+
+            else
+            {
+                Scalar = Math.Sqrt(dot);
+                XY = v.Y / (2.0f * Scalar);
+            }
         }
         public readonly Rotor2 Inverse
         {
@@ -79,6 +90,10 @@ namespace IceFebruary.Space
             float resultXY = Math.Lerp(aXY, bXY, interpolation);
 
             float sqrMagnitude = resultScalar * resultScalar + resultXY * resultXY;
+
+            if (sqrMagnitude < Math.Epsilon)
+                return Default;
+
             float invMagnitude = 1f / Math.Sqrt(sqrMagnitude);
 
             return new(resultScalar * invMagnitude, resultXY * invMagnitude);

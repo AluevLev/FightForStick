@@ -6,7 +6,7 @@ namespace IceFebruary
     public static class Math
     {
         public const float Pi = SysMathF.PI;
-        public const float Epsilon = 0.0001f;
+        public const float Epsilon = 0.00001f;
         public const float Rad2Deg = 180f / Pi;
         public const float Deg2Rad = Pi / 180f;
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -36,11 +36,12 @@ namespace IceFebruary
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float NimbleAtan2(float y, float x)
         {
-            if (x == 0f && y == 0f)
-                return 0f;
-
             float absX = Abs(x);
             float absY = Abs(y);
+
+            if (absX < Epsilon && absY < Epsilon)
+                return 0f;
+
             float ratio = absX > absY ? absY / absX : absX / absY;
             float angle = (0.9724f - 0.1919f * ratio * ratio) * ratio;
 
