@@ -1,8 +1,8 @@
 namespace IceFebruary.Physics
 {
+    using IceFebruary.Proxy;
     using System;
     using System.Runtime.CompilerServices;
-    using IceFebruary.Proxy;
 
     public readonly struct LayerMask : IEquatable<LayerMask>
     {

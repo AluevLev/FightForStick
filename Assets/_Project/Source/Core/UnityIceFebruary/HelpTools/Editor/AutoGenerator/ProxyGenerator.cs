@@ -1,11 +1,11 @@
 namespace UnityIceFebruary.HelpTools.AutoGenerator
 {
-    using UnityEditor;
-    using System.Linq;
-    using System.IO;
-    using System;
-    using System.Reflection;
     using IceFebruary.Proxy;
+    using System;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using UnityEditor;
     using UnityIceFebruary.HelpTools.Debuggers;
 
     public static class ProxyGenerator
@@ -60,7 +60,7 @@ namespace UnityIceFebruary.HelpTools.AutoGenerator
             }
 
             ProxyGeneratorDebugger.DebugSuccess();
-    
+
             AssetDatabase.Refresh();
         }
         private static int GetPriority(Type type)

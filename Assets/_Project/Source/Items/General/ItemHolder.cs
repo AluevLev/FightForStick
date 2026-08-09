@@ -1,7 +1,7 @@
 using IceFebruary;
 using IceFebruary.Physics;
-using IceFebruary.Space.Rotor2Provider;
 using IceFebruary.Space.Follow;
+using IceFebruary.Space.Rotor2Provider;
 
 public sealed class ItemHolder : BaseEntity
 {

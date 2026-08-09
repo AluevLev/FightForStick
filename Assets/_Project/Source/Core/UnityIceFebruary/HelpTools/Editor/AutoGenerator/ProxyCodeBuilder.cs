@@ -1,10 +1,10 @@
 namespace UnityIceFebruary.HelpTools.AutoGenerator
 {
+    using IceFebruary;
     using IceFebruary.Proxy;
     using System;
     using System.Text;
     using UnityIceFebruary.HelpTools.Debuggers;
-    using IceFebruary;
 
     public static class ProxyCodeBuilder
     {

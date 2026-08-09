@@ -6,14 +6,14 @@ using IceFebruary.Space.Rotor2Provider;
 
 public sealed class EntityMotor : BaseEntity, IEntityMotor
 {
-	private readonly IRigidbody2D _pushBody;
+    private readonly IRigidbody2D _pushBody;
     private readonly ITargetPossessing<IRotor2Provider> _leftHip;
     private readonly ITargetPossessing<IRotor2Provider> _rightHip;
     private readonly ITargetPossessing<IRotor2Provider>[] _shins;
 
     private readonly IRotor2Provider _limbMinRotation;
     private readonly IRotor2Provider _limbMaxRotation;
-    
+
     public EntityMotor(IRigidbody2D pushBody, ITargetPossessing<IRotor2Provider> leftHip, ITargetPossessing<IRotor2Provider> rightHip, ITargetPossessing<IRotor2Provider>[] shins, Rotor2 rest, Rotor2 amplitude)
     {
         _pushBody = pushBody;

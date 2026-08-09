@@ -1,7 +1,7 @@
 namespace IceFebruary.Random
 {
-    using System.Collections.Generic;
     using IceFebruary.Collections;
+    using System.Collections.Generic;
 
     public sealed class Random
     {

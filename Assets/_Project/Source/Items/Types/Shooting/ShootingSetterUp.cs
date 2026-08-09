@@ -1,6 +1,6 @@
 using IceFebruary;
-using IceFebruary.Time;
 using IceFebruary.Factories;
+using IceFebruary.Time;
 
 public sealed class ShootingSetterUp : ISettableUp<ShootingConfig>
 {

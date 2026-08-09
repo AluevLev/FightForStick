@@ -1,5 +1,3 @@
-using IceFebruary.Space.Vector2Provider;
-
 namespace IceFebruary.Space.Rotor2Provider
 {
     public static class Rotor2ProviderExtensions

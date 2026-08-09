@@ -1,6 +1,6 @@
-using IceFebruary.Time;
 using IceFebruary.Factories;
 using IceFebruary.Physics.Balancer;
+using IceFebruary.Time;
 
 public sealed class ItemHolderSetterUp : ISettableUp<ItemSettings, ItemHolder>
 {
@@ -9,8 +9,8 @@ public sealed class ItemHolderSetterUp : ISettableUp<ItemSettings, ItemHolder>
     {
         _time = time;
     }
-	public ItemHolder SetUp(ItemSettings config)
-	{
+    public ItemHolder SetUp(ItemSettings config)
+    {
         PhysicsBalancerConfig physicsBalancerConfig = config.PhysicsLimbConfig;
         PhysicsBalancerSettings physicsBalancerSettings = physicsBalancerConfig.Settings;
 

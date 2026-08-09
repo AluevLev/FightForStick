@@ -1,7 +1,7 @@
 namespace IceFebruary.Space
 {
-    using System.Runtime.CompilerServices;
     using IceFebruary.Proxy;
+    using System.Runtime.CompilerServices;
 
     public readonly struct Rotor2 : System.IEquatable<Rotor2>
     {

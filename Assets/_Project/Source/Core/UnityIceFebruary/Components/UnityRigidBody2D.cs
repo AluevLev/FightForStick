@@ -1,13 +1,12 @@
 namespace UnityIceFebruary.Components
 {
     using IceFebruary.Physics;
-    using IceFebruary.Space;
     using IceFebruary.Proxy;
+    using IceFebruary.Space;
     using UnityIceFebruary.Adaptation;
-
     using Rigidbody2D = UnityEngine.Rigidbody2D;
     using UnityForceMode2D = UnityEngine.ForceMode2D;
-    
+
     public sealed class UnityRigidbody2D : UnityBaseEntity<Rigidbody2D>, IRigidbody2D
     {
         [FieldProxy(typeof(IRigidbody2D))]

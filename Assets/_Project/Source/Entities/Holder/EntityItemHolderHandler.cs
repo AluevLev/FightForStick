@@ -1,8 +1,8 @@
 using IceFebruary;
+using IceFebruary.Physics;
 using IceFebruary.Space;
 using IceFebruary.Space.Rotor2Provider;
 using IceFebruary.Space.Vector2Provider;
-using IceFebruary.Physics;
 
 public sealed class EntityItemHolderHandler : BaseEntity, IItemHolderHandler
 {

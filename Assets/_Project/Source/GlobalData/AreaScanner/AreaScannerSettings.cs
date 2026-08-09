@@ -1,5 +1,5 @@
-using IceFebruary.Proxy;
 using IceFebruary.Physics;
+using IceFebruary.Proxy;
 using IceFebruary.Shapes;
 
 public readonly struct AreaScannerSettings

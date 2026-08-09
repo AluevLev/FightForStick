@@ -14,7 +14,7 @@ public sealed class StickmanBuilder : ISettableUp<StickmanConfig>
 
     private StickmanConfig _stickmanConfig;
     public IVector2Provider StickmanPosition { get; private set; }
-    
+
     public EntityMotorHandler MotorHandler { get; private set; }
     public EntityItemHolderHandler ItemHolderHandler { get; private set; }
 

@@ -1,7 +1,7 @@
 namespace IceFebruary.Render
 {
-    using IceFebruary.Space;
     using IceFebruary.Proxy;
+    using IceFebruary.Space;
 
     [InterfaceProxy]
     public interface ICamera : IBaseEntity

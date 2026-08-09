@@ -1,10 +1,9 @@
 namespace UnityIceFebruary.Adaptation
 {
     using System.Runtime.CompilerServices;
-
     using IceContactFilter2D = IceFebruary.Physics.ContactFilter2D;
-    using UnityContactFilter2D = UnityEngine.ContactFilter2D;
     using IceLayerMask = IceFebruary.Physics.LayerMask;
+    using UnityContactFilter2D = UnityEngine.ContactFilter2D;
 
     public static class UnityContactFilter2DConverter
     {

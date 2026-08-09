@@ -8,7 +8,7 @@ public sealed class ObjectPool
     private readonly IObjectManager _objectManager;
     private readonly IGameObject _prefab;
     private readonly float _objectLifeTime;
-    
+
     private readonly TemporaryObject[] _pool;
     private int _currentObjectIndex;
     public ObjectPool(ITime time, IObjectManager objectManager, int poolSize, IGameObject prefab, float objectLifeTime)

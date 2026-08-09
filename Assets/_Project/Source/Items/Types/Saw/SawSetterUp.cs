@@ -8,9 +8,9 @@ public sealed class SawSetterUp : ISettableUp<SawConfig>
         _holderSettableUp = holderSettableUp;
     }
     public void SetUp(SawConfig config)
-	{
+    {
         ItemSettings itemSettings = config.ItemSettings;
 
         itemSettings.GameObject.MainComponent = new Saw(_holderSettableUp.SetUp(itemSettings), config.AnimatorField);
-	}
+    }
 }

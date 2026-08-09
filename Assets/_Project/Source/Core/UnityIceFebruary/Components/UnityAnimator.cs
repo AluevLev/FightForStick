@@ -1,9 +1,8 @@
 namespace UnityIceFebruary.Components
 {
-    using UnityIceFebruary;
     using IceFebruary.Animation;
     using IceFebruary.Proxy;
-
+    using UnityIceFebruary;
     using Animator = UnityEngine.Animator;
 
     public sealed class UnityAnimator : UnityBaseEntity<Animator>, IAnimator

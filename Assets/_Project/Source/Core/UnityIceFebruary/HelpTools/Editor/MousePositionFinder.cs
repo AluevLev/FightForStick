@@ -50,6 +50,6 @@ namespace UnityIceFebruary.HelpTools
             if (currentEvent != null && currentEvent.type == EventType.MouseDown)
                 _lastMousePosition = currentEvent.mousePosition;
         }
-        
+
     }
 }

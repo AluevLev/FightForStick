@@ -1,9 +1,8 @@
 namespace UnityIceFebruary.Adaptation
 {
     using IceFebruary;
-    using IceFebruary.Space;
     using IceFebruary.Physics;
-
+    using IceFebruary.Space;
     using IceRaycastHit2D = IceFebruary.Physics.RaycastHit2D;
     using UnityRaycastHit2D = UnityEngine.RaycastHit2D;
 
