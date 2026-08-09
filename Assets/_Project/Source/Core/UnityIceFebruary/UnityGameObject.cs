@@ -2,7 +2,8 @@ namespace UnityIceFebruary
 {
     using IceFebruary;
     using IceFebruary.Proxy;
-    using UnityEngine;
+
+    using GameObject = UnityEngine.GameObject;
 
     public sealed class UnityGameObject : UnityBaseEntity<GameObject>, IGameObject
     {
@@ -17,7 +18,7 @@ namespace UnityIceFebruary
         [FieldProxy(typeof(IGameObject))]
         public UnityGameObject(GameObject gameObject) : base(gameObject)
         {
-            Transform = (ITransform)UnityMethods.Upsert(gameObject.transform);
+            Transform = UnityMethods.Upsert<UnityEngine.Transform, ITransform>(gameObject.transform);
         }
         public IRootConfig GetRootConfig()
         {
@@ -26,7 +27,7 @@ namespace UnityIceFebruary
 
             IRootConfig rootConfig = info.ToPoco();
 
-            Object.Destroy(info);
+            UnityEngine.Object.Destroy(info);
 
             return rootConfig;
         }

@@ -35,7 +35,7 @@ public sealed class EntityItemHolderHandler : BaseEntity, IItemHolderHandler
 
         _pickUpChecker.Overlap();
 
-        if (!_pickUpChecker.Succes)
+        if (!_pickUpChecker.Success)
             return;
 
         IPickable item = null;

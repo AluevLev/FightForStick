@@ -59,7 +59,7 @@ namespace UnityIceFebruary.HelpTools.AutoGenerator
                     Generate(attributeType, type.GetProxyName(), code);
             }
 
-            ProxyGeneratorDebugger.DebugSucces();
+            ProxyGeneratorDebugger.DebugSuccess();
     
             AssetDatabase.Refresh();
         }

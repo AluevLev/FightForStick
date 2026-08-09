@@ -17,5 +17,9 @@ public sealed class CameraSizeChanger : BaseEntity, IFrame
 		_maxSize = maxSize;
 		_sensitivity = sensitivity;
 	}
-    public void OnFrame(float frameLength) => _camera.Size = Math.Clamp(_camera.Size + _inputProvider.MouseScrolldown * _sensitivity, _minSize, _maxSize);
+    public void OnFrame(float frameLength)
+	{
+		if (_inputProvider.Active() && _camera.Exists())
+            _camera.Size = Math.Clamp(_camera.Size + _inputProvider.MouseScrolldown * _sensitivity, _minSize, _maxSize);
+    }
 }

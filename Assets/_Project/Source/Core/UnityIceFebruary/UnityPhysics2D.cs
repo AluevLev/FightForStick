@@ -48,8 +48,8 @@ namespace UnityIceFebruary
             {
                 UnityCollider2D unityCollider2D = _collidersBuffer[index];
 
-                ICollider2D collider2D = (ICollider2D)UnityMethods.Upsert(unityCollider2D);
-                IGameObject gameObject = (IGameObject)UnityMethods.Upsert(unityCollider2D.gameObject);
+                ICollider2D collider2D = UnityMethods.Upsert<UnityCollider2D, ICollider2D>(unityCollider2D);
+                IGameObject gameObject = UnityMethods.Upsert<UnityEngine.GameObject, IGameObject>(unityCollider2D.gameObject);
                 result[index] = new(collider2D, gameObject);
             }
         }

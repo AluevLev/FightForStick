@@ -11,8 +11,8 @@ namespace UnityIceFebruary.Adaptation
     {
         public static IceRaycastHit2D ToIce(UnityRaycastHit2D raycastHit2D)
         {
-            IGameObject gameObject = (IGameObject)UnityMethods.Upsert(raycastHit2D.collider.gameObject);
-            ICollider2D collider2D = (ICollider2D)UnityMethods.Upsert(raycastHit2D.collider);
+            IGameObject gameObject = UnityMethods.Upsert<UnityEngine.GameObject, IGameObject>(raycastHit2D.collider.gameObject);
+            ICollider2D collider2D = UnityMethods.Upsert<UnityEngine.Collider2D, ICollider2D>(raycastHit2D.collider);
             ITransform transform = gameObject.Transform;
             Vector2 point = raycastHit2D.point.ToIce();
             float distance = raycastHit2D.distance;

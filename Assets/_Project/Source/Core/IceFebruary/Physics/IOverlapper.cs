@@ -6,7 +6,7 @@ namespace IceFebruary.Physics
     {
         Component<ICollider2D>[] Colliders2D { get; }
         int Colliders2DActualLength { get; }
-        bool Succes { get; }
+        bool Success { get; }
         void Overlap();
     }
 }

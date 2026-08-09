@@ -18,7 +18,7 @@ namespace UnityIceFebruary.Components
         }
         public IRigidbody2D ConnectedBody
         {
-            get => (IRigidbody2D)UnityMethods.Upsert(Original.connectedBody);
+            get => UnityMethods.Upsert<UnityEngine.Rigidbody2D, IRigidbody2D>(Original.connectedBody);
             set => Original.connectedBody = (value as UnityRigidbody2D)?.Original;
         }
     }

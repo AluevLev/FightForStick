@@ -30,7 +30,7 @@ public sealed class EntityMotorHandler : BaseEntity, IMotorHandler, IFixedFrame
 
         _groundChecker.Overlap();
 
-        if (_groundChecker.Succes && _jumpTrigger.Active != IsSneaking)
+        if (_groundChecker.Success && _jumpTrigger.Active != IsSneaking)
         {
             if (IsSneaking)
                 _entityMotor.ForcePush(_movementCalculator.GetSneakVector());

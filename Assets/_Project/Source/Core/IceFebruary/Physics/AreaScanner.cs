@@ -10,7 +10,7 @@ namespace IceFebruary.Physics
         private readonly IPhysics2D _physics2D;
         public Component<ICollider2D>[] Colliders2D { get; private init; }
         public int Colliders2DActualLength { get; private set; }
-        public bool Succes => Colliders2DActualLength > 0;
+        public bool Success => Colliders2DActualLength > 0;
         private readonly IShape _shape;
         private readonly IVector2Provider _position;
         private readonly IRotor2Provider _rotation;
