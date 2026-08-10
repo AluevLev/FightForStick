@@ -2,8 +2,5 @@ namespace IceFebruary.Proxy
 {
     using System;
 
-    public abstract class GeneratorAttribute : Attribute
-    {
-
-    }
+    public abstract class GeneratorAttribute : Attribute { }
 }

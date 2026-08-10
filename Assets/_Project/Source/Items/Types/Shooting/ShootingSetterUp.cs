@@ -22,7 +22,7 @@ public sealed class ShootingSetterUp : ISettableUp<ShootingConfig>
         ProjectileSettings projectileSettings = settings.ProjectileSettings;
 
         ShootingCalculator shootingDirectionCalculator = new(settings.ShootingForce, settings.RecoilForce);
-        Factory<BulletFactory, BulletConfig> bulletFactory = new(_objectManager, new(_objectManager));
+        Factory<BulletFactory, BulletConfig> bulletFactory = new(_objectManager, new());
 
         Timer cooldown = new(
             _time,

@@ -12,6 +12,7 @@ namespace UnityIceFebruary.HelpTools.AutoGenerator
         private static readonly string _proxyPath = Path.Combine(_autoGenerationDirectoryPath, "Proxy");
         private static readonly string _fieldProxyPath = Path.Combine(_autoGenerationDirectoryPath, "Field Proxy");
         private static readonly string _interfaceProxyPath = Path.Combine(_autoGenerationDirectoryPath, "Interface Proxy");
+        private static readonly string _genericVariantProxyPath = Path.Combine(_autoGenerationDirectoryPath, "Generic Variant");
         private static readonly string _scriptableObjectProxyPath = Path.Combine(_autoGenerationDirectoryPath, "Scriptable Object Proxy");
         private static readonly string _staticDictionariesPath = Path.Combine(_autoGenerationDirectoryPath, "Static Dictionaries");
         private static readonly Dictionary<Type, string> _pathsOfTypes = new()
@@ -19,6 +20,7 @@ namespace UnityIceFebruary.HelpTools.AutoGenerator
             { typeof(Proxy), _proxyPath },
             { typeof(FieldProxy), _fieldProxyPath },
             { typeof(InterfaceProxy), _interfaceProxyPath },
+            { typeof(GenericVariantProxy), _genericVariantProxyPath },
             { typeof(ScriptableObjectProxy), _scriptableObjectProxyPath },
             { typeof(StaticProxy), _staticDictionariesPath }
         };
@@ -29,6 +31,7 @@ namespace UnityIceFebruary.HelpTools.AutoGenerator
             RecoveryDirectory(_proxyPath);
             RecoveryDirectory(_fieldProxyPath);
             RecoveryDirectory(_interfaceProxyPath);
+            RecoveryDirectory(_genericVariantProxyPath);
             RecoveryDirectory(_scriptableObjectProxyPath);
             RecoveryDirectory(_staticDictionariesPath);
         }

@@ -5,12 +5,8 @@ namespace IceFebruary.Animation
     [InterfaceProxy]
     public interface IAnimator : IBaseEntity
     {
-        int GetInt(int hash);
-        void SetInt(int hash, int value);
-        float GetFloat(int hash);
-        void SetFloat(int hash, float value);
-        bool GetBool(int hash);
-        void SetBool(int hash, bool value);
+        T Get<T>(int hash) where T : struct;
+        void Set<T>(int hash, T value) where T : struct;
         void SetTrigger(int hash);
     }
 }

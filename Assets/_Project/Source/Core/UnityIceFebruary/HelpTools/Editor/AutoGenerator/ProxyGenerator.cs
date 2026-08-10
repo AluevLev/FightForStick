@@ -40,29 +40,37 @@ namespace UnityIceFebruary.HelpTools.AutoGenerator
                 .OfType<UnityMatchPair>()
                 .ToArray();
 
-            Generate(typeof(StaticProxy), StaticProxy.UnityMatchObjectsName, StaticProxyCodeBuilder.GetStaticUnityMatchComponentCode(pairs));
+            GenerateStaticProxy(pairs);
 
             foreach (Type type in proxyableTypes)
             {
-                GeneratorAttribute generatorAttribute = type.GetAttribute<GeneratorAttribute>();
-
-                (Type attributeType, string code) = generatorAttribute switch
-                {
-                    Proxy => (typeof(Proxy), ProxyCodeBuilder.GetProxyCode(type)),
-                    FieldProxy fieldProxy => (typeof(FieldProxy), ProxyCodeBuilder.GetFieldProxyCode(type, fieldProxy)),
-                    InterfaceProxy => (typeof(InterfaceProxy), ProxyCodeBuilder.GetInterfaceProxyCode(type)),
-                    ScriptableObjectProxy => (typeof(ScriptableObjectProxy), ProxyCodeBuilder.GetScriptableObjectProxyCode(type)),
-                    _ => (null, null)
-                };
-
-                if (attributeType != null)
-                    Generate(attributeType, type.GetProxyName(), code);
+                if (type.HasAttribute())
+                    GenerateProxyByAttribute(type);
+                if (type.IsConfig())
+                    GenerateConfigProxy(type);
             }
 
             ProxyGeneratorDebugger.DebugSuccess();
 
             AssetDatabase.Refresh();
         }
+        private static void GenerateProxyByAttribute(Type type)
+        {
+            GeneratorAttribute attribute = type.GetAttribute<GeneratorAttribute>();
+
+            (Type attributeType, string code) = attribute switch
+            {
+                FieldProxy fieldProxy => (typeof(FieldProxy), ProxyCodeBuilder.GetFieldProxyCode(type, fieldProxy)),
+                InterfaceProxy => (typeof(InterfaceProxy), ProxyCodeBuilder.GetInterfaceProxyCode(type)),
+                ScriptableObjectProxy => (typeof(ScriptableObjectProxy), ProxyCodeBuilder.GetScriptableObjectProxyCode(type)),
+                _ => (null, null)
+            };
+
+            Generate(attributeType, type.GetProxyName(), code);
+        }
+        private static void GenerateConfigProxy(Type type) => Generate(typeof(Proxy), type.GetProxyName(), ProxyCodeBuilder.GetProxyCode(type));
+        private static void GenerateStaticProxy(UnityMatchPair[] pairs) => Generate(typeof(StaticProxy), StaticProxy.UnityMatchObjectsName, StaticProxyCodeBuilder.GetStaticUnityMatchComponentCode(pairs));
+        public static void GenerateGenericVariantProxy(Type type) => Generate(typeof(GenericVariantProxy), type.GetGenericProxyName(), ProxyCodeBuilder.GetGenericVariantProxyCode(type));
         private static int GetPriority(Type type)
         {
             if (type.HasAttribute<InterfaceProxy>())

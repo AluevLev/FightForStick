@@ -9,17 +9,11 @@ public readonly struct ItemSettings
     public PhysicsBalancerConfig PhysicsLimbConfig { get; private init; }
 
     [FieldProxy]
-    public ItemSettings(IGameObject gameObject, HingeJoint2DComponent[] holders, PhysicsBalancerConfig physicsLimbConfig)
+    public ItemSettings(IGameObject gameObject, Component<IHingeJoint2D>[] holders, PhysicsBalancerConfig physicsLimbConfig)
     {
         GameObject = gameObject;
 
-        Holders = new Component<IHingeJoint2D>[holders.Length];
-
-        for (int index = 0; index < holders.Length; index++)
-        {
-            HingeJoint2DComponent hingeJoint2DComponent = holders[index];
-            Holders[index] = new Component<IHingeJoint2D>(hingeJoint2DComponent.HingeJoint2D, hingeJoint2DComponent.GameObject);
-        }
+        Holders = holders;
 
         PhysicsLimbConfig = physicsLimbConfig;
     }

@@ -1,16 +1,12 @@
 using IceFebruary;
 using IceFebruary.Physics;
-using IceFebruary.Proxy;
 
 public sealed class BulletConfig : IRootConfig
 {
-    public IGameObject GameObject { get; private init; }
-    public IRigidbody2D Rigidbody2D { get; private init; }
+    public Component<IRigidbody2D> Rigidbody2DComponent { get; private init; }
 
-    [Proxy]
-    public BulletConfig(IGameObject gameObject, IRigidbody2D rigidbody2D)
+    public BulletConfig(Component<IRigidbody2D> rigidbody2DComponent)
     {
-        GameObject = gameObject;
-        Rigidbody2D = rigidbody2D;
+        Rigidbody2DComponent = rigidbody2DComponent;
     }
 }
