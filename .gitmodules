@@ -1,0 +1,6 @@
+[submodule "Assets/_Project/Source/Core/IceFebruary"]
+	path = Assets/_Project/Source/Core/IceFebruary
+	url = https://github.com/AluevLev/IceFebruary.git
+[submodule "Assets/_Project/Source/Core/UnityIceFebruary"]
+	path = Assets/_Project/Source/Core/UnityIceFebruary
+	url = https://github.com/AluevLev/UnityIceFebruary.git
