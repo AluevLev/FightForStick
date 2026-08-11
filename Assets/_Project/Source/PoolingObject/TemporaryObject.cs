@@ -15,13 +15,16 @@ public sealed class TemporaryObject : BaseEntity, IFixedFrame
     }
     public void Start()
     {
+        if (!Enabled || !GameObject.Exists())
+            return;
+
         _timer.SetCooldown();
 
         GameObject.Enabled = true;
     }
     public void OnFixedFrame()
     {
-        if (_timer.InCoolDown || !GameObject.Active())
+        if (!Enabled || _timer.InCoolDown || !GameObject.Active())
             return;
 
         GameObject.Enabled = false;

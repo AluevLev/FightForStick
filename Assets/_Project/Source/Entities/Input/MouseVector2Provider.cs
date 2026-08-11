@@ -11,7 +11,7 @@ public sealed class MouseVector2Provider : IVector2Provider
     }
     public bool TryGet(out Vector2 point)
     {
-        bool hasValue = _inputProvider.Active();
+        bool hasValue = _inputProvider.Exists();
 
         point = hasValue ? _inputProvider.MousePosition : default;
 

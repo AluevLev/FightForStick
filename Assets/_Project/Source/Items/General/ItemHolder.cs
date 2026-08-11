@@ -3,7 +3,7 @@ using IceFebruary.Physics;
 using IceFebruary.Space.Follow;
 using IceFebruary.Space.Rotor2Provider;
 
-public sealed class ItemHolder : BaseEntity
+public readonly struct ItemHolder
 {
     public IGameObject GameObject { get; private init; }
     public Component<IHingeJoint2D>[] Holders { get; private init; }

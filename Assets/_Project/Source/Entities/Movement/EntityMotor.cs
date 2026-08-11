@@ -1,15 +1,17 @@
 using IceFebruary;
+using IceFebruary.Collections;
 using IceFebruary.Physics;
 using IceFebruary.Space;
 using IceFebruary.Space.Follow;
 using IceFebruary.Space.Rotor2Provider;
 
-public sealed class EntityMotor : BaseEntity, IEntityMotor
+public sealed class EntityMotor : IEntityMotor
 {
     private readonly IRigidbody2D _pushBody;
     private readonly ITargetPossessing<IRotor2Provider> _leftHip;
     private readonly ITargetPossessing<IRotor2Provider> _rightHip;
     private readonly ITargetPossessing<IRotor2Provider>[] _shins;
+    private readonly bool _shinsNotExists;
 
     private readonly IRotor2Provider _limbMinRotation;
     private readonly IRotor2Provider _limbMaxRotation;
@@ -20,35 +22,68 @@ public sealed class EntityMotor : BaseEntity, IEntityMotor
         _leftHip = leftHip;
         _rightHip = rightHip;
         _shins = shins;
+        _shinsNotExists = !shins.Exists();
 
         _limbMinRotation = new Rotor2Provider(rest * amplitude.Inverse);
         _limbMaxRotation = new Rotor2Provider(rest * amplitude);
     }
     public void OpenHips()
     {
+        if (!_leftHip.Exists() || !_rightHip.Exists())
+            return;
+
         _leftHip.SetTarget(_limbMinRotation);
         _rightHip.SetTarget(_limbMaxRotation);
     }
     public void CloseHips()
     {
+        if (!_leftHip.Exists() || !_rightHip.Exists())
+            return;
+
         _leftHip.SetTarget(_limbMaxRotation);
         _rightHip.SetTarget(_limbMinRotation);
     }
     private void SetShins(IRotor2Provider rotation)
     {
+        if (_shinsNotExists)
+            return;
+
         for (int index = 0; index < _shins.Length; index++)
-            _shins[index].SetTarget(rotation);
+        {
+            ITargetPossessing<IRotor2Provider> shin = _shins[index];
+
+            if (shin.Exists())
+                shin.SetTarget(rotation);
+        }
     }
     public void SetMinShins() => SetShins(_limbMinRotation);
     public void SetMaxShins() => SetShins(_limbMaxRotation);
     public void ResetLegs()
     {
-        _leftHip.ResetTarget();
-        _rightHip.ResetTarget();
+        if (_leftHip.Exists())
+            _leftHip.ResetTarget();
+        if (_rightHip.Exists())
+            _rightHip.ResetTarget();
+
+        if (_shinsNotExists)
+            return;
 
         for (int index = 0; index < _shins.Length; index++)
-            _shins[index].ResetTarget();
+        {
+            ITargetPossessing<IRotor2Provider> shin = _shins[index];
+
+            if (shin.Exists())
+                shin.ResetTarget();
+        }
     }
-    public void ForcePush(Vector2 force) => _pushBody.AddForce(force, ForceMode2D.Force);
-    public void ImpulsePush(Vector2 impulse) => _pushBody.AddForce(impulse, ForceMode2D.Impulse);
+    public void ForcePush(Vector2 force)
+    {
+        if (_pushBody.Exists())
+            _pushBody.AddForce(force, ForceMode2D.Force);
+    }
+    public void ImpulsePush(Vector2 impulse)
+    {
+        if (_pushBody.Exists())
+            _pushBody.AddForce(impulse, ForceMode2D.Impulse);
+    }
 }

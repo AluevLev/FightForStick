@@ -4,7 +4,7 @@ using IceFebruary.Space;
 using IceFebruary.Space.Rotor2Provider;
 using IceFebruary.Space.Vector2Provider;
 
-public sealed class EntityItemHolderHandler : BaseEntity, IItemHolderHandler
+public sealed class EntityItemHolderHandler : IItemHolderHandler
 {
     private readonly IOverlapper _pickUpChecker;
     private readonly IItemHolder _entityItemHolder;
@@ -30,7 +30,10 @@ public sealed class EntityItemHolderHandler : BaseEntity, IItemHolderHandler
     }
     public void PickUp()
     {
-        if (!_stickmanPosition.TryGetSafety(out Vector2 entityPosition) || !_cursorPosition.TryGetSafety(out Vector2 cursorPosition) || Vector2.SqrDistance(cursorPosition, entityPosition) > _sqrMaxPickUpDistance)
+        if (!_pickUpChecker.Exists() ||
+            !_stickmanPosition.TryGetSafety(out Vector2 entityPosition) ||
+            !_cursorPosition.TryGetSafety(out Vector2 cursorPosition) ||
+            Vector2.SqrDistance(cursorPosition, entityPosition) > _sqrMaxPickUpDistance)
             return;
 
         _pickUpChecker.Overlap();
@@ -39,11 +42,10 @@ public sealed class EntityItemHolderHandler : BaseEntity, IItemHolderHandler
             return;
 
         IPickable item = null;
-        IGameObject itemGameObject = null;
 
         for (int index = 0; index < _pickUpChecker.Colliders2DActualLength; index++)
         {
-            itemGameObject = _pickUpChecker.Colliders2D[index].GameObject;
+            IGameObject itemGameObject = _pickUpChecker.Colliders2D[index].GameObject;
 
             if (itemGameObject.MainComponent is IPickable pickable)
             {
@@ -94,7 +96,7 @@ public sealed class EntityItemHolderHandler : BaseEntity, IItemHolderHandler
 
         Item = null;
 
-        _itemHolder = null;
+        _itemHolder = default;
         _itemUsable = null;
         _itemReleasable = null;
         _itemLayer = 0;

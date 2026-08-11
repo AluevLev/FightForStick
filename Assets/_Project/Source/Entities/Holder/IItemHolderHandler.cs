@@ -1,6 +1,6 @@
 using IceFebruary;
 
-public interface IItemHolderHandler : IBaseEntity
+public interface IItemHolderHandler
 {
     IPickable Item { get; }
     void PickUp();

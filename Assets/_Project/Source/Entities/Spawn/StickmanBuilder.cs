@@ -123,10 +123,11 @@ public sealed class StickmanBuilder : ISettableUp<StickmanConfig>
 
         AreaScannerSettings itemAreaScannerSettings = pickUpConfig.ItemAreaScannerSettings;
 
-        IHand[] hands = new IHand[pickUpConfig.EntityHands.Length];
+        IRigidbody2D[] entityHands = pickUpConfig.EntityHands;
+        IHand[] hands = new IHand[entityHands.Length];
 
         for (int index = 0; index < hands.Length; index++)
-            hands[index] = new EntityHand(pickUpConfig.EntityHands[index]);
+            hands[index] = new EntityHand(entityHands[index]);
 
         IItemHolder itemHolderController = new EntityItemHolder(hands);
 

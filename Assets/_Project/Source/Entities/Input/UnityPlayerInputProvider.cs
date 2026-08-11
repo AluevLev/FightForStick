@@ -24,6 +24,9 @@ public sealed class UnityPlayerInputProvider : BaseEntity, IInputProvider, IFram
     }
     public void OnFrame(float frameLength)
     {
+        if (!Enabled || _controls == null)
+            return;
+
         HorizontalMovement = _playerActions.HorizontalMovement.ReadValue<float>();
         VerticalMovement = _playerActions.VerticalMovement.ReadValue<float>();
         MousePosition = _playerActions.LookPositionOnScreen.ReadValue<UnityEngine.Vector2>().ToIce();

@@ -33,7 +33,8 @@ public sealed class Shooting : BaseEntity, IPickable, IUsable
     }
     public void Use()
     {
-        if (_cooldown.InCoolDown ||
+        if (!Enabled ||
+            _cooldown.InCoolDown ||
             _reloadCooldown.InCoolDown ||
             !_shootPoint.TryGetSafety(out Vector2 shootPoint) ||
             !_shootDirection.TryGetSafety(out Vector2 shootDirection))
@@ -58,7 +59,7 @@ public sealed class Shooting : BaseEntity, IPickable, IUsable
             bulletRigidbody2D.AddForce(_shootingCalculator.GetBulletForce(shootDirection), ForceMode2D.Impulse);
         }
 
-        if (_rigidbody2D.Active())
+        if (_rigidbody2D.Exists())
             _rigidbody2D.AddForce(_shootingCalculator.GetRecoilForce(shootDirection), ForceMode2D.Impulse);
 
         _cooldown.SetCooldown();

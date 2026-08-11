@@ -21,12 +21,22 @@ public sealed class EntityMotorHandler : BaseEntity, IMotorHandler, IFixedFrame
         _hipsTimer = hipsTimer;
         _jumpTrigger = jumpTrigger;
     }
-    public void Jump() => _jumpTrigger.Charge();
+    public void Jump()
+    {
+        if (Enabled)
+            _jumpTrigger.Charge();
+    }
     public void OnFixedFrame()
     {
+        if (!Enabled)
+            return;
+
         _entityMotor.ForcePush(_movementCalculator.GetMovementVector(MovementDirection));
 
         SetLegs();
+
+        if (!_groundChecker.Exists())
+            return;
 
         _groundChecker.Overlap();
 

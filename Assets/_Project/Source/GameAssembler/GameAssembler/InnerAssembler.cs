@@ -57,11 +57,9 @@ public sealed class InnerAssembler : IInnerAssembler
     {
         SpawnSettings spawnSettings = _spawnList.CameraSpawnSettings;
 
-        return _objectManager.Create(
-            spawnSettings.GameObject,
-            spawnSettings.Position,
-            Rotor2.Default)
-            .GetRootConfig() as CameraConfig;
+        return _objectManager
+            .Create(spawnSettings.GameObject, spawnSettings.Position, Rotor2.Default)
+            .TryGetRootConfig(out CameraConfig rootConfig) ? rootConfig : null;
     }
     private void SetUpCamera(IVector2Provider playerStickmanPosition, CameraConfig cameraConfig)
     {
@@ -150,11 +148,8 @@ public sealed class InnerAssembler : IInnerAssembler
         {
             SpawnSettings spawnSettings = spawnList[index];
 
-            IRootConfig rootConfig = _objectManager.Create(
-                spawnSettings.GameObject,
-                spawnSettings.Position,
-                Rotor2.Default)
-                .GetRootConfig();
+            if (!_objectManager.Create(spawnSettings.GameObject, spawnSettings.Position, Rotor2.Default).TryGetRootConfig(out IRootConfig rootConfig))
+                return;
 
             switch (rootConfig)
             {

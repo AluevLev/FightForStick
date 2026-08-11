@@ -4,21 +4,23 @@ using IceFebruary.Time;
 public sealed class EntityItemHolderController : BaseEntity, IFrame
 {
     private readonly IInputProvider _inputProvider;
-    private readonly IItemHolderHandler _playerHolderHandler;
-    public EntityItemHolderController(IInputProvider inputProvider, IItemHolderHandler playerHolderHandler)
+    private readonly IItemHolderHandler _holderHandler;
+    public EntityItemHolderController(IInputProvider inputProvider, IItemHolderHandler holderHandler)
     {
         _inputProvider = inputProvider;
-        _playerHolderHandler = playerHolderHandler;
+        _holderHandler = holderHandler;
     }
     public void OnFrame(float frameLength)
     {
+        if (!Enabled || !_inputProvider.Exists())
+            return;
         if (_inputProvider.IsPickingUpItem)
-            _playerHolderHandler.PickUp();
+            _holderHandler.PickUp();
         if (_inputProvider.IsUsing)
-            _playerHolderHandler.Use();
+            _holderHandler.Use();
         else
-            _playerHolderHandler.Release();
+            _holderHandler.Release();
         if (_inputProvider.IsDroppingItem)
-            _playerHolderHandler.Drop();
+            _holderHandler.Drop();
     }
 }

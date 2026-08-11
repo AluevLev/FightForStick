@@ -1,7 +1,7 @@
 using IceFebruary;
 using IceFebruary.Space;
 
-public interface IEntityMotor : IBaseEntity
+public interface IEntityMotor
 {
     void OpenHips();
     void CloseHips();
