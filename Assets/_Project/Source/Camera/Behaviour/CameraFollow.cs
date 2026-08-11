@@ -16,7 +16,7 @@ public sealed class CameraFollow : BaseEntity, IFrame, ITargetPossessing<IVector
     public void ResetTarget() => _targetPosition = null;
     public void OnFrame(float frameLength)
     {
-        if (_cameraPosition.Exists() && _targetPosition.TryGetSafety(out Vector2 targetPosition))
+        if (Enabled && _cameraPosition.Exists() && _targetPosition.TryGetSafety(out Vector2 targetPosition))
             _cameraPosition.Position = targetPosition;
     }
 }

@@ -23,20 +23,17 @@ public sealed class EnemyInputProvider : BaseEntity, IInputProvider, IFrame
     public bool IsPickingUpItem { get; private set; }
     public void OnFrame(float frameLength)
     {
-        if (!Enabled)
-            return;
-
         Vector2 targetPosition = default;
         Vector2 enemyPosition = default;
 
-        bool success = _enemyPosition.TryGetSafety(out enemyPosition) && _targetPosition.TryGetSafety(out targetPosition);
+        bool success = Enabled && _enemyPosition.TryGetSafety(out enemyPosition) && _targetPosition.TryGetSafety(out targetPosition);
 
         HorizontalMovement = success ? targetPosition.X.CompareTo(enemyPosition.X) : 0f;
         VerticalMovement = success ? targetPosition.Y.CompareTo(enemyPosition.Y) : 0f;
 
-        bool itemInHandExists = EnemyHolderHandler != null && EnemyHolderHandler.Item.Exists();
+        bool itemInHandExists = success && EnemyHolderHandler != null && EnemyHolderHandler.Item.Exists();
 
-        MousePosition = success && itemInHandExists ? targetPosition : enemyPosition;
+        MousePosition = itemInHandExists ? targetPosition : enemyPosition;
 
         IsUsing = itemInHandExists;
         IsPickingUpItem = !itemInHandExists;

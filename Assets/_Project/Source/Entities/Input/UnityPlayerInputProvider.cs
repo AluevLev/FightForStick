@@ -2,6 +2,7 @@ using IceFebruary;
 using IceFebruary.Space;
 using IceFebruary.Time;
 using UnityIceFebruary.Adaptation;
+using UnityVector2 = UnityEngine.Vector2;
 
 public sealed class UnityPlayerInputProvider : BaseEntity, IInputProvider, IFrame
 {
@@ -24,17 +25,26 @@ public sealed class UnityPlayerInputProvider : BaseEntity, IInputProvider, IFram
     }
     public void OnFrame(float frameLength)
     {
-        if (!Enabled || _controls == null)
-            return;
+        if (Enabled && _controls != null)
+            SetControls(_playerActions.HorizontalMovement.ReadValue<float>(),
+                _playerActions.VerticalMovement.ReadValue<float>(),
+                _playerActions.LookPositionOnScreen.ReadValue<UnityVector2>().ToIce(),
+                _playerActions.Scroll.ReadValue<UnityVector2>().ToIce().Y,
+                _playerActions.IsUsing.IsPressed(),
+                _playerActions.IsPickingUp.WasPressedThisFrame(),
+                _playerActions.IsDropping.WasPressedThisFrame());
+        else
+            SetControls(default, default, default, default, default, default, default);
+    }
+    private void SetControls(float horizontalMovement, float verticalMovement, Vector2 mousePosition, float mouseScrolldown, bool isUsing, bool isPickingUpItem, bool isDroppingItem)
+    {
+        HorizontalMovement = horizontalMovement;
+        VerticalMovement = verticalMovement;
+        MousePosition = mousePosition;
+        MouseScrolldown = mouseScrolldown;
 
-        HorizontalMovement = _playerActions.HorizontalMovement.ReadValue<float>();
-        VerticalMovement = _playerActions.VerticalMovement.ReadValue<float>();
-        MousePosition = _playerActions.LookPositionOnScreen.ReadValue<UnityEngine.Vector2>().ToIce();
-        MouseScrolldown = _playerActions.Scroll.ReadValue<UnityEngine.Vector2>().ToIce().Y;
-
-        IsUsing = _playerActions.IsUsing.IsPressed();
-
-        IsPickingUpItem = _playerActions.IsPickingUp.WasPressedThisFrame();
-        IsDroppingItem = _playerActions.IsDropping.WasPressedThisFrame();
+        IsUsing = isUsing;
+        IsPickingUpItem = isPickingUpItem;
+        IsDroppingItem = isDroppingItem;
     }
 }

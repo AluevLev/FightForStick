@@ -24,7 +24,7 @@ public sealed class TemporaryObject : BaseEntity, IFixedFrame
     }
     public void OnFixedFrame()
     {
-        if (!Enabled || _timer.InCoolDown || !GameObject.Active())
+        if (!Enabled || _timer.InCoolDown || !GameObject.Exists() || !GameObject.Enabled)
             return;
 
         GameObject.Enabled = false;
