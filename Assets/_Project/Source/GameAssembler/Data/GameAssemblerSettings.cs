@@ -5,7 +5,7 @@ public readonly struct GameAssemblerSettings
     public int StartTimeCyclesBufferLength { get; private init; }
     public int StartPhysicsCollidersBufferLength { get; private init; }
 
-    [ScriptableObjectProxy]
+    [DataObjectProxy]
     public GameAssemblerSettings(int startTimeCyclesBufferLength, int startPhysicsCollidersBufferLength)
     {
         StartTimeCyclesBufferLength = startTimeCyclesBufferLength;

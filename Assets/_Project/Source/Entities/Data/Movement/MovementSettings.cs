@@ -11,7 +11,7 @@ public readonly struct MovementSettings
     public Rotor2 LegRest { get; private init; }
     public Rotor2 LegAmplitude { get; private init; }
 
-    [ScriptableObjectProxy]
+    [DataObjectProxy]
     public MovementSettings(float speed, float jumpSpeed, float jumpBoost, float sneakBoost,
         float legsChangeRotationPeriod, Rotor2 legRest, Rotor2 legAmplitude)
     {

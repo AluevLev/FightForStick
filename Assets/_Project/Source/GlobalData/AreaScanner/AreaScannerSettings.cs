@@ -8,7 +8,7 @@ public readonly struct AreaScannerSettings
     public int CollidersMaxCount { get; private init; }
     public ContactFilter2D ContactFilter2D { get; private init; }
 
-    [ScriptableObjectProxy]
+    [DataObjectProxy]
     public AreaScannerSettings(IShape shape, int collidersMaxCount, ContactFilter2D contactFilter2D)
     {
         Shape = shape;

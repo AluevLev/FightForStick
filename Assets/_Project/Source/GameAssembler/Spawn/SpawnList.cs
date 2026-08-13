@@ -8,7 +8,7 @@ public readonly struct SpawnList
     public SpawnSettings[] EnemiesSpawnList { get; private init; }
     public SpawnSettings[] ItemsSpawnList { get; private init; }
 
-    [ScriptableObjectProxy]
+    [DataObjectProxy]
     public SpawnList(SpawnSettings levelSpawnSettings, SpawnSettings cameraSpawnSettings, SpawnSettings playerSpawnSettings, SpawnSettings[] enemiesSpawnList, SpawnSettings[] itemsSpawnList)
     {
         LevelSpawnSettings = levelSpawnSettings;

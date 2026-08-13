@@ -6,7 +6,7 @@ public readonly struct ProjectileSettings
     public IGameObject Prefab { get; private init; }
     public float ObjectLifetime { get; private init; }
 
-    [ScriptableObjectProxy]
+    [DataObjectProxy]
     public ProjectileSettings(IGameObject prefab, float objectLifeTime)
     {
         Prefab = prefab;

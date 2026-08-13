@@ -7,7 +7,7 @@ public readonly struct CameraSettings
     public float MaxSize { get; private init; }
     public float Sensitivity { get; private init; }
 
-    [ScriptableObjectProxy]
+    [DataObjectProxy]
     public CameraSettings(float interpolation, float minSize, float maxSize, float sensitivity)
     {
         Interpolation = interpolation;

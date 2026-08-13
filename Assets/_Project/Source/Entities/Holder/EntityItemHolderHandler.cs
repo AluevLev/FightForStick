@@ -38,7 +38,7 @@ public sealed class EntityItemHolderHandler : IItemHolderHandler
 
         _pickUpChecker.Overlap();
 
-        if (!_pickUpChecker.Success)
+        if (_pickUpChecker.Colliders2DActualLength == 0)
             return;
 
         IPickable item = null;

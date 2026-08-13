@@ -9,7 +9,7 @@ public readonly struct ShootingSettings
     public float Cooldown { get; private init; }
     public float ReloadCooldown { get; private init; }
 
-    [ScriptableObjectProxy]
+    [DataObjectProxy]
     public ShootingSettings(ProjectileSettings projectileSettings, int bulletsCount, float shootingForce, float recoilForce, float cooldown, float reloadCooldown)
     {
         ProjectileSettings = projectileSettings;
