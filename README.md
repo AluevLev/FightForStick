@@ -89,7 +89,7 @@ When a level loads, the data management flow processes as follows:
 This game is built on top of a modular ecosystem. To understand the underlying core systems, automated proxy generation, and high-performance execution layers used in this project, check out the main framework repositories:
 
 * 🧊 **[IceFebruary](https://github.com/AluevLev/IceFebruary)** — The standalone, zero-allocation C# (POCO) architectural core focusing on rigid determinism and clean business logic.
-* 🔀 **[UnityIceFebruary](https://github.com/AluevLev/UnityIceFebruary)** — The high-performance binding, conversion, and compile-time code-generation layer for engine integration.
+* 🧊 **[UnityIceFebruary](https://github.com/AluevLev/UnityIceFebruary)** — The high-performance binding, conversion, and compile-time code-generation layer for engine integration.
 
 ------------------------------
 
