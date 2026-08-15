@@ -31,7 +31,9 @@ The project showcases a complex architecture built entirely within a decoupled, 
 
 ------------------------------
 
-## 🛠 Subsystem & Core Gameplay Mechanics## 1. Fluent Ragdoll Assembly (StickmanBuilder)
+## 🛠 Subsystem & Core Gameplay Mechanics
+
+## 1. Fluent Ragdoll Assembly (StickmanBuilder)
 
 Orchestrates the instantiation and procedural composition of complete physical character entities using a readable Fluent Interface pattern:
 
