@@ -5,6 +5,7 @@ using IceFebruary.Physics.Balancer;
 using IceFebruary.Space.Follow;
 using IceFebruary.Space.Rotor2Provider;
 using IceFebruary.Space.Vector2Provider;
+using IceFebruary.Space;
 using IceFebruary.Time;
 
 public sealed class StickmanBuilder : ISettableUp<StickmanConfig>
@@ -116,7 +117,7 @@ public sealed class StickmanBuilder : ISettableUp<StickmanConfig>
 
         return this;
     }
-    public StickmanBuilder SetItemHolder(IVector2Provider cursorPosition, IRotor2Provider rotation = null)
+    public StickmanBuilder SetItemHolder(IVector2Provider cursorPosition)
     {
         PickUpConfig pickUpConfig = _stickmanConfig.PickUpConfig;
         PickUpSettings pickUpSettings = pickUpConfig.Settings;
@@ -135,7 +136,7 @@ public sealed class StickmanBuilder : ISettableUp<StickmanConfig>
             _physics2D,
             itemAreaScannerSettings.Shape,
             cursorPosition,
-            rotation,
+            new Rotor2Provider(Rotor2.Default),
             itemAreaScannerSettings.ContactFilter2D,
             itemAreaScannerSettings.CollidersMaxCount);
 
