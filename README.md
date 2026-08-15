@@ -5,6 +5,22 @@ The project showcases a complex architecture built entirely within a decoupled, 
 
 ------------------------------
 
+## 🕹 Gameplay Sandbox Preview
+
+> 💡 **Architectural Note:** *Fight for Stick* is compiled as a **deterministic physical sandbox** designed to stress-test the *IceFebruary* core infrastructure under extreme physics conditions. Rather than tracking traditional health points, the gameplay focuses entirely on interactive ragdoll balancing, procedural walking locomotion, and non-alloc impulse distributions.
+
+<table>
+  <tr>
+    <td><img src="Media/Gameplay1.png" alt="Ragdoll Combat Layout" width="450" height="230"></td>
+    <td><img src="Media/Gameplay2.png" alt="Procedural Weapon Mechanics" width="450" height="230"></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><img src="Media/Gameplay3.png" alt="Scale Testing with Giant Entities" width="550" height="370"></td>
+  </tr>
+</table>
+
+------------------------------
+
 ## ✨ Architectural Accomplishments
 
 * Pure Object-Oriented Domain Layer: The core gameplay logic is completely written in standard C#, isolating player behavior, weapon calculations, and movement loops from engine-specific dependencies.
@@ -72,8 +88,8 @@ When a level loads, the data management flow processes as follows:
 
 This game is built on top of a modular ecosystem. To understand the underlying core systems, automated proxy generation, and high-performance execution layers used in this project, check out the main framework repositories:
 
-* 🧊 **[IceFebruary](https://github.com)** — The standalone, zero-allocation C# (POCO) architectural core focusing on rigid determinism and clean business logic.
-* 🔀 **[UnityIceFebruary](https://github.com)** — The high-performance binding, conversion, and compile-time code-generation layer for engine integration.
+* 🧊 **[IceFebruary](https://github.com/AluevLev/IceFebruary)** — The standalone, zero-allocation C# (POCO) architectural core focusing on rigid determinism and clean business logic.
+* 🔀 **[UnityIceFebruary](https://github.com/AluevLev/UnityIceFebruary)** — The high-performance binding, conversion, and compile-time code-generation layer for engine integration.
 
 ------------------------------
 
